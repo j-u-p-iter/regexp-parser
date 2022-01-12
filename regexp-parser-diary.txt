@@ -1,0 +1,68 @@
+Here we describe how we build the regexp parser step by step.
+
+The structure of the parser will be standard. The parser consists of Tokenizer and Parser.
+
+Yep, it's a little bit strange that Parser is one of the two building blocks of the parser,
+but it's like that by historical reasons. The reason for that is because the Parser implements the 
+main, the most important and heavy lifting job. Sometimes parsers don't include Tokenizer part at all.
+Such type of parsers are called scannerless. They are implemented like that, cause sometimes (in case of some languages) 
+it's just hard to implement Tokenizer and Parser separately. But still it's considered as the best practice to implement 
+Tokenizer and Parser separately according to the separation concerns principle.
+
+The parser we're building will respect the next regexp grammar:
+
+Exp: Term
+    | Term '|' Exp
+Term: Factor
+    | Factor Term
+Factor: Atom
+    | Atom MetaChar
+    | Atom '{' CharCount '}'
+Atom: RegChar
+    | '.'
+    | '(' Exp ')'
+    | '[' CharClass ']'
+    | '[' '^' CharClass ']'
+CharClass: CharClassItem
+    | CharClassItem CharClass
+CharClassItem: RegChar
+    | RegChar '-' RegChar
+CharCount: Integer
+    | Integer ','
+    | Integer ',' Integer
+Integer: Digit
+    | Digit Integer
+RegChar: GeneralCharacter
+    | '\' AnyChar
+AnyChar: .+
+MetaChar: '?' | '*' | '+'
+Digit: '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+GenearlCharacter: a-z | 0-9 | _ | " "
+
+How to read such type of grammar I've explained in the grammar_basics.txt.
+
+The grammar itself looks pretty complex, and to use this grammar as an orientir would be very hard.
+
+The grammar plays role of the instruction - what rules should be satisfied the regexp parser to be implemented correctly.
+
+So, grammar is our guide. At the same time to use it as a whole thing would be pretty hard. And so, my suggestion
+to implement the parser according to the provided above grammar gradually. We'll start from the very bottom of the grammar 
+and will move to the top. 
+
+Without further ado let's define the first grammar production (rule, pattern) our parser will satisfy.
+
+
+1. First step.
+
+Exp: RegularCharacter
+
+This is the first grammar snippet we're going to implement.
+
+Regular expression parser in this case will be able to parse only Regular Characters.
+
+
+2. Second step.
+
+Exp: Char
+Char: RegularCharacter
+    | '\' AnyChar 

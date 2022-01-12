@@ -1,0 +1,99 @@
+To be able to write formal grammar at first it's necessary to learn to read the grammar.
+
+
+Formal grammar:
+
+<expr> ::= <term>
+    | <term>'|'<expr>
+<term> ::= <factor>
+    | <factor><term>
+<factor> ::= <atom>
+    | <atom><meta-char>
+<atom> ::= <char>
+    | '('<expr>')'
+<char> ::= <any-char-except-meta>
+    | '\'<any-char>
+<meta-char> ::= '?' | '*' | '+'
+
+What I noticed is that it's much move convinient and easier to read grammar from the bottom to the top, than
+from the top to the bottom, despite the fact that the first nonterminal at the top is called as starting symbol.
+Programm starts it's execution from the starting symbol, but it's better to read this programm representation from the bottom.
+
+Let's go from the bottom to the top:
+
+1. First step.
+
+<meta-char> ::= '?' | '*' | '+'
+
+Here we can see, that on the lower level the language (regexp) consists of some set of meta characters.
+
+2. Second step. 
+
+<char> ::= <any-char-except-meta>
+    | '\'<any-char>
+
+Here we can see, that each character of the language can be represented as any available symbol exept meta characters
+or absolutely any symbol, including meta characters, if it's escaped with "\".
+
+3. Third step.
+
+<atom> ::= <char>
+    | '('<expr>')'
+
+Here we can see, that such called an atom of the language can be represented either as a simple character or the whole regular expression if it's
+in brackets. In other words the language unit is either one character or the whole regexp, wrapped in brackets (further we'll name it as a group).
+
+So, we can say, that in it's simplest form the atom is an any character except meta character, or escaped absolutely any character. In the complex
+form the atom is some regular expression, wrapped in the brackets.
+
+4. Fourth step.
+
+<factor> ::= <atom>
+    | <atom><meta-char>
+
+Here we can see, that such called a factor of the language can be represented as atom or atom followed by one meta character. 
+
+In it's simplest form the factor is either any character without meta. In the most complex form it's escaped meta followed by meta character.
+
+Intermidiate representation can look like non-metacharacter followed by meta character.
+
+5. Fifth step.
+
+<term> ::= <factor>
+    | <factor><term>
+
+Here we can see, that such called term of the language can consist of either one factor or two factors, or three factors (recursive deriviation):
+
+<factor> | <factor><term>
+
+<factor> | (<factor><factor> | <factor><factor><term>)
+
+and etc.
+
+In the simplest form the term is an any non-meta character. In the most complex form it's several captured groups followed by meta characters,
+concatenated with each other:
+
+(regexp1)*(regexp1)+
+
+and etc.
+
+The intermidiate step can look like one non-metacharacter + escaped meta character; like one non-meta character concatenated with captured goup without following meta-character;
+like caputed group without following meta-character concatenated with the captured group followed by mera-character.
+
+
+Ooooph, we're almost there.
+
+
+6. Sixth step. 
+
+<expr> ::= <term>
+    | <term>'|'<expr>
+
+
+We can see, that the whole regular expression can be represented as one term or two terms, concatenated with '|', or three terms, united with "|" (recursive deriviation).
+
+In it's simplest form it's one, two or three non-meta character, concatenated with each other. In the most complex form it's set of captured groups with meta characters,
+concatenated with "|" with one more set of captured groups and etc.
+
+
+https://deniskyashif.com/2020/08/17/parsing-regex-with-recursive-descent/

@@ -1,0 +1,98 @@
+In computing, we use formal languages - programming languages, query languages, markup languages, protocols, config formats, etc. 
+Using them, we define what we want the computer to do.
+
+Formal grammars, on the other hand, are used to define the languages themselves. 
+For every formal language, we have a corresponding grammar (usually context-free) that defines its structure.
+
+To parse any program, any language we need the grammar. Everything starts from grammar. Grammar is the set of rules
+the language works. It's not possible to parse the language without knowing the grammar.
+
+If you know the grammar you can turn it into the programm.
+
+Grammar consists of non-terminals and terminals.
+non-terminals are variables in the grammar. To read the grammar (deriviate it) you should substitute one non-terminal (variable) with another.
+terminals are simple plain values, literals, like strings, numbers, booleans.
+
+To build the parser for the language you should convert the grammar of the language to it's programm analogue (programming implementation).
+
+If the non-terminal depends on some other non-terminals - it means, that in the programm we'll have a function that will depend on other function 
+calls. For non-terminals we create the appropriate methods.
+
+If you get a string and a parser, based on grammar and run parser on the string (parse the string) you'll get answers on two questions:
+- does this string belongs to the language, described by grammar;
+- what is the structure of the string with regard to the grammar.
+
+
+To build the grammar there're a lot of different notations (languages to describe the grammar): BNF, EBNF and etc.
+
+There're different types of grammar (category of grammar). Each type(category) has it's own capabilities.
+
+Regular grammar can describe only simple strings, set of strings. This is the same, that RegExp can do. By the way we can say, that RegExp is 
+one of the possible notations of the grammar for the set of strings.
+
+Context-free grammar is more advanced grammar. This is the grammar, that we use to describe the programming languages. To describe the RegExp language
+we also use the context-free grammar.
+
+As a great exercise to convert grammar to the programm you can take simple regular grammar like:
+
+<S> ::= 'a'<A>'e'
+<A> ::= 'b'<A>'d' | 'c'
+
+(this is BNF notation)
+
+and convert it to the programm.
+
+
+Every language has a grammar. Programming languages have grammar as well as the languages we use in our daily communication - English, Russian and etc.
+
+To better understand the meaning of the grammar, let's define a trivial example of English grammar:
+
+sentence    -> <subject><verb-phrase><object>
+subject     -> This | Computers | I 
+verb-phrase -> <adverb><verb> | <verb>
+<adverb>    -> never
+verb        -> is | run | am | tell
+object      -> the <noun> | a <noun> | <noun>
+noun        -> university | world | cheese | lies
+
+Here we define such called productions (or just rules). I believe it's called productions, cause each line (production) produces some result.
+
+The process of replacing non-terminals one with another is called deriviatioon.
+
+Here's the one of the possible deriviation of the sentence, usign the provided above productions:
+
+sentence    -> <subject> <verb-phrase> <object>
+            -> This <verb-phrase> <object>
+            -> This <verb> <object>
+            -> This is <object>
+            -> This is a <noun>
+            -> This is a university
+
+This is just one of the possible deriviations. Using the above productions we can also derivie the next sentences:
+
+This is a university.
+Computers run the world.
+I am the cheese.
+I never tell lies.
+
+The deriviation of the sentenses fro the set of productions is also called as parsing.
+
+As we said for each non-terminal there's an appropriate variable or the method in the parsing programm (or just parser).
+
+When we execute the parser non-terminal methods call each other. The method, related to the first production rule, calls
+an appropriate method, related to the second production rule, the method, related to the second production rule, calls an 
+appropriate method for the third production rule and etc - deriviation (parsing) in an action.
+
+It's important to notice, that in addition to several reasonable sentences, we can also derive nonsense like "Computers run cheese" and "This am a lies".
+
+These sentences don't make semantic sense, but they are sintatically correct because they are of the sequence of subject, verb-phrase and object.
+
+Formal grammr are the tool for syntax, not semantics. We worry about semantics at a later point in the compiling process. In the syntax analysis phase,
+we verify structure, not meaning.
+
+
+https://github.com/deniskyashif/thesis/blob/master/project/src/RegExp.cs
+https://deniskyashif.com/2020/08/17/parsing-regex-with-recursive-descent/
+https://gist.github.com/deniskyashif/24c055ec845dce9e33344e0afc6dd7ec
+https://github.com/hokein/Automata.js/blob/master/src/lexer.js
+https://www.udemy.com/course/parser-from-scratch/learn/lecture/23815814#overview

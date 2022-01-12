@@ -1,0 +1,169 @@
+Let's say our program looks like: "print('hello')". It does nothing more than just prints the "hello" message on
+the screen.
+
+And, let's say our goal is to parse this program.
+
+The parser consists of multiple structural blocks:
+
+- Tokenizer (lexical analysis).
+
+Sometimes this module is called Lexer or Scanner.
+
+To be able to do anything reasonable with the original program, which is basically nothing more than just a string,
+that consists of some statements, we need to transform string representation into something much more convinient to
+work with. 
+
+Such process of transformation of stringified representation of the program into the object structure is called
+parsing. The whole process consists of multiple steps and the first step is exactly to split the original stringified
+program on set of different tokens - stream of tokens. The stream of tokens is the first intermidiate representation
+of the program.
+
+For our program we can define next set of tokens:
+
+[ID: "print"]
+[STRING: "hello"]
+
+
+Each token has a type and a value. Value is also called lexeme.
+
+The purpose of the tokenizer is to split the program on the set of tokens, but not to validate the program itself.
+
+The validation is included into the parsing step, which is the next after the lexical analysis.
+
+Let's say we have a program:
+
+"if (".
+
+For us as readers of the program the program itself is obviously invalid.
+
+But the role of the tokinizer is just to split this program on all the tokens it can find there:
+
+[keywork: "if"]
+[op: "("]
+
+- Parser (syntatic alanysis).
+
+As it was already said parsing is the next step of preparing object representation of the program.
+
+The purpose of the parser:
+- to validate the correctness of the grammar of the program. As an example, the parser checks if the keyword "if", used
+  above is accepted by the grammar of the program. So, parser knows about the grammar of the language and validates
+  the program according to this grammar.
+
+- to build such called AST (Abstract Syntax Tree) tree. This is the actual object representation of the program we were searching for. 
+  The AST for our above program can look like: 
+
+  <Call nam="print" args=["hello"] />
+
+The AST is the object representation of the program, which is understandable for the interpreter of the language. After
+we create the AST we can feed it to the interpreter to obtain the result.
+
+
+Parsing process relates to the text processing. Text consists of sentences, sentences consist of words or tokens (lexemes).
+
+Let's go through very importang terms we'll constantly use going throught the parsing topic:
+
+Alphabet.
+
+Alphabets are a set of symbols, which are always finite. They denoted by Σ and looks like:
+
+Σ = {0,1} is an alphabet of binary digits.
+Σ = {a,b} is an alphabet that consists of two characters (also denoted as symbols) - "a" and "b".
+
+An English alphabet consists of 26 characters, Russian alphabet consists of 33 characters. In the both above cases
+the alphabets consist only of two characters.
+
+Language.
+
+Language is determined by alphabet. It's set of strings, which can include any character of the alphabet the language
+is determined by.
+
+It has the next notation:
+
+L1(Σ) = {aa, ab, ba, bb, bba, ...}
+
+The language can be finite or infinite.
+
+Let's say we have a language that is determined by the alphabet: Σ = {a,b}. And this is the only condition or requirement for
+the language we have.
+
+In this case the language is infinite and has the next notation:
+
+L1(Σ) = {aa, ab, ba, bb, bba, ...}.
+
+It's infinite because the string of the language can consist of any number of characters.
+
+
+And let's suppose we have next set of requirements for the language: 
+  - Σ = {a,b} 
+  - |w| = 2
+
+Here "w" - is a notation we use to denote a string. And the length of the string is denoted as |w|.
+
+In this case the notation for the language looks like:
+
+L1(Σ) = { aa, ab, ba, bb }.
+
+It's finite language, cause the strings of this language can contain maximum 2 characters.
+
+The main takeaway we should grab out of here is that applying the restrictions to the alphabet we form
+such called the Grammar.
+
+So, the Grammar is the set of restrictions on top of the alphabet for the specific language.
+
+Formal grammars.
+
+All the languages have grammar. The is an English grammar, Russian grammar. And, programming languages
+also have grammars.
+
+The Grammar is a finite set of formal rules for generating syntactically correct sentences or meaningful 
+correct sentences of a language. In other words it's a set of rules by which strings of a language are
+constructed. Or in other words it's a set of rules, that describe a language.
+
+Technically the Grammar is a Tupple of four elements:
+
+G = (N, T, P, S).
+
+N - non-terminal symbols or just non-terminals, or variables. It defines a set of symbols
+in our grammar which can hold some value, which at the same time can hold either a single character or 
+a subset of other characters. These symbols are represented using a capital letter like A, B, C, etc.
+
+T - terminals. These are the symbols which appear in our strings in our programs "as is". It's not a special variable,
+but exactly the specific character.
+
+P - production rules. These are exactly the rules that describe the language. These rules describe how to form
+valid strings from the language's alphabet.
+
+S - starting symbol. The first symbol we start our analysis from, we start our derivation process. This is the process of 
+replacing some variables by the values they hold.
+
+Regular grammars are used to parse regular expressions.
+
+Context-sensetive and context-free are used to parse programming languages.
+
+The Grammar is something we use for any language. It defines the rules we can build the sentences (statements) of the language.
+
+Without the Grammar the language can't exist. The language is determined by the Grammar.
+
+The're different notations to describe the Grammar itself (mathematical models). They are very useful, cause
+they allow us to describe very complex languages, using concise syntax.
+
+RegExp is one of such type of notations.
+BNF is another notation.
+
+RegExp itself describes some strings subset:
+
+- strings, that sutisfy the email format (email language);
+- strings, that sutisfy the phone format (phone language). 
+
+
+The RegExp itself (as any another language) can be descibed by the Grammar.
+
+If the email language consists of emails, the RegExp language consists of all possible regexps.
+
+
+So, this is very important to point out - the RegExp is the notation (the Grammar), used to described some set of strings;
+and, there's also the Grammar, that describes the regexp strings itself.
+
+To be able to parse RegExp we need at first to define the Grammar for the regexp language.
+
