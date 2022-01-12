@@ -16,4 +16,34 @@ describe('Parser', () => {
       },
     });
   });
+
+  it('parses digits properly', () => {
+    expect(parser.parse('1')).toEqual({
+      type: "RegExp", 
+      body: {
+        type: "Digit", 
+        value: "1"
+      },
+    });
+  });
+
+  it('parses underscore properly', () => {
+    expect(parser.parse('_')).toEqual({
+      type: "RegExp", 
+      body: {
+        type: "Underscore", 
+        value: "_"
+      },
+    });
+  });
+
+  it.only('parses underscore properly', () => {
+    expect(parser.parse(" a")).toEqual({
+      type: "RegExp", 
+      body: {
+        type: "Space", 
+        value: " "
+      },
+    });
+  });
 });

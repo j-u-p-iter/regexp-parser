@@ -40,6 +40,21 @@ import { Tokenizer } from "./Tokenizer";
  *
  * Next: ...
  */
+
+/**
+ * Each nonterminal in the grammar has an appropriate method
+ *   in the Parser. Each nonterminal knows, that:
+ *
+ *   - it should throw an error if the consuming (current character)
+ *     is not the one, that expected to consume.
+ *
+ *   - it should return either terminal (token, related to the terminal), if the nonterminal
+ *     maps to the terminal.
+ *
+ *   - or it should return the result of the nonterminal call (token, related to the nonterminal).
+ *     The called nonterminal decides by itself what it should return according to the grammar.
+ *
+ */
 export class Parser {
   private tokenizer: Tokenizer;
   private lookahead: { type: TokenType; value: string };
@@ -53,7 +68,16 @@ export class Parser {
   private RegExpr() {
     return {
       type: "RegExp",
-      body: this.Letter()
+      body: this.GeneralCharacter()
+    };
+  }
+
+  private Digit() {
+    const token = this.consume(TokenType.DIGIT);
+
+    return {
+      type: "Digit",
+      value: token.value
     };
   }
 
@@ -64,6 +88,43 @@ export class Parser {
       type: "Letter",
       value: token.value
     };
+  }
+
+  private Underscore() {
+    const token = this.consume(TokenType.UNDERSCORE);
+
+    return {
+      type: "Underscore",
+      value: token.value
+    };
+  }
+
+  private Space() {
+    const token = this.consume(TokenType.SPACE);
+
+    return {
+      type: "Space",
+      value: token.value
+    };
+  }
+
+  private GeneralCharacter() {
+    switch (this.lookahead.type) {
+      case TokenType.LETTER:
+        return this.Letter();
+
+      case TokenType.DIGIT:
+        return this.Digit();
+
+      case TokenType.UNDERSCORE:
+        return this.Underscore();
+
+      case TokenType.SPACE:
+        return this.Space();
+
+      default:
+        return null;
+    }
   }
 
   /**

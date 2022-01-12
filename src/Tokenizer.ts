@@ -111,17 +111,6 @@ export class Tokenizer {
     };
   }
 
-  private regularCharacter() {
-    const character = this.peek();
-
-    this.consume(character);
-
-    return {
-      type: TokenType.REGULAR,
-      value: character
-    };
-  }
-
   private letterCharacter() {
     const character = this.peek();
 
@@ -159,7 +148,7 @@ export class Tokenizer {
     return character === "_";
   }
 
-  private isGeneralCharacter(character) {
+  private isSpaceCharacter(character) {
     return character === " ";
   }
 
@@ -169,6 +158,15 @@ export class Tokenizer {
     return {
       type: TokenType.UNDERSCORE,
       value: "_"
+    };
+  }
+
+  private spaceCharacter() {
+    this.consume(" ");
+
+    return {
+      type: TokenType.SPACE,
+      value: " "
     };
   }
 
@@ -261,12 +259,12 @@ export class Tokenizer {
       return this.digitCharacter();
     }
 
-    if (this.isGeneralCharacter(nextCharacter)) {
-      return this.regularCharacter();
-    }
-
     if (this.isUnderscoreCharacter(nextCharacter)) {
       return this.underscoreCharacter();
+    }
+
+    if (this.isSpaceCharacter(nextCharacter)) {
+      return this.spaceCharacter();
     }
 
     /**

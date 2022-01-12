@@ -3,6 +3,7 @@ export const META_CHARS = ["?", "*", "+"];
 export enum TokenType {
   LETTER = "Letter",
   DIGIT = "Digit",
+  SPACE = "Space",
   UNDERSCORE = "Underscore",
   REGULAR = "Regular",
   UNKNOWN = "Unknown",
