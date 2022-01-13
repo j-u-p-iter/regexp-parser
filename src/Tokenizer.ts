@@ -57,7 +57,9 @@ export class Tokenizer {
    *
    */
   private consume(character) {
-    if (this.peek() !== character) {
+    const nextCharacter = this.peek();
+
+    if (nextCharacter !== character) {
       throw new Error(`Unexpected character ${character}`);
     }
 
@@ -68,6 +70,8 @@ export class Tokenizer {
      *
      */
     this.counter++;
+
+    return nextCharacter;
   }
 
   // private isMetaCharacter(character) {
@@ -95,35 +99,23 @@ export class Tokenizer {
   }
 
   private backSlash() {
-    const character = this.peek();
-
-    this.consume(character);
-
     return {
       type: TokenType.BACK_SLASH,
-      value: character
+      value: this.consume("\\")
     };
   }
 
-  private letterCharacter() {
-    const character = this.peek();
-
-    this.consume(character);
-
+  private letterCharacter(character) {
     return {
       type: TokenType.LETTER,
-      value: character
+      value: this.consume(character)
     };
   }
 
-  private digitCharacter() {
-    const character = this.peek();
-
-    this.consume(character);
-
+  private digitCharacter(character) {
     return {
       type: TokenType.DIGIT,
-      value: character
+      value: this.consume(character)
     };
   }
 
@@ -146,21 +138,10 @@ export class Tokenizer {
     return character === " ";
   }
 
-  private underscoreCharacter() {
-    this.consume("_");
-
+  private createToken(tokenType: TokenType, tokenValue: string) {
     return {
-      type: TokenType.UNDERSCORE,
-      value: "_"
-    };
-  }
-
-  private spaceCharacter() {
-    this.consume(" ");
-
-    return {
-      type: TokenType.SPACE,
-      value: " "
+      type: tokenType,
+      value: this.consume(tokenValue)
     };
   }
 
@@ -173,64 +154,19 @@ export class Tokenizer {
     };
   }
 
-  private starCharacter() {
-    this.consume("*");
-
-    return {
-      type: TokenType.STAR,
-      value: "*"
-    };
-  }
-
-  private questionMarkCharacter() {
-    this.consume("?");
-
-    return {
-      type: TokenType.QUESTION_MARK,
-      value: "?"
-    };
-  }
-
-  private plusCharacter() {
-    this.consume("+");
-
-    return {
-      type: TokenType.PLUS,
-      value: "+"
-    };
-  }
-
-  private leftBracketCharacter() {
-    this.consume("(");
-
-    return {
-      type: TokenType.LEFT_BRACKET,
-      value: "("
-    };
-  }
-
-  private rightBracketCharacter() {
-    this.consume(")");
-
-    return {
-      type: TokenType.RIGHT_BRACKET,
-      value: ")"
-    };
-  }
-
   private metaCharacter() {
     const nextCharacter = this.peek();
 
     if (nextCharacter === "*") {
-      return this.starCharacter();
+      return this.createToken(TokenType.STAR, "*");
     }
 
     if (nextCharacter === "?") {
-      return this.questionMarkCharacter();
+      return this.createToken(TokenType.QUESTION_MARK, "?");
     }
 
     if (nextCharacter === "+") {
-      return this.plusCharacter();
+      return this.createToken(TokenType.PLUS, "+");
     }
   }
 
@@ -246,19 +182,19 @@ export class Tokenizer {
     const nextCharacter = this.peek();
 
     if (this.isLetterCharacter(nextCharacter)) {
-      return this.letterCharacter();
+      return this.letterCharacter(nextCharacter);
     }
 
     if (this.isDigitCharacter(nextCharacter)) {
-      return this.digitCharacter();
+      return this.digitCharacter(nextCharacter);
     }
 
     if (this.isUnderscoreCharacter(nextCharacter)) {
-      return this.underscoreCharacter();
+      return this.createToken(TokenType.UNDERSCORE, "_");
     }
 
     if (this.isSpaceCharacter(nextCharacter)) {
-      return this.spaceCharacter();
+      return this.createToken(TokenType.SPACE, " ");
     }
 
     /**
@@ -283,11 +219,11 @@ export class Tokenizer {
     }
 
     if (nextCharacter === "(") {
-      return this.leftBracketCharacter();
+      return this.createToken(TokenType.LEFT_BRACKET, "(");
     }
 
     if (nextCharacter === ")") {
-      return this.rightBracketCharacter();
+      return this.createToken(TokenType.RIGHT_BRACKET, ")");
     }
 
     return this.uknownCharacter();
