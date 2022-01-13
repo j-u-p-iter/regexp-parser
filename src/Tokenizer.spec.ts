@@ -40,31 +40,6 @@ describe('Tokenizer', () => {
     expect(tokenizer.getNextToken()).toEqual({ type: 'Underscore', value: '_' }); 
   });
 
-  /**
-   * Eventually we'll get rid off the "\" in this case.
-   *   The parser won't have an access to this character.
-   *
-   */
-  it('returns regular character token if the regular character is escaped', () => {
-    const tokenizer = new Tokenizer();
-
-    tokenizer.init('\a');
-    expect(tokenizer.getNextToken()).toEqual({ type: 'Letter', value: 'a' }); 
-
-    tokenizer.init('\\?');
-    expect(tokenizer.getNextToken()).toEqual({ type: 'Regular', value: '?' }); 
-
-    tokenizer.init('\\\\');
-    expect(tokenizer.getNextToken()).toEqual({ type: 'Regular', value: '\\' }); 
-  });
-
-  it('throws if the \\ is not followed by a character', () => {
-    const tokenizer = new Tokenizer();
-
-    tokenizer.init('\\');
-    expect(tokenizer.getNextToken.bind(tokenizer)).toThrow('The \\ should be followed by a character.'); 
-  });
-
   it('returns star character token', () => {
     const tokenizer = new Tokenizer();
 
@@ -130,10 +105,21 @@ describe('Tokenizer', () => {
     }); 
   });
 
+  it('returns back slash character token', () => {
+    const tokenizer = new Tokenizer();
+
+    tokenizer.init('\\');
+
+    expect(tokenizer.getNextToken()).toEqual({ 
+      type: 'Back Slash', 
+      value: '\\' 
+    }); 
+  });
+
   it('returns correct set of tokens', () => {
     const tokenizer = new Tokenizer();
 
-    tokenizer.init('a?\\\\ ');
+    tokenizer.init('a?\\ ');
 
     expect(tokenizer.getNextToken()).toEqual({ 
       type: 'Letter', 
@@ -146,7 +132,7 @@ describe('Tokenizer', () => {
     }); 
 
     expect(tokenizer.getNextToken()).toEqual({ 
-      type: 'Regular', 
+      type: 'Back Slash', 
       value: '\\' 
     }); 
 

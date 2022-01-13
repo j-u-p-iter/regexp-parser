@@ -35,7 +35,7 @@ import { Tokenizer } from "./Tokenizer";
  * Expression: Character | Expression Character;
  * Character: GeneralCharacter | Slash AnyCharacter;
  * GeneralCharacter: Letter | Digit | Underscore | Space;
- * AnyCharacter: .+;
+ * AnyCharacter: GeneralCharacter | NonGeneralCharacter;
  * Slash: "\"
  *
  * Next: ...
@@ -68,60 +68,42 @@ export class Parser {
   private RegExpr() {
     return {
       type: "RegExp",
-      body: this.GeneralCharacter()
+      body: this.Body()
     };
   }
 
-  private Digit() {
-    const token = this.consume(TokenType.DIGIT);
+  private hasMoreTokens() {
+    return this.tokenizer.hasMoreTokens();
+  }
+
+  private EscapedCharacter() {
+    this.consume(TokenType.BACK_SLASH);
+
+    if (!this.hasMoreTokens()) {
+      throw new Error("Expect character after the \\");
+    }
+
+    return this.RegularCharacter(this.lookahead.type);
+  }
+
+  private RegularCharacter(characterType) {
+    const token = this.consume(characterType);
 
     return {
-      type: "Digit",
+      type: "RegularCharacter",
       value: token.value
     };
   }
 
-  private Letter() {
-    const token = this.consume(TokenType.LETTER);
-
-    return {
-      type: "Letter",
-      value: token.value
-    };
-  }
-
-  private Underscore() {
-    const token = this.consume(TokenType.UNDERSCORE);
-
-    return {
-      type: "Underscore",
-      value: token.value
-    };
-  }
-
-  private Space() {
-    const token = this.consume(TokenType.SPACE);
-
-    return {
-      type: "Space",
-      value: token.value
-    };
-  }
-
-  private GeneralCharacter() {
+  private Body() {
     switch (this.lookahead.type) {
       case TokenType.LETTER:
-        return this.Letter();
-
       case TokenType.DIGIT:
-        return this.Digit();
-
       case TokenType.UNDERSCORE:
-        return this.Underscore();
-
       case TokenType.SPACE:
-        return this.Space();
-
+        return this.RegularCharacter(this.lookahead.type);
+      case TokenType.BACK_SLASH:
+        return this.EscapedCharacter();
       default:
         return null;
     }

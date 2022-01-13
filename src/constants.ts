@@ -8,6 +8,7 @@ export enum TokenType {
   REGULAR = "Regular",
   UNKNOWN = "Unknown",
   STAR = "Star",
+  BACK_SLASH = "Back Slash",
   QUESTION_MARK = "Question Mark",
   PLUS = "Plus",
   LEFT_BRACKET = "Left Bracket",

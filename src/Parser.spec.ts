@@ -11,7 +11,7 @@ describe('Parser', () => {
     expect(parser.parse('a')).toEqual({
       type: "RegExp", 
       body: {
-        type: "Letter", 
+        type: "RegularCharacter", 
         value: "a"
       },
     });
@@ -21,7 +21,7 @@ describe('Parser', () => {
     expect(parser.parse('1')).toEqual({
       type: "RegExp", 
       body: {
-        type: "Digit", 
+        type: "RegularCharacter", 
         value: "1"
       },
     });
@@ -31,18 +31,28 @@ describe('Parser', () => {
     expect(parser.parse('_')).toEqual({
       type: "RegExp", 
       body: {
-        type: "Underscore", 
+        type: "RegularCharacter", 
         value: "_"
       },
     });
   });
 
-  it.only('parses underscore properly', () => {
-    expect(parser.parse(" a")).toEqual({
+  it('parses underscore properly', () => {
+    expect(parser.parse(" ")).toEqual({
       type: "RegExp", 
       body: {
-        type: "Space", 
+        type: "RegularCharacter", 
         value: " "
+      },
+    });
+  });
+
+  it('parses escaped character properly', () => {
+    expect(parser.parse("\\^")).toEqual({
+      type: "RegExp", 
+      body: {
+        type: "RegularCharacter", 
+        value: "^"
       },
     });
   });

@@ -94,19 +94,13 @@ export class Tokenizer {
     return this.counter < this.input.length;
   }
 
-  private escapedCharacter() {
-    this.consume("\\");
-
-    if (!this.hasMoreTokens()) {
-      throw new Error("The \\ should be followed by a character.");
-    }
-
+  private backSlash() {
     const character = this.peek();
 
     this.consume(character);
 
     return {
-      type: TokenType.REGULAR,
+      type: TokenType.BACK_SLASH,
       value: character
     };
   }
@@ -281,7 +275,7 @@ export class Tokenizer {
      *   or constructs an additional characters class (\w, \n).
      */
     if (nextCharacter === "\\") {
-      return this.escapedCharacter();
+      return this.backSlash();
     }
 
     if (META_CHARS.includes(nextCharacter)) {
