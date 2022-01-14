@@ -98,27 +98,6 @@ export class Tokenizer {
     return this.counter < this.input.length;
   }
 
-  private backSlash() {
-    return {
-      type: TokenType.BACK_SLASH,
-      value: this.consume("\\")
-    };
-  }
-
-  private letterCharacter(character) {
-    return {
-      type: TokenType.LETTER,
-      value: this.consume(character)
-    };
-  }
-
-  private digitCharacter(character) {
-    return {
-      type: TokenType.DIGIT,
-      value: this.consume(character)
-    };
-  }
-
   private isLetterCharacter(character) {
     return (
       (character >= "a" && character <= "z") ||
@@ -130,19 +109,28 @@ export class Tokenizer {
     return character >= "0" && character <= "9";
   }
 
-  private isUnderscoreCharacter(character) {
-    return character === "_";
-  }
-
-  private isSpaceCharacter(character) {
-    return character === " ";
-  }
-
   private createToken(tokenType: TokenType, tokenValue: string) {
     return {
       type: tokenType,
       value: this.consume(tokenValue)
     };
+  }
+
+  private restCharacters(nextCharacter) {
+    switch (nextCharacter) {
+      case "\\":
+        return this.createToken(TokenType.BACK_SLASH, "\\");
+      case "(":
+        return this.createToken(TokenType.LEFT_BRACKET, "(");
+      case ")":
+        return this.createToken(TokenType.RIGHT_BRACKET, ")");
+      case "_":
+        return this.createToken(TokenType.UNDERSCORE, "_");
+      case " ":
+        return this.createToken(TokenType.SPACE, " ");
+      default:
+        return this.uknownCharacter();
+    }
   }
 
   private uknownCharacter() {
@@ -157,16 +145,13 @@ export class Tokenizer {
   private metaCharacter() {
     const nextCharacter = this.peek();
 
-    if (nextCharacter === "*") {
-      return this.createToken(TokenType.STAR, "*");
-    }
-
-    if (nextCharacter === "?") {
-      return this.createToken(TokenType.QUESTION_MARK, "?");
-    }
-
-    if (nextCharacter === "+") {
-      return this.createToken(TokenType.PLUS, "+");
+    switch (nextCharacter) {
+      case "*":
+        return this.createToken(TokenType.STAR, "*");
+      case "?":
+        return this.createToken(TokenType.QUESTION_MARK, "?");
+      case "+":
+        return this.createToken(TokenType.PLUS, "+");
     }
   }
 
@@ -182,19 +167,11 @@ export class Tokenizer {
     const nextCharacter = this.peek();
 
     if (this.isLetterCharacter(nextCharacter)) {
-      return this.letterCharacter(nextCharacter);
+      return this.createToken(TokenType.LETTER, nextCharacter);
     }
 
     if (this.isDigitCharacter(nextCharacter)) {
-      return this.digitCharacter(nextCharacter);
-    }
-
-    if (this.isUnderscoreCharacter(nextCharacter)) {
-      return this.createToken(TokenType.UNDERSCORE, "_");
-    }
-
-    if (this.isSpaceCharacter(nextCharacter)) {
-      return this.createToken(TokenType.SPACE, " ");
+      return this.createToken(TokenType.DIGIT, nextCharacter);
     }
 
     /**
@@ -210,22 +187,11 @@ export class Tokenizer {
      *   changes the meening of the next character: either escapes it
      *   or constructs an additional characters class (\w, \n).
      */
-    if (nextCharacter === "\\") {
-      return this.backSlash();
-    }
 
     if (META_CHARS.includes(nextCharacter)) {
       return this.metaCharacter();
     }
 
-    if (nextCharacter === "(") {
-      return this.createToken(TokenType.LEFT_BRACKET, "(");
-    }
-
-    if (nextCharacter === ")") {
-      return this.createToken(TokenType.RIGHT_BRACKET, ")");
-    }
-
-    return this.uknownCharacter();
+    return this.restCharacters(nextCharacter);
   }
 }
