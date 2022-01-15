@@ -11,16 +11,43 @@ import { Tokenizer } from "./Tokenizer";
  *   Letter
  *   | Digit;
  *
+ * The starting Expression nonterminal plays role of a variable,
+ *   that stores the result of parsing of the Letter or the Digit.
+ *   In the result AST the Expression is presented with the root object.
+ *
+ *   {
+ *     type: 'RegExp',
+ *     expressions: ...,
+ *   }
+ *
+ *   This Letter and Digit nonterminals are represented in the program as
+ *     two functions. The funciton, related to the Letter nonterminal
+ *     returns node of an AST tree, related to the letter character
+ *     and the function, related to the Digit nonterminal - node,
+ *     related to the digit character.
+ *
+ *     The thing is we don't need to distinguish the Letter and the Digit
+ *     into the result AST tree. So, the node for both types of characters
+ *       will be the same - RegularCharacter and will look like that:
+ *
+ *     {
+ *       type: "RegularCharacter",
+ *       value: // letter or number character,
+ *     }
+ *
+ *
+ *
  * After that it will look like:
  *
- * Expression:       GeneralCharacter;
- * GeneralCharacter: Letter | Digit | Underscore;
+ * Expression:       RegularCharacter;
+ * RegularCharacter: Letter | Digit | Underscore;
  *
  *
  * Next iteration:
  *
- * Expression:       GeneralCharacter;
- * GeneralCharacter: Letter | Digit | Underscore | Space;
+ * Expression:       RegularCharacter;
+ * RegularCharacter: Letter | Digit | Underscore | Space;
+ *
  *
  * Next iteration:
  *
@@ -68,24 +95,26 @@ export class Parser {
   private RegExpr() {
     return {
       type: "RegExp",
-      body: this.Body()
+      expressions: this.Expressions()
     };
-  }
-
-  private hasMoreTokens() {
-    return this.tokenizer.hasMoreTokens();
   }
 
   private EscapedCharacter() {
     this.consume(TokenType.BACK_SLASH);
 
-    if (!this.hasMoreTokens()) {
+    if (!this.lookahead) {
       throw new Error("Expect character after the \\");
     }
 
     return this.RegularCharacter(this.lookahead.type);
   }
 
+  /**
+   * Consumes the current token,
+   *   moves to the next token,
+   *   returns the current token.
+   *
+   */
   private RegularCharacter(characterType) {
     const token = this.consume(characterType);
 
@@ -95,18 +124,39 @@ export class Parser {
     };
   }
 
-  private Body() {
+  private Character() {
+    /**
+     * The next character routes
+     *   the parsing direction.
+     *
+     */
     switch (this.lookahead.type) {
       case TokenType.LETTER:
       case TokenType.DIGIT:
       case TokenType.UNDERSCORE:
       case TokenType.SPACE:
         return this.RegularCharacter(this.lookahead.type);
+
       case TokenType.BACK_SLASH:
         return this.EscapedCharacter();
+
       default:
         return null;
     }
+  }
+
+  private Characters() {
+    const characters = [];
+
+    do {
+      characters.push(this.Character());
+    } while (this.lookahead);
+
+    return characters;
+  }
+
+  private Expressions() {
+    return this.Characters();
   }
 
   /**
@@ -117,11 +167,13 @@ export class Parser {
     const nextToken = this.lookahead;
 
     if (nextToken === null) {
-      throw Error(`Unexpected end of input, expected ${tokenType} instead.`);
+      throw new Error(
+        `Unexpected end of input, expected ${tokenType} instead.`
+      );
     }
 
     if (nextToken.type !== tokenType) {
-      throw Error(
+      throw new Error(
         `Unexpected token ${nextToken.value}, expected ${tokenType} instead.`
       );
     }
@@ -132,6 +184,10 @@ export class Parser {
      *   switched to the next one.
      */
     this.lookahead = this.tokenizer.getNextToken();
+
+    if (this.lookahead && this.lookahead.type === TokenType.UNKNOWN) {
+      throw new Error("Can't process the unknown character");
+    }
 
     return nextToken;
   }

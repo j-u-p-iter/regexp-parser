@@ -12,5 +12,6 @@ export enum TokenType {
   QUESTION_MARK = "Question Mark",
   PLUS = "Plus",
   LEFT_BRACKET = "Left Bracket",
-  RIGHT_BRACKET = "Right Bracket"
+  RIGHT_BRACKET = "Right Bracket",
+  CARET = "Caret"
 }

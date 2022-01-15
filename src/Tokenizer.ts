@@ -128,6 +128,8 @@ export class Tokenizer {
         return this.createToken(TokenType.UNDERSCORE, "_");
       case " ":
         return this.createToken(TokenType.SPACE, " ");
+      case "^":
+        return this.createToken(TokenType.CARET, "^");
       default:
         return this.uknownCharacter();
     }
