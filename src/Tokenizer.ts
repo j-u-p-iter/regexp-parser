@@ -154,6 +154,8 @@ export class Tokenizer {
         return this.createToken(TokenType.QUESTION_MARK, "?");
       case "+":
         return this.createToken(TokenType.PLUS, "+");
+      case ".":
+        return this.createToken(TokenType.DOT, ".");
     }
   }
 

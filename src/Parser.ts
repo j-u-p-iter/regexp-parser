@@ -65,7 +65,14 @@ import { Tokenizer } from "./Tokenizer";
  * AnyCharacter: GeneralCharacter | NonGeneralCharacter;
  * Slash: "\"
  *
- * Next: ...
+ * Next:
+ *
+ * Expression: Atom | Expression Atom;
+ * Atom: Character | .;
+ * Character: GeneralCharacter | Slash AnyCharacter;
+ * GeneralCharacter: Letter | Digit | Underscore | Space;
+ * AnyCharacter: GeneralCharacter | NonGeneralCharacter;
+ * Slash: "\"
  */
 
 /**
@@ -131,18 +138,30 @@ export class Parser {
      *
      */
     switch (this.lookahead.type) {
+      case TokenType.BACK_SLASH:
+        return this.EscapedCharacter();
+
       case TokenType.LETTER:
       case TokenType.DIGIT:
       case TokenType.UNDERSCORE:
       case TokenType.SPACE:
         return this.RegularCharacter(this.lookahead.type);
 
-      case TokenType.BACK_SLASH:
-        return this.EscapedCharacter();
+      case TokenType.DOT:
+        return this.MetaCharacter(this.lookahead.type);
 
       default:
         return null;
     }
+  }
+
+  private MetaCharacter(characterType) {
+    const token = this.consume(characterType);
+
+    return {
+      type: "MetaCharacter",
+      value: token.value
+    };
   }
 
   private Characters() {
@@ -157,6 +176,12 @@ export class Parser {
 
   private Expressions() {
     return this.Characters();
+  }
+
+  private processUnknownCharacter() {
+    if (this.lookahead && this.lookahead.type === TokenType.UNKNOWN) {
+      throw new Error("Can't process the unknown character");
+    }
   }
 
   /**
@@ -185,9 +210,7 @@ export class Parser {
      */
     this.lookahead = this.tokenizer.getNextToken();
 
-    if (this.lookahead && this.lookahead.type === TokenType.UNKNOWN) {
-      throw new Error("Can't process the unknown character");
-    }
+    this.processUnknownCharacter();
 
     return nextToken;
   }
@@ -200,6 +223,8 @@ export class Parser {
     this.tokenizer.init(regExpString);
 
     this.lookahead = this.tokenizer.getNextToken();
+
+    this.processUnknownCharacter();
 
     return this.RegExpr();
   }

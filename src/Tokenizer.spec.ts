@@ -116,6 +116,17 @@ describe('Tokenizer', () => {
     }); 
   });
 
+  it('returns back slash character token', () => {
+    const tokenizer = new Tokenizer();
+
+    tokenizer.init('.');
+
+    expect(tokenizer.getNextToken()).toEqual({ 
+      type: 'Dot', 
+      value: '.' 
+    }); 
+  });
+
   it('returns correct set of tokens', () => {
     const tokenizer = new Tokenizer();
 
