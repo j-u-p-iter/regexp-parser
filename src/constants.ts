@@ -16,3 +16,8 @@ export enum TokenType {
   RIGHT_BRACKET = "Right Bracket",
   CARET = "Caret"
 }
+
+export enum NodeType {
+  PATTERN = "Pattern",
+  DISJUNCTION = "Disjunction"
+}

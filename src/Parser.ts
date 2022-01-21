@@ -1,4 +1,4 @@
-import { TokenType } from "./constants";
+import { NodeType, TokenType } from "./constants";
 import { Tokenizer } from "./Tokenizer";
 /**
  * At first the programm will look like:
@@ -101,8 +101,8 @@ export class Parser {
    */
   private RegExpr() {
     return {
-      type: "RegExp",
-      expressions: this.Expressions()
+      type: NodeType.PATTERN,
+      value: this.Disjunction()
     };
   }
 
@@ -174,8 +174,11 @@ export class Parser {
     return characters;
   }
 
-  private Expressions() {
-    return this.Characters();
+  private Disjunction() {
+    return {
+      type: NodeType.DISJUNCTION,
+      value: this.Characters()
+    };
   }
 
   private processUnknownCharacter() {

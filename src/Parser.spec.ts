@@ -1,4 +1,5 @@
 import { Parser } from './Parser';
+import { NodeType } from './constants';
 
 describe('Parser', () => {
   let parser;
@@ -9,61 +10,79 @@ describe('Parser', () => {
 
   it('parses letters properly', () => {
     expect(parser.parse('a')).toEqual({
-      type: "RegExp", 
-      expressions: [{
-        type: "RegularCharacter", 
-        value: "a"
-      }],
+      type: NodeType.PATTERN, 
+      value: {
+        type: NodeType.DISJUNCTION,
+        value: [{
+          type: "RegularCharacter", 
+          value: "a"
+        }],
+      },
     });
   });
 
   it('parses digits properly', () => {
     expect(parser.parse('1')).toEqual({
-      type: "RegExp", 
-      expressions: [{
-        type: "RegularCharacter", 
-        value: "1"
-      }],
+      type: NodeType.PATTERN, 
+      value: {
+        type: NodeType.DISJUNCTION,
+        value: [{
+          type: "RegularCharacter", 
+          value: "1"
+        }],
+      },
     });
   });
 
   it('parses underscore properly', () => {
     expect(parser.parse('_')).toEqual({
-      type: "RegExp", 
-      expressions: [{
-        type: "RegularCharacter", 
-        value: "_"
-      }],
+      type: NodeType.PATTERN, 
+      value: {
+        type: NodeType.DISJUNCTION,
+        value: [{
+          type: "RegularCharacter", 
+          value: "_"
+        }],
+      },
     });
   });
 
   it('parses underscore properly', () => {
-    expect(parser.parse(" ")).toEqual({
-      type: "RegExp", 
-      expressions: [{
-        type: "RegularCharacter", 
-        value: " "
-      }],
+    expect(parser.parse(' ')).toEqual({
+      type: NodeType.PATTERN, 
+      value: {
+        type: NodeType.DISJUNCTION,
+        value: [{
+          type: "RegularCharacter", 
+          value: " "
+        }],
+      },
     });
   });
 
   it('parses escaped character properly', () => {
-    expect(parser.parse("\\^")).toEqual({
-      type: "RegExp", 
-      expressions: [{
-        type: "RegularCharacter", 
-        value: "^"
-      }],
+    expect(parser.parse('\\^')).toEqual({
+      type: NodeType.PATTERN, 
+      value: {
+        type: NodeType.DISJUNCTION,
+        value: [{
+          type: "RegularCharacter", 
+          value: "^"
+        }],
+      },
     });
   });
   
   it('parses dot character properly', () => {
-    expect(parser.parse(".")).toEqual({
-      type: "RegExp", 
-      expressions: [{
-        type: "MetaCharacter", 
-        value: "."
-      }],
+    expect(parser.parse('.')).toEqual({
+      type: NodeType.PATTERN, 
+      value: {
+        type: NodeType.DISJUNCTION,
+        value: [{
+          type: "MetaCharacter", 
+          value: "."
+        }],
+      },
     });
   });
 
@@ -77,14 +96,17 @@ describe('Parser', () => {
 
   it('parses concatenated characters properly', () => {
     expect(parser.parse("a.b\\^\\.")).toEqual({
-      type: "RegExp", 
-      expressions: [
-        { type: "RegularCharacter", value: "a" }, 
-        { type: "MetaCharacter", value: "." }, 
-        { type: "RegularCharacter", value: "b" }, 
-        { type: "RegularCharacter", value: "^" },
-        { type: "RegularCharacter", value: "." }
-      ]
+      type: NodeType.PATTERN, 
+      value: {
+        type: NodeType.DISJUNCTION,
+        value: [
+          { type: "RegularCharacter", value: "a" }, 
+          { type: "MetaCharacter", value: "." }, 
+          { type: "RegularCharacter", value: "b" }, 
+          { type: "RegularCharacter", value: "^" },
+          { type: "RegularCharacter", value: "." }
+        ],
+      }
     });
   });
 });
