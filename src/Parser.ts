@@ -1,5 +1,7 @@
 import { NodeType, TokenType } from "./constants";
 import { Tokenizer } from "./Tokenizer";
+import { Disjunction, Pattern, RegExpr } from "./types";
+
 /**
  * At first the programm will look like:
  * Expression:
@@ -99,10 +101,13 @@ export class Parser {
    *   based on the current token.
    *
    */
-  private RegExpr() {
+  private RegExpr(): RegExpr {
     return {
-      type: NodeType.PATTERN,
-      value: this.Disjunction()
+      type: NodeType.REG_EXPR,
+      value: this.Pattern(),
+      flags: {
+        ignoreCase: false
+      }
     };
   }
 
@@ -174,7 +179,14 @@ export class Parser {
     return characters;
   }
 
-  private Disjunction() {
+  private Pattern(): Pattern {
+    return {
+      type: NodeType.PATTERN,
+      value: this.Disjunction()
+    };
+  }
+
+  private Disjunction(): Disjunction {
     return {
       type: NodeType.DISJUNCTION,
       value: this.Characters()

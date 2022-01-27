@@ -1,5 +1,22 @@
 import { Parser } from './Parser';
 import { NodeType } from './constants';
+import { Disjunction } from './types';
+
+const createRootNode = (regExpNodes: Disjunction['value']) => {
+  return {
+    type: NodeType.REG_EXPR,
+    value: {
+      type: NodeType.PATTERN,
+      value: {
+        type: NodeType.DISJUNCTION,
+        value: regExpNodes,
+      },
+    },
+    flags: {
+      ignoreCase: false,
+    },
+  }
+};
 
 describe('Parser', () => {
   let parser;
@@ -9,81 +26,53 @@ describe('Parser', () => {
   });
 
   it('parses letters properly', () => {
-    expect(parser.parse('a')).toEqual({
-      type: NodeType.PATTERN, 
-      value: {
-        type: NodeType.DISJUNCTION,
-        value: [{
-          type: "RegularCharacter", 
-          value: "a"
-        }],
-      },
-    });
+    expect(parser.parse('a')).toEqual(createRootNode([{
+      type: "RegularCharacter", 
+      value: "a"
+    }]));
   });
 
   it('parses digits properly', () => {
-    expect(parser.parse('1')).toEqual({
-      type: NodeType.PATTERN, 
-      value: {
-        type: NodeType.DISJUNCTION,
-        value: [{
-          type: "RegularCharacter", 
-          value: "1"
-        }],
-      },
-    });
+    expect(parser.parse('1')).toEqual(createRootNode([{
+      type: "RegularCharacter", 
+      value: "1"
+    }]));
   });
 
   it('parses underscore properly', () => {
-    expect(parser.parse('_')).toEqual({
-      type: NodeType.PATTERN, 
-      value: {
-        type: NodeType.DISJUNCTION,
-        value: [{
-          type: "RegularCharacter", 
-          value: "_"
-        }],
-      },
-    });
+    expect(parser.parse('_')).toEqual(createRootNode(
+      [{
+        type: "RegularCharacter", 
+        value: "_"
+      }]
+    ));
   });
 
-  it('parses underscore properly', () => {
-    expect(parser.parse(' ')).toEqual({
-      type: NodeType.PATTERN, 
-      value: {
-        type: NodeType.DISJUNCTION,
-        value: [{
-          type: "RegularCharacter", 
-          value: " "
-        }],
-      },
-    });
+  it('parses space properly', () => {
+    expect(parser.parse(' ')).toEqual(createRootNode(
+      [{
+        type: "RegularCharacter", 
+        value: " "
+      }]
+    ));
   });
 
   it('parses escaped character properly', () => {
-    expect(parser.parse('\\^')).toEqual({
-      type: NodeType.PATTERN, 
-      value: {
-        type: NodeType.DISJUNCTION,
-        value: [{
-          type: "RegularCharacter", 
-          value: "^"
-        }],
-      },
-    });
+    expect(parser.parse('\\^')).toEqual(createRootNode(
+      [{
+        type: "RegularCharacter", 
+        value: "^"
+      }]
+    ));
   });
   
   it('parses dot character properly', () => {
-    expect(parser.parse('.')).toEqual({
-      type: NodeType.PATTERN, 
-      value: {
-        type: NodeType.DISJUNCTION,
-        value: [{
-          type: "MetaCharacter", 
-          value: "."
-        }],
-      },
-    });
+    expect(parser.parse('.')).toEqual(createRootNode(
+      [{
+        type: "MetaCharacter", 
+        value: "."
+      }]
+    ));
   });
 
   it('throws error with first unknown character', () => {
@@ -95,18 +84,14 @@ describe('Parser', () => {
   });
 
   it('parses concatenated characters properly', () => {
-    expect(parser.parse("a.b\\^\\.")).toEqual({
-      type: NodeType.PATTERN, 
-      value: {
-        type: NodeType.DISJUNCTION,
-        value: [
-          { type: "RegularCharacter", value: "a" }, 
-          { type: "MetaCharacter", value: "." }, 
-          { type: "RegularCharacter", value: "b" }, 
-          { type: "RegularCharacter", value: "^" },
-          { type: "RegularCharacter", value: "." }
-        ],
-      }
-    });
+    expect(parser.parse("a.b\\^\\.")).toEqual(createRootNode(
+      [
+        { type: "RegularCharacter", value: "a" }, 
+        { type: "MetaCharacter", value: "." }, 
+        { type: "RegularCharacter", value: "b" }, 
+        { type: "RegularCharacter", value: "^" },
+        { type: "RegularCharacter", value: "." }
+      ]
+    ));
   });
 });

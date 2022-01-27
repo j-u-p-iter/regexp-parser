@@ -19,5 +19,6 @@ export enum TokenType {
 
 export enum NodeType {
   PATTERN = "Pattern",
-  DISJUNCTION = "Disjunction"
+  DISJUNCTION = "Disjunction",
+  REG_EXPR = "RegExpr"
 }
