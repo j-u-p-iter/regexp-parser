@@ -105,10 +105,26 @@ export class Parser {
     return {
       type: NodeType.REG_EXPR,
       value: this.Pattern(),
-      flags: {
-        ignoreCase: false
-      }
+      flags: this.Flags()
     };
+  }
+
+  private addFlags(flags) {
+    flags.ignoreCase = false;
+
+    return flags;
+  }
+
+  private Flags() {
+    let flags = {
+      ignoreCase: true
+    };
+
+    do {
+      flags = this.addFlags(flags);
+    } while (this.lookahead);
+
+    return flags;
   }
 
   private EscapedCharacter() {
