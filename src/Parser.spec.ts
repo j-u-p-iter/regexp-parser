@@ -83,6 +83,14 @@ describe('Parser', () => {
     expect(() => parser.parse("/ab!/")).toThrow("Can't process the unknown character");
   });
 
+  it('throws error without opening slash', () => {
+    expect(() => parser.parse("ab/")).toThrow("Unexpected token a, expected Slash instead.");
+  });
+
+  it('throws error without closing slash', () => {
+    expect(() => parser.parse("/ab")).toThrow("Unexpected end of input, expected Slash instead.");
+  });
+
   it('parses concatenated characters properly', () => {
     expect(parser.parse("/a.b\\^\\./")).toEqual(createRootNode(
       [
