@@ -118,6 +118,8 @@ export class Tokenizer {
 
   private restCharacters(nextCharacter) {
     switch (nextCharacter) {
+      case "/":
+        return this.createToken(TokenType.SLASH, "/");
       case "\\":
         return this.createToken(TokenType.BACK_SLASH, "\\");
       case "(":

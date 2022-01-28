@@ -174,7 +174,13 @@ export class Parser {
 
     do {
       characters.push(this.Character());
-    } while (this.lookahead);
+    } while (this.lookahead && this.lookahead.type !== TokenType.SLASH);
+
+    if (!this.lookahead || this.lookahead.type !== TokenType.SLASH) {
+      throw new Error(
+        "RegExp should be enclosed into the slashes. The closing slash is absent."
+      );
+    }
 
     return characters;
   }
@@ -239,7 +245,7 @@ export class Parser {
 
     this.lookahead = this.tokenizer.getNextToken();
 
-    this.processUnknownCharacter();
+    this.consume(TokenType.SLASH);
 
     return this.RegExpr();
   }

@@ -26,21 +26,21 @@ describe('Parser', () => {
   });
 
   it('parses letters properly', () => {
-    expect(parser.parse('a')).toEqual(createRootNode([{
+    expect(parser.parse('/a/')).toEqual(createRootNode([{
       type: "RegularCharacter", 
       value: "a"
     }]));
   });
 
   it('parses digits properly', () => {
-    expect(parser.parse('1')).toEqual(createRootNode([{
+    expect(parser.parse('/1/')).toEqual(createRootNode([{
       type: "RegularCharacter", 
       value: "1"
     }]));
   });
 
   it('parses underscore properly', () => {
-    expect(parser.parse('_')).toEqual(createRootNode(
+    expect(parser.parse('/_/')).toEqual(createRootNode(
       [{
         type: "RegularCharacter", 
         value: "_"
@@ -49,7 +49,7 @@ describe('Parser', () => {
   });
 
   it('parses space properly', () => {
-    expect(parser.parse(' ')).toEqual(createRootNode(
+    expect(parser.parse('/ /')).toEqual(createRootNode(
       [{
         type: "RegularCharacter", 
         value: " "
@@ -58,7 +58,7 @@ describe('Parser', () => {
   });
 
   it('parses escaped character properly', () => {
-    expect(parser.parse('\\^')).toEqual(createRootNode(
+    expect(parser.parse('/\\^/')).toEqual(createRootNode(
       [{
         type: "RegularCharacter", 
         value: "^"
@@ -67,7 +67,7 @@ describe('Parser', () => {
   });
   
   it('parses dot character properly', () => {
-    expect(parser.parse('.')).toEqual(createRootNode(
+    expect(parser.parse('/./')).toEqual(createRootNode(
       [{
         type: "MetaCharacter", 
         value: "."
@@ -76,15 +76,15 @@ describe('Parser', () => {
   });
 
   it('throws error with first unknown character', () => {
-    expect(() => parser.parse("!")).toThrow("Can't process the unknown character");
+    expect(() => parser.parse("/!/")).toThrow("Can't process the unknown character");
   });
 
   it('throws error with unknown character after the first one', () => {
-    expect(() => parser.parse("ab!")).toThrow("Can't process the unknown character");
+    expect(() => parser.parse("/ab!/")).toThrow("Can't process the unknown character");
   });
 
   it('parses concatenated characters properly', () => {
-    expect(parser.parse("a.b\\^\\.")).toEqual(createRootNode(
+    expect(parser.parse("/a.b\\^\\./")).toEqual(createRootNode(
       [
         { type: "RegularCharacter", value: "a" }, 
         { type: "MetaCharacter", value: "." }, 

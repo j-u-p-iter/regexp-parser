@@ -1,6 +1,7 @@
 export const META_CHARS = ["?", "*", "+", "."];
 
 export enum TokenType {
+  SLASH = "Slash",
   LETTER = "Letter",
   DOT = "Dot",
   DIGIT = "Digit",
