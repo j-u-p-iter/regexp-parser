@@ -23,3 +23,9 @@ export enum NodeType {
   DISJUNCTION = "Disjunction",
   REG_EXPR = "RegExpr"
 }
+
+export const DEFAULT_FLAGS = {
+  ignoreCase: false,
+  global: false,
+  dotAll: false
+};

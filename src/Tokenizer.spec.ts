@@ -130,7 +130,12 @@ describe('Tokenizer', () => {
   it('returns correct set of tokens', () => {
     const tokenizer = new Tokenizer();
 
-    tokenizer.init('a?\\ ');
+    tokenizer.init('/a?\\ /');
+
+    expect(tokenizer.getNextToken()).toEqual({ 
+      type: 'Slash', 
+      value: '/' 
+    }); 
 
     expect(tokenizer.getNextToken()).toEqual({ 
       type: 'Letter', 
@@ -150,6 +155,11 @@ describe('Tokenizer', () => {
     expect(tokenizer.getNextToken()).toEqual({ 
       type: 'Space', 
       value: ' ' 
+    }); 
+
+    expect(tokenizer.getNextToken()).toEqual({ 
+      type: 'Slash', 
+      value: '/' 
     }); 
 
     expect(tokenizer.getNextToken()).toEqual(null); 

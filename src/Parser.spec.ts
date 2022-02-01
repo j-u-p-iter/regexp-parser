@@ -1,8 +1,11 @@
 import { Parser } from './Parser';
-import { NodeType } from './constants';
+import { NodeType, DEFAULT_FLAGS } from './constants';
 import { Disjunction } from './types';
 
-const createRootNode = (regExpNodes: Disjunction['value']) => {
+const createRootNode = (
+  regExpNodes: Disjunction['value'], 
+  flags = { ignoreCase: false },
+) => {
   return {
     type: NodeType.REG_EXPR,
     value: {
@@ -12,9 +15,7 @@ const createRootNode = (regExpNodes: Disjunction['value']) => {
         value: regExpNodes,
       },
     },
-    flags: {
-      ignoreCase: false,
-    },
+    flags,
   }
 };
 
@@ -101,5 +102,34 @@ describe('Parser', () => {
         { type: "RegularCharacter", value: "." }
       ]
     ));
+  });
+
+  describe.only('flags', () => {
+    let parseRegExp;
+
+    beforeAll(() => {
+      parseRegExp = (regExp) => parser.parse(regExp);
+    });
+
+    it('parses "ignore case" flag properly', () => {
+      expect(parseRegExp('/a/i').flags).toEqual({
+        ...DEFAULT_FLAGS,
+        ignoreCase: true,
+      });
+    });
+
+    it('parses "global" flag properly', () => {
+      expect(parseRegExp('/a/g').flags).toEqual({
+        ...DEFAULT_FLAGS,
+        global: true,
+      });
+    });
+
+    it('parses "dotAll" flag properly', () => {
+      expect(parseRegExp('/a/s').flags).toEqual({
+        ...DEFAULT_FLAGS,
+        dotAll: true,
+      });
+    });
   });
 });

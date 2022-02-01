@@ -1,4 +1,5 @@
 import { NodeType, TokenType } from "./constants";
+import { DEFAULT_FLAGS } from "./constants";
 import { Tokenizer } from "./Tokenizer";
 import { Disjunction, Pattern, RegExpr } from "./types";
 
@@ -109,19 +110,37 @@ export class Parser {
     };
   }
 
-  private addFlags(flags) {
-    flags.ignoreCase = false;
+  private getFlags() {
+    const flags = DEFAULT_FLAGS;
+
+    if (this.lookahead === null) {
+      return flags;
+    }
+
+    const currentToken = this.consume(TokenType.LETTER);
+
+    switch (currentToken.value) {
+      case "i":
+        flags.ignoreCase = true;
+        break;
+
+      case "g":
+        flags.global = true;
+        break;
+
+      case "s":
+        flags.dotAll = true;
+        break;
+    }
 
     return flags;
   }
 
   private Flags() {
-    let flags = {
-      ignoreCase: true
-    };
+    let flags;
 
     do {
-      flags = this.addFlags(flags);
+      flags = this.getFlags();
     } while (this.lookahead);
 
     return flags;
