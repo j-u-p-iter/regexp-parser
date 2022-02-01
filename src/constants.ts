@@ -27,5 +27,6 @@ export enum NodeType {
 export const DEFAULT_FLAGS = {
   ignoreCase: false,
   global: false,
-  dotAll: false
+  dotAll: false,
+  multiline: false
 };

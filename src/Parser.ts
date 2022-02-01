@@ -131,6 +131,10 @@ export class Parser {
       case "s":
         flags.dotAll = true;
         break;
+
+      case "m":
+        flags.multiline = true;
+        break;
     }
 
     return flags;

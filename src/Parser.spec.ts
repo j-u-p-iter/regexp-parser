@@ -131,5 +131,12 @@ describe('Parser', () => {
         dotAll: true,
       });
     });
+
+    it('parses "multiline" flag properly', () => {
+      expect(parseRegExp('/a/m').flags).toEqual({
+        ...DEFAULT_FLAGS,
+        multiline: true,
+      });
+    });
   });
 });
