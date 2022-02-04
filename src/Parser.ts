@@ -110,14 +110,18 @@ export class Parser {
     };
   }
 
-  private getFlags() {
-    const flags = DEFAULT_FLAGS;
-
+  private getFlags(flags, addedFlags) {
     if (this.lookahead === null) {
       return flags;
     }
 
     const currentToken = this.consume(TokenType.LETTER);
+
+    if (addedFlags.has(currentToken.value)) {
+      throw Error(`Duplicated flag "${currentToken.value}" is not allowed.`);
+    }
+
+    addedFlags.add(currentToken.value);
 
     switch (currentToken.value) {
       case "i":
@@ -135,16 +139,28 @@ export class Parser {
       case "m":
         flags.multiline = true;
         break;
+
+      case "y":
+        flags.sticky = true;
+        break;
+
+      case "u":
+        flags.unicode = true;
+        break;
+
+      default:
+        throw Error(`Invalid flag "${currentToken.value}" is detected.`);
     }
 
     return flags;
   }
 
   private Flags() {
-    let flags;
+    let flags = DEFAULT_FLAGS;
+    const addedFlags = new Set();
 
     do {
-      flags = this.getFlags();
+      flags = this.getFlags(flags, addedFlags);
     } while (this.lookahead);
 
     return flags;

@@ -138,5 +138,27 @@ describe('Parser', () => {
         multiline: true,
       });
     });
+
+    it('parses "sticky" flag properly', () => {
+      expect(parseRegExp('/a/y').flags).toEqual({
+        ...DEFAULT_FLAGS,
+        sticky: true,
+      });
+    });
+
+    it('parses "unicode" flag properly', () => {
+      expect(parseRegExp('/a/u').flags).toEqual({
+        ...DEFAULT_FLAGS,
+        unicode: true,
+      });
+    });
+
+    it('throws correct error if the flag is duplicated', () => {
+      expect(() => parseRegExp('/a/yy')).toThrow('Duplicated flag "y" is not allowed.');
+    });
+
+    it('throws correct error if the flag is invalid', () => {
+      expect(() => parseRegExp('/a/f')).toThrow('Invalid flag "f" is detected.');
+    });
   });
 });

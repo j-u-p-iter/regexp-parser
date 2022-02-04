@@ -28,5 +28,7 @@ export const DEFAULT_FLAGS = {
   ignoreCase: false,
   global: false,
   dotAll: false,
-  multiline: false
+  multiline: false,
+  sticky: false,
+  unicode: false
 };
