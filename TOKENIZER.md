@@ -68,3 +68,5 @@ export enum TokenType {
 }
 ```
 The **index** property contains the order index of each character in the regexp string. It's the only location information we need to detect the position of the token in the original input string.
+
+The Token class for the tokenizer can be found here: https://github.com/j-u-p-iter/regexp-parser/blob/main/src/Token.ts
