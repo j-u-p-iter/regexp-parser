@@ -13,11 +13,11 @@ describe('Tokenizer', () => {
 
     tokenizer.init('a');
 
-    expect(tokenizer.getNextToken()).toEqual({ type: 'Letter', value: 'a' }); 
+    expect(tokenizer.getNextToken()).toEqual({ type: 'Letter', value: 'a', index: 0 }); 
 
     tokenizer.init('M');
 
-    expect(tokenizer.getNextToken()).toEqual({ type: 'Letter', value: 'M' }); 
+    expect(tokenizer.getNextToken()).toEqual({ type: 'Letter', value: 'M', index: 0 }); 
   });
 
   it('returns digit character token', () => {
@@ -25,11 +25,11 @@ describe('Tokenizer', () => {
 
     tokenizer.init('1');
 
-    expect(tokenizer.getNextToken()).toEqual({ type: 'Digit', value: '1' }); 
+    expect(tokenizer.getNextToken()).toEqual({ type: 'Digit', value: '1', index: 0 }); 
 
     tokenizer.init('8');
 
-    expect(tokenizer.getNextToken()).toEqual({ type: 'Digit', value: '8' }); 
+    expect(tokenizer.getNextToken()).toEqual({ type: 'Digit', value: '8', index: 0 }); 
   });
 
   it('returns underscore character token', () => {
@@ -37,7 +37,7 @@ describe('Tokenizer', () => {
 
     tokenizer.init('_');
 
-    expect(tokenizer.getNextToken()).toEqual({ type: 'Underscore', value: '_' }); 
+    expect(tokenizer.getNextToken()).toEqual({ type: 'Underscore', value: '_', index: 0 }); 
   });
 
   it('returns star character token', () => {
@@ -46,7 +46,8 @@ describe('Tokenizer', () => {
     tokenizer.init('*');
     expect(tokenizer.getNextToken()).toEqual({
       type: 'Star',
-      value: '*'
+      value: '*',
+      index: 0,
     }); 
   });
 
@@ -57,7 +58,8 @@ describe('Tokenizer', () => {
 
     expect(tokenizer.getNextToken()).toEqual({ 
       type: 'Question Mark', 
-      value: '?' 
+      value: '?',
+      index: 0,
     }); 
   });
 
@@ -68,7 +70,8 @@ describe('Tokenizer', () => {
 
     expect(tokenizer.getNextToken()).toEqual({ 
       type: 'Plus', 
-      value: '+' 
+      value: '+',
+      index: 0,
     }); 
   });
 
@@ -79,7 +82,8 @@ describe('Tokenizer', () => {
 
     expect(tokenizer.getNextToken()).toEqual({ 
       type: 'Left Bracket', 
-      value: '(' 
+      value: '(',
+      index: 0,
     }); 
   });
 
@@ -90,7 +94,8 @@ describe('Tokenizer', () => {
 
     expect(tokenizer.getNextToken()).toEqual({ 
       type: 'Right Bracket', 
-      value: ')' 
+      value: ')',
+      index: 0,
     }); 
   });
 
@@ -101,7 +106,8 @@ describe('Tokenizer', () => {
 
     expect(tokenizer.getNextToken()).toEqual({ 
       type: 'Space', 
-      value: ' ' 
+      value: ' ',
+      index: 0,
     }); 
   });
 
@@ -112,7 +118,8 @@ describe('Tokenizer', () => {
 
     expect(tokenizer.getNextToken()).toEqual({ 
       type: 'Back Slash', 
-      value: '\\' 
+      value: '\\',
+      index: 0,
     }); 
   });
 
@@ -123,7 +130,20 @@ describe('Tokenizer', () => {
 
     expect(tokenizer.getNextToken()).toEqual({ 
       type: 'Dot', 
-      value: '.' 
+      value: '.',
+      index: 0,
+    }); 
+  });
+
+  it('returns back slash character token', () => {
+    const tokenizer = new Tokenizer();
+
+    tokenizer.init('|');
+
+    expect(tokenizer.getNextToken()).toEqual({ 
+      type: 'Pipe', 
+      value: '|',
+      index: 0,
     }); 
   });
 
@@ -134,32 +154,38 @@ describe('Tokenizer', () => {
 
     expect(tokenizer.getNextToken()).toEqual({ 
       type: 'Slash', 
-      value: '/' 
+      value: '/',
+      index: 0,
     }); 
 
     expect(tokenizer.getNextToken()).toEqual({ 
       type: 'Letter', 
-      value: 'a' 
+      value: 'a',
+      index: 1,
     }); 
 
     expect(tokenizer.getNextToken()).toEqual({ 
       type: 'Question Mark', 
-      value: '?' 
+      value: '?',
+      index: 2,
     }); 
 
     expect(tokenizer.getNextToken()).toEqual({ 
       type: 'Back Slash', 
-      value: '\\' 
+      value: '\\',
+      index: 3,
     }); 
 
     expect(tokenizer.getNextToken()).toEqual({ 
       type: 'Space', 
-      value: ' ' 
+      value: ' ',
+      index: 4
     }); 
 
     expect(tokenizer.getNextToken()).toEqual({ 
       type: 'Slash', 
-      value: '/' 
+      value: '/' ,
+      index: 5,
     }); 
 
     expect(tokenizer.getNextToken()).toEqual(null); 

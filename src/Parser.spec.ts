@@ -1,10 +1,10 @@
 import { Parser } from './Parser';
 import { NodeType, DEFAULT_FLAGS } from './constants';
-import { Disjunction } from './types';
+import { Disjunction, Alternative } from './types';
 
 const createRootNode = (
   regExpNodes: Disjunction['value'], 
-  flags = { ignoreCase: false },
+  flags = DEFAULT_FLAGS,
 ) => {
   return {
     type: NodeType.REG_EXPR,
@@ -19,6 +19,13 @@ const createRootNode = (
   }
 };
 
+const createAlternative = (nodeValue: Alternative['value']): Alternative  => {
+  return {
+    type: 'Alternative',
+    value: nodeValue,
+  } 
+}
+
 describe('Parser', () => {
   let parser;
 
@@ -27,52 +34,73 @@ describe('Parser', () => {
   });
 
   it('parses letters properly', () => {
-    expect(parser.parse('/a/')).toEqual(createRootNode([{
-      type: "RegularCharacter", 
-      value: "a"
-    }]));
+    expect(parser.parse('/a/')).toEqual(createRootNode([
+      createAlternative([{
+        type: "RegularCharacter", 
+        value: "a"
+      }])
+    ]));
+  });
+
+  it.only('parses alternatives properly', () => {
+    expect(parser.parse('/a|b|c/')).toEqual(createRootNode([
+      createAlternative([{
+        type: "RegularCharacter", 
+        value: "a"
+      }]),
+      createAlternative([{
+        type: "RegularCharacter", 
+        value: "b"
+      }]),
+      createAlternative([{
+        type: "RegularCharacter", 
+        value: "c"
+      }]),
+    ]));
   });
 
   it('parses digits properly', () => {
-    expect(parser.parse('/1/')).toEqual(createRootNode([{
-      type: "RegularCharacter", 
-      value: "1"
-    }]));
+    expect(parser.parse('/1/')).toEqual(createRootNode([
+      createAlternative([{
+        type: "RegularCharacter", 
+        value: "1"
+      }])
+    ]));
   });
 
   it('parses underscore properly', () => {
     expect(parser.parse('/_/')).toEqual(createRootNode(
-      [{
+      [createAlternative([{
         type: "RegularCharacter", 
         value: "_"
-      }]
+      }])]
     ));
   });
 
   it('parses space properly', () => {
     expect(parser.parse('/ /')).toEqual(createRootNode(
-      [{
+      [createAlternative([{
         type: "RegularCharacter", 
         value: " "
-      }]
+      }])]
     ));
   });
 
   it('parses escaped character properly', () => {
     expect(parser.parse('/\\^/')).toEqual(createRootNode(
-      [{
+      [createAlternative([{
         type: "RegularCharacter", 
         value: "^"
-      }]
+      }])]
     ));
   });
   
   it('parses dot character properly', () => {
     expect(parser.parse('/./')).toEqual(createRootNode(
-      [{
+      [createAlternative([{
         type: "MetaCharacter", 
         value: "."
-      }]
+      }])]
     ));
   });
 
@@ -94,13 +122,13 @@ describe('Parser', () => {
 
   it('parses concatenated characters properly', () => {
     expect(parser.parse("/a.b\\^\\./")).toEqual(createRootNode(
-      [
+      [createAlternative([
         { type: "RegularCharacter", value: "a" }, 
         { type: "MetaCharacter", value: "." }, 
         { type: "RegularCharacter", value: "b" }, 
         { type: "RegularCharacter", value: "^" },
         { type: "RegularCharacter", value: "." }
-      ]
+      ])]
     ));
   });
 

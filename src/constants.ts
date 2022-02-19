@@ -15,10 +15,12 @@ export enum TokenType {
   PLUS = "Plus",
   LEFT_BRACKET = "Left Bracket",
   RIGHT_BRACKET = "Right Bracket",
-  CARET = "Caret"
+  CARET = "Caret",
+  PIPE = "Pipe"
 }
 
 export enum NodeType {
+  ALTERNATIVE = "Alternative",
   PATTERN = "Pattern",
   DISJUNCTION = "Disjunction",
   REG_EXPR = "RegExpr"

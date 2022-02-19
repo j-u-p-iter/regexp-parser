@@ -1,7 +1,7 @@
 import { NodeType, TokenType } from "./constants";
 import { DEFAULT_FLAGS } from "./constants";
 import { Tokenizer } from "./Tokenizer";
-import { Disjunction, Pattern, RegExpr } from "./types";
+import { Alternative, Disjunction, Pattern, RegExpr } from "./types";
 
 /**
  * At first the programm will look like:
@@ -227,11 +227,25 @@ export class Parser {
   private Characters() {
     const characters = [];
 
+    /**
+     * The SLASH character means, that we reached the end of the RegExp,
+     *   so we stop iterating here.
+     *
+     * The PIPE character means, that we reached the edge of the Alternative.
+     *   we need to stop interating and to enter the next Alternative.
+     *
+     */
     do {
       characters.push(this.Character());
-    } while (this.lookahead && this.lookahead.type !== TokenType.SLASH);
+    } while (
+      this.lookahead &&
+      this.lookahead.type !== TokenType.PIPE &&
+      this.lookahead.type !== TokenType.SLASH
+    );
 
-    this.consume(TokenType.SLASH);
+    if (this.lookahead && this.lookahead.type === TokenType.PIPE) {
+      this.consume(TokenType.PIPE);
+    }
 
     return characters;
   }
@@ -243,10 +257,29 @@ export class Parser {
     };
   }
 
+  private Alternatives(): Alternative[] {
+    const alternatives = [];
+
+    do {
+      alternatives.push(this.Alternative());
+    } while (this.lookahead && this.lookahead.type !== TokenType.SLASH);
+
+    this.consume(TokenType.SLASH);
+
+    return alternatives;
+  }
+
+  private Alternative(): Alternative {
+    return {
+      type: NodeType.ALTERNATIVE,
+      value: this.Characters()
+    };
+  }
+
   private Disjunction(): Disjunction {
     return {
       type: NodeType.DISJUNCTION,
-      value: this.Characters()
+      value: this.Alternatives()
     };
   }
 

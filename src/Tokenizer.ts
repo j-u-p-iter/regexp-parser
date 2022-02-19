@@ -74,10 +74,6 @@ export class Tokenizer {
     return nextCharacter;
   }
 
-  // private isMetaCharacter(character) {
-  // return META_CHARS.includes(character);
-  // }
-
   public input;
   public counter;
 
@@ -111,6 +107,7 @@ export class Tokenizer {
 
   private createToken(tokenType: TokenType, tokenValue: string) {
     return {
+      index: this.counter,
       type: tokenType,
       value: this.consume(tokenValue)
     };
@@ -132,6 +129,8 @@ export class Tokenizer {
         return this.createToken(TokenType.SPACE, " ");
       case "^":
         return this.createToken(TokenType.CARET, "^");
+      case "|":
+        return this.createToken(TokenType.PIPE, "|");
       default:
         return this.uknownCharacter();
     }

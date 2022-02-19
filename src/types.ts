@@ -1,8 +1,11 @@
-export type Alternative = any;
+export interface Alternative {
+  type: "Alternative";
+  value: any;
+}
 
 export interface Disjunction {
   type: "Disjunction";
-  value: Alternative;
+  value: Alternative[];
 }
 
 export interface Pattern {
