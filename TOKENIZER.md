@@ -44,6 +44,7 @@ The location information defines the position of the lexemes in the source code.
 Our tokenizer emits tokens with **value**, **type** and **index** properties. Each token or the tokenizer holds one length character. It could be made differently. For example, we could represent character classes like **\d**, **\w** and etc. with one token. But still, we decided to split regexp string on every character, cause we believe it will add an additional flexibility for the parser to work with the produced tokens.
 
 The **value** property of the token contains the **lexeme**, which is one single character in our case.
+
 The **type** property contains the kind of the character. We create it as enum and it looks like this:
 
 ```typescript
