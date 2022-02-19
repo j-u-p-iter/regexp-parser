@@ -29,3 +29,10 @@ That’s what lexical analysis is about. Our job is to scan through the list of 
 The **lexemes** are only the raw substrings of the source code. However, in the process of grouping character sequences into lexemes, we also stumble upon some other useful information.
 
 Usually we use **value** property to store **lexemes** in the result **token** object.
+
+### Token types
+
+The parser ofthen has code like if the next token is this to that, if it's that do this.
+The parser could recognize tokens from the raw lexemes by comparing the strings, but that’s slow and kind of ugly. Instead, at the point that we recognize a lexeme, we also remember which **kind** of lexeme it represents. We store this information usually into the **type** property and call token type.
+
+### Location information
