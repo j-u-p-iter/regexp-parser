@@ -66,3 +66,4 @@ export enum TokenType {
   PIPE = 'Pipe'                                                                                                       
 }
 ```
+The **index** property contains the order index of each character in the regexp string. It's the only location information we need to detect the position of the token in the original input string.
