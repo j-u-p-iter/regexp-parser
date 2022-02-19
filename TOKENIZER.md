@@ -25,3 +25,7 @@ Here, "var" is the keyword for declaring a variable. That three-character sequen
 That’s what lexical analysis is about. Our job is to scan through the list of characters and group them together into the smallest sequences that still represent something. Each of these blobs of characters is called a **lexeme**. In that example line of code, the lexemes are:
 
 **var**, **language**, **=**, **"some string"**.
+
+The **lexemes** are only the raw substrings of the source code. However, in the process of grouping character sequences into lexemes, we also stumble upon some other useful information.
+
+Usually we use **value** property to store **lexemes** in the result **token** object.
