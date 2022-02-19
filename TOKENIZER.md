@@ -36,3 +36,5 @@ The parser ofthen has code like if the next token is this to that, if it's that 
 The parser could recognize tokens from the raw lexemes by comparing the strings, but that’s slow and kind of ugly. Instead, at the point that we recognize a lexeme, we also remember which **kind** of lexeme it represents. We store this information usually into the **type** property and call token type.
 
 ### Location information
+
+The location information defines the position of the lexemes in the source code. It can represented by **line** and **column** coordinates for the beginning and for the end of the lexemes; or by **line**, **column** and the **length** properties for each lexeme. Such type of data can be very useful in case we report error message for the end user of the code and point out the precise location of an error.
