@@ -38,6 +38,7 @@
  */
 
 import { META_CHARS, TokenType } from "./constants";
+import { Token } from "./Token";
 
 /**
  * Lazily (on demain) pulls a token from a stream.
@@ -106,11 +107,13 @@ export class Tokenizer {
   }
 
   private createToken(tokenType: TokenType, tokenValue: string) {
-    return {
-      index: this.counter,
-      type: tokenType,
-      value: this.consume(tokenValue)
-    };
+    // consuming character we increment the index.
+    // So, we store the index here before consuming the character.
+    const currentCharacterIndex = this.counter;
+
+    this.consume(tokenValue);
+
+    return new Token(tokenType, tokenValue, currentCharacterIndex);
   }
 
   private restCharacters(nextCharacter) {
