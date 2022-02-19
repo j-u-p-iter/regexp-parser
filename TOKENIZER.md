@@ -38,3 +38,31 @@ The parser could recognize tokens from the raw lexemes by comparing the strings,
 ### Location information
 
 The location information defines the position of the lexemes in the source code. It can represented by **line** and **column** coordinates for the beginning and for the end of the lexemes; or by **line**, **column** and the **length** properties for each lexeme. Such type of data can be very useful in case we report error message for the end user of the code and point out the precise location of an error.
+
+## RegExp token
+
+Our tokenizer emits tokens with **value**, **type** and **index** properties. Each token or the tokenizer holds one length character. It could be made differently. For example, we could represent character classes like **\d**, **\w** and etc. with one token. But still, we decided to split regexp string on every character, cause we believe it will add an additional flexibility for the parser to work with the produced tokens.
+
+The **value** property of the token contains the **lexeme**, which is one single character in our case.
+The **type** property contains the kind of the character. We create it as enum and it looks like this:
+
+```typescript
+export enum TokenType {                                                                                               
+  SLASH = "Slash",                                                                                                    
+  LETTER = "Letter",                                                                                                  
+  DOT = "Dot",                                                                                                        
+  DIGIT = "Digit",                                                                                                    
+  SPACE = "Space",                                                                                                    
+  UNDERSCORE = "Underscore",                                                                                          
+  REGULAR = "Regular",                                                                                                
+  UNKNOWN = "Unknown",                                                                                                
+  STAR = "Star",                                                                                                      
+  BACK_SLASH = "Back Slash",                                                                                          
+  QUESTION_MARK = "Question Mark",                                                                                    
+  PLUS = "Plus",                                                                                                      
+  LEFT_BRACKET = "Left Bracket",                                                                                      
+  RIGHT_BRACKET = "Right Bracket",                                                                                    
+  CARET = "Caret",                                                                                                    
+  PIPE = 'Pipe'                                                                                                       
+}
+```
