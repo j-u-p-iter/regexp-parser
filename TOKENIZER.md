@@ -77,10 +77,19 @@ In short the principle of scanner work can be explained as the process of consum
 
 The best way to understand what it means is to imagine the input string and the charet underneath of the first symbol of the string. The caret points out to the first symbol of the string. This symbol is called the current character. If we consume this character we return it from the appropriate method, responsible for characters consuming and move the caret to the next character of the string. Consuming of the character can be explained in another way as removing the character from the string. We consumed it, means we used it and we lost any connections with this character and we won't be able to operate by this character somehow and anyhow further in the parser code.
 
+### input property
+
+This property is used to store the original input string we are going to parse. It's not mutable property. It will always stay as it is.
+
 ### counter property
 
 This property is used to point out to the current active character. The current character is the character the caret points out in each concrete moment until the character is consumed.
 
 ### consume method
 
-This is the most widely used method. It's goal is to consume the current character and returns it.
+This is the most widely used method. It's goal is to consume the current character and return it. When we consume the character we return the current character the caret (counter) points out for the input string and move caret to the next character.
+
+
+### peak method
+
+
