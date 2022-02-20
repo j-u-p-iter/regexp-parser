@@ -16,7 +16,8 @@ export enum TokenType {
   LEFT_BRACKET = "Left Bracket",
   RIGHT_BRACKET = "Right Bracket",
   CARET = "Caret",
-  PIPE = "Pipe"
+  PIPE = "Pipe",
+  EOF = "End Of File"
 }
 
 export enum NodeType {

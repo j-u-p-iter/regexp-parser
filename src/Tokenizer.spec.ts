@@ -188,6 +188,10 @@ describe('Tokenizer', () => {
       index: 5,
     }); 
 
-    expect(tokenizer.getNextToken()).toEqual(null); 
+    expect(tokenizer.getNextToken()).toEqual({ 
+      type: 'End Of File',
+      value: null,
+      index: 6,
+    }); 
   });
 });

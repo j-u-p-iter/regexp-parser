@@ -33,7 +33,7 @@ describe('Parser', () => {
     parser = new Parser();
   });
 
-  it('parses letters properly', () => {
+  it.only('parses letters properly', () => {
     expect(parser.parse('/a/')).toEqual(createRootNode([
       createAlternative([{
         type: "RegularCharacter", 

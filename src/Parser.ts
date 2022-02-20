@@ -94,7 +94,7 @@ import { Alternative, Disjunction, Pattern, RegExpr } from "./types";
  */
 export class Parser {
   private tokenizer: Tokenizer;
-  private lookahead: { type: TokenType; value: string };
+  private lookahead: { type: TokenType; value: string | null; index: number };
 
   /**
    * Each nonterminal knows,
@@ -111,7 +111,7 @@ export class Parser {
   }
 
   private getFlags(flags, addedFlags) {
-    if (this.lookahead === null) {
+    if (this.lookahead.type === TokenType.EOF) {
       return flags;
     }
 
@@ -161,7 +161,7 @@ export class Parser {
 
     do {
       flags = this.getFlags(flags, addedFlags);
-    } while (this.lookahead);
+    } while (this.lookahead.type !== TokenType.EOF);
 
     return flags;
   }
@@ -296,7 +296,7 @@ export class Parser {
   private consume(tokenType: TokenType) {
     const nextToken = this.lookahead;
 
-    if (nextToken === null) {
+    if (nextToken.type === TokenType.EOF) {
       throw new Error(
         `Unexpected end of input, expected ${tokenType} instead.`
       );

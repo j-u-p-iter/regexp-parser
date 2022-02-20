@@ -114,17 +114,19 @@ export class Tokenizer {
     return character >= "0" && character <= "9";
   }
 
-  private createToken(tokenType: TokenType, tokenValue: string) {
+  private createToken(tokenType: TokenType, tokenValue: string | null): Token {
     // consuming character we increment the index.
     // So, we store the index here before consuming the character.
     const currentCharacterIndex = this.counter;
 
-    this.consume(tokenValue);
+    if (tokenType !== TokenType.EOF && tokenType !== TokenType.UNKNOWN) {
+      this.consume(tokenValue);
+    }
 
     return new Token(tokenType, tokenValue, currentCharacterIndex);
   }
 
-  private restCharacters(nextCharacter) {
+  private restCharacters(nextCharacter): Token {
     switch (nextCharacter) {
       case "/":
         return this.createToken(TokenType.SLASH, "/");
@@ -143,17 +145,8 @@ export class Tokenizer {
       case "|":
         return this.createToken(TokenType.PIPE, "|");
       default:
-        return this.uknownCharacter();
+        return this.createToken(TokenType.UNKNOWN, nextCharacter);
     }
-  }
-
-  private uknownCharacter() {
-    const character = this.peek();
-
-    return {
-      type: TokenType.UNKNOWN,
-      value: character
-    };
   }
 
   private metaCharacter() {
@@ -175,9 +168,18 @@ export class Tokenizer {
    * Obtains the next token.
    *
    */
-  public getNextToken() {
+  public getNextToken(): Token {
     if (!this.hasMoreTokens()) {
-      return null;
+      /**
+       * EOF token indicates end-of-regexp line condition. It means,
+       *   that there's nothing else to read from the input string.
+       *
+       *   To be honest this is not something that is strictly needed.
+       *     But it makes the tokenizer and the parser as a whole
+       *     a little bit cleaner.
+       *
+       */
+      return this.createToken(TokenType.EOF, null);
     }
 
     const nextCharacter = this.peek();
