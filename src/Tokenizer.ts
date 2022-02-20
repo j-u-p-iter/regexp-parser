@@ -75,8 +75,12 @@ export class Tokenizer {
     return nextCharacter;
   }
 
-  public input;
-  public counter;
+  // store the original regexp in this property
+  private input;
+
+  // stores the index of the current
+  // non-consumed yet character
+  private counter;
 
   /**
    * Initialization step. The input string
@@ -90,6 +94,10 @@ export class Tokenizer {
   /**
    * Detects, if there are more tokens
    *   to extract from the string.
+   *
+   *   If there're no tokens anymore, it means
+   *     we consume all the characters or
+   *     the input string has no characters at all.
    */
   public hasMoreTokens() {
     return this.counter < this.input.length;
