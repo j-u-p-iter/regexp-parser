@@ -79,7 +79,7 @@ The best way to understand what it means is to imagine the input string and the 
 
 ### counter property
 
-This property is used to point out to the current active character.
+This property is used to point out to the current active character. The current character is the character the caret points out in each concrete moment until the character is consumed.
 
 ### consume method
 
