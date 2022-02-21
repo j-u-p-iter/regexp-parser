@@ -57,12 +57,8 @@ export class Tokenizer {
    *   We name this process as the consuming of the character.
    *
    */
-  private consume(character) {
+  private consume() {
     const nextCharacter = this.peek();
-
-    if (nextCharacter !== character) {
-      throw new Error(`Unexpected character ${character}`);
-    }
 
     /**
      * After we increase the counter the previous
@@ -120,7 +116,7 @@ export class Tokenizer {
     const currentCharacterIndex = this.counter;
 
     if (tokenType !== TokenType.EOF && tokenType !== TokenType.UNKNOWN) {
-      this.consume(tokenValue);
+      this.consume();
     }
 
     return new Token(tokenType, tokenValue, currentCharacterIndex);
@@ -166,6 +162,21 @@ export class Tokenizer {
 
   /**
    * Obtains the next token.
+   *   We made a decision that the tokenizer will produce
+   *   all lexemes as only one single character. It's made
+   *   for the flexibility purposes. It will allow to the parser
+   *   to handle tokens, group them together into the result
+   *   AST nodes and add properties to the appropriate AST nodes
+   *   in a more flexible and easy way.
+   *
+   *   We splitted all characters in multiple groups.
+   *
+   *     - Meta Characters. They are handled by the metaCharacter method.
+   *     - Letters. We don't have specific method for this type. It's handled directly
+   *       in the getNextToken method.
+   *     - Digits. Again, we don't have a specific method for this type. Handling happens
+   *       directly in the getNextToken method.
+   *     - Other characters. They are handled by the restCharacters method.
    *
    */
   public getNextToken(): Token {
