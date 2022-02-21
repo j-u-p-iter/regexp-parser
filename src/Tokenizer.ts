@@ -110,38 +110,42 @@ export class Tokenizer {
     return character >= "0" && character <= "9";
   }
 
-  private createToken(tokenType: TokenType, tokenValue: string | null): Token {
-    // consuming character we increment the index.
-    // So, we store the index here before consuming the character.
-    const currentCharacterIndex = this.counter;
+  private createToken(tokenType: TokenType): Token {
+    const currentCharacter = tokenType === TokenType.EOF ? null : this.peek();
+
+    const currentCharacterToken = new Token(
+      tokenType,
+      currentCharacter,
+      this.counter
+    );
 
     if (tokenType !== TokenType.EOF && tokenType !== TokenType.UNKNOWN) {
       this.consume();
     }
 
-    return new Token(tokenType, tokenValue, currentCharacterIndex);
+    return currentCharacterToken;
   }
 
   private restCharacters(nextCharacter): Token {
     switch (nextCharacter) {
       case "/":
-        return this.createToken(TokenType.SLASH, "/");
+        return this.createToken(TokenType.SLASH);
       case "\\":
-        return this.createToken(TokenType.BACK_SLASH, "\\");
+        return this.createToken(TokenType.BACK_SLASH);
       case "(":
-        return this.createToken(TokenType.LEFT_BRACKET, "(");
+        return this.createToken(TokenType.LEFT_BRACKET);
       case ")":
-        return this.createToken(TokenType.RIGHT_BRACKET, ")");
+        return this.createToken(TokenType.RIGHT_BRACKET);
       case "_":
-        return this.createToken(TokenType.UNDERSCORE, "_");
+        return this.createToken(TokenType.UNDERSCORE);
       case " ":
-        return this.createToken(TokenType.SPACE, " ");
+        return this.createToken(TokenType.SPACE);
       case "^":
-        return this.createToken(TokenType.CARET, "^");
+        return this.createToken(TokenType.CARET);
       case "|":
-        return this.createToken(TokenType.PIPE, "|");
+        return this.createToken(TokenType.PIPE);
       default:
-        return this.createToken(TokenType.UNKNOWN, nextCharacter);
+        return this.createToken(TokenType.UNKNOWN);
     }
   }
 
@@ -150,13 +154,13 @@ export class Tokenizer {
 
     switch (nextCharacter) {
       case "*":
-        return this.createToken(TokenType.STAR, "*");
+        return this.createToken(TokenType.STAR);
       case "?":
-        return this.createToken(TokenType.QUESTION_MARK, "?");
+        return this.createToken(TokenType.QUESTION_MARK);
       case "+":
-        return this.createToken(TokenType.PLUS, "+");
+        return this.createToken(TokenType.PLUS);
       case ".":
-        return this.createToken(TokenType.DOT, ".");
+        return this.createToken(TokenType.DOT);
     }
   }
 
@@ -190,17 +194,17 @@ export class Tokenizer {
        *     a little bit cleaner.
        *
        */
-      return this.createToken(TokenType.EOF, null);
+      return this.createToken(TokenType.EOF);
     }
 
     const nextCharacter = this.peek();
 
     if (this.isLetterCharacter(nextCharacter)) {
-      return this.createToken(TokenType.LETTER, nextCharacter);
+      return this.createToken(TokenType.LETTER);
     }
 
     if (this.isDigitCharacter(nextCharacter)) {
-      return this.createToken(TokenType.DIGIT, nextCharacter);
+      return this.createToken(TokenType.DIGIT);
     }
 
     /**
