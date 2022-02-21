@@ -70,3 +70,26 @@ export enum TokenType {
 The **index** property contains the order index of each character in the regexp string. It's the only location information we need to detect the position of the token in the original input string.
 
 The Token class for the tokenizer can be found here: https://github.com/j-u-p-iter/regexp-parser/blob/main/src/Token.ts
+
+## Main tokenizer methods and properties
+
+In short the principle of scanner work can be explained as the process of consuming the characters in a loop one by one, combining them into the lexemes and returning them in form of tokens - objects, that describes lexemes as independent structuring block of the input string.
+
+The best way to understand what it means is to imagine the input string and the charet underneath of the first symbol of the string. The caret points out to the first symbol of the string. This symbol is called the current character. If we consume this character we return it from the appropriate method, responsible for characters consuming and move the caret to the next character of the string. Consuming of the character can be explained in another way as removing the character from the string. We consumed it, means we used it and we lost any connections with this character and we won't be able to operate by this character somehow and anyhow further in the parser code.
+
+### input property
+
+This property is used to store the original input string we are going to parse. It's not mutable property. It will always stay as it is.
+
+### counter property
+
+This property is used to point out to the current active character. The current character is the character the caret points out in each concrete moment until the character is consumed.
+
+### consume method
+
+This is the most widely used method. It's goal is to consume the current character and return it. When we consume the character we return the current character the caret (counter) points out for the input string and move caret to the next character.
+
+
+### peak method
+
+This method is similar to the consume method but it doesn't consume the character. It just returns the current character the counter points out at the exact point of time. This method has a special name. It's called **lookahead** Since it only looks at the current unconsumed character, we have one character of lookahead. The smaller this number is, generraly, the faster the scanner runs. The rules of the lexical grammar dictate how much lookahead we need. Fortunately, most languages in wide use peek only one or two characters ahead. In our regexp tokenizer we won't use peak method at all, cause each lexeme in our case consists only of one character. In this simple case it's enough just consume characters straightaway.
