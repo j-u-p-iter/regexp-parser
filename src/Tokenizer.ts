@@ -95,11 +95,11 @@ export class Tokenizer {
    *     we consume all the characters or
    *     the input string has no characters at all.
    */
-  public hasMoreTokens() {
+  public hasMoreCharacters() {
     return this.counter < this.input.length;
   }
 
-  private isLetterCharacter(character) {
+  private isAlphaCharacter(character) {
     return (
       (character >= "a" && character <= "z") ||
       (character >= "A" && character <= "Z")
@@ -126,7 +126,9 @@ export class Tokenizer {
     return currentCharacterToken;
   }
 
-  private restCharacters(nextCharacter): Token {
+  private restCharacters(): Token {
+    const nextCharacter = this.peek();
+
     switch (nextCharacter) {
       case "/":
         return this.createToken(TokenType.SLASH);
@@ -184,7 +186,7 @@ export class Tokenizer {
    *
    */
   public getNextToken(): Token {
-    if (!this.hasMoreTokens()) {
+    if (!this.hasMoreCharacters()) {
       /**
        * EOF token indicates end-of-regexp line condition. It means,
        *   that there's nothing else to read from the input string.
@@ -199,7 +201,7 @@ export class Tokenizer {
 
     const nextCharacter = this.peek();
 
-    if (this.isLetterCharacter(nextCharacter)) {
+    if (this.isAlphaCharacter(nextCharacter)) {
       return this.createToken(TokenType.LETTER);
     }
 
@@ -225,6 +227,6 @@ export class Tokenizer {
       return this.metaCharacter();
     }
 
-    return this.restCharacters(nextCharacter);
+    return this.restCharacters();
   }
 }
