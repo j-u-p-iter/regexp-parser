@@ -85,6 +85,10 @@ This property is used to store the original input string we are going to parse. 
 
 This property is used to point out to the current active character. The current character is the character the caret points out in each concrete moment until the character is consumed.
 
+### hasMoreCharacters method
+
+This simple helper is used to detect are there any other characters to extract into the tokens. If it false it means that all characters of the input string were consumed. If it's true, there are more characters to consume.
+
 ### consume method
 
 This is the most widely used method. It's goal is to consume the current character and return it. When we consume the character we return the current character the caret (counter) points out for the input string and move caret to the next character.
