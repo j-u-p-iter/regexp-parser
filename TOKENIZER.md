@@ -97,3 +97,13 @@ This is the most widely used method. It's goal is to consume the current charact
 ### peak method
 
 This method is similar to the consume method but it doesn't consume the character. It just returns the current character the counter points out at the exact point of time. This method has a special name. It's called **lookahead** Since it only looks at the current unconsumed character, we have one character of lookahead. The smaller this number is, generraly, the faster the scanner runs. The rules of the lexical grammar dictate how much lookahead we need. Fortunately, most languages in wide use peek only one or two characters ahead. In our regexp tokenizer we won't use peak method at all, cause each lexeme in our case consists only of one character. In this simple case it's enough just consume characters straightaway.
+
+
+### createToken method
+
+Method is used to create the tokens. It uses special Token class for that.
+
+What it does is:
+1. peeks the current character from the input string, calling the **peek** method. If this is the end of the string the `EOF` token will be created with `null` value as the token value.
+2. consumes the current character from the input string for all tokens except EOF or UNKNOWN.
+3. returns the character.
