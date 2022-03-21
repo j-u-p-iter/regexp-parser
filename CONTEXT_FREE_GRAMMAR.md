@@ -9,3 +9,7 @@ Let's say we have the next ariphmetic operation:
 ```
 
 We know that the multiplication is evaluated before the addition or substraction. One way to visualize that precedence is using a tree. Leaf nodes are numbers, and interior nodes are operators with branches for each of their operands. The higher the precedence of an operation the closer the operation is to the bottom of the tree. The less the precedence - the closer it's to the top.
+
+So it intuitively seems like a workable representation of our code is a tree that matches the grammatical structure — the operator nesting — of the language.
+
+So, indeed the most appropriate representation of the code for the interpreter to run is the tree.
