@@ -37,3 +37,10 @@ All lexemes of this/that language can be described by regular expressions. It me
 Syntactic grammar is another beast. It regulates how tokens (lexemes) or simply words get grouped into sentenses.
 
 So, as we can see the difference between lexical and syntatic grammar is the level of granularity of building blocks (characters vs words) and result structure (lexemes vs sentenses). The rules how to build and respectively validate and parse lexemes are described by lexical grammar. The rules how to build and respectively parse and validate sentenses (expressions) are described by syntatic grammar.
+
+
+### Again about Formal Grammar
+
+A formal grammar takes a set of atomic pieces it calls its “alphabet”. Then it defines a (usually infinite) set of “strings” that are “in” the grammar. Each string is a sequence of “letters” in the alphabet.
+
+I’m using all those quotes because the terms get a little confusing as you move from lexical to syntactic grammars. In our scanner’s grammar, the alphabet consists of individual characters and the strings are the valid lexemes—roughly “words”. In the syntactic grammar we’re talking about now, we’re at a different level of granularity. Now each “letter” in the alphabet is an entire token and a “string” is a sequence of tokens—an entire expression.
