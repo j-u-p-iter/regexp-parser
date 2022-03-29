@@ -15,3 +15,5 @@ So it intuitively seems like a workable representation of our code is a tree tha
 So, indeed the most appropriate representation of the code for the interpreter to run is the tree.
 
 To understand how to split something on structuring blocks, pieces, we should know the laws or the rules of how these pieces are connected with each other. This is the something, that is described by grammar. Knowing these rules, we can split the source string on the pieces and combine them in the shape of a tree to make it readable (interpreatable) for interpreters.
+
+To formulate these rules we need to have some syntax for them. The source code of a program can be represented with an infinite amount of expressions. According to this we need some tool that will allow us to describe potentially infinite amount of valid strings. In other words we need the way to describe potentially infinite amount of strings, using finite amount of these strings.
