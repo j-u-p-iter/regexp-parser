@@ -63,3 +63,11 @@ sentence –> <subject> <verb-phrase> <object>
 ```
 
 In addition to several reasonable sentences, we can also derive nonsense like "Computers run cheese" and "This am a lies". These sentences don't make semantic sense, but they are syntactically correct because they are of the sequence of subject, verb-phrase, and object. Formal grammars are a tool for syntax, not semantics. We worry about semantics at a later point in the compiling process. In the syntax analysis phase, we verify structure, not meaning.
+
+Vocabulary
+
+Before we can proceed we should review some important definitions:
+
+Grammar - a set of rules by which valid sentences in a language are constructed. 
+
+Nonterminal - a grammar symbol that can be replaced/expanded to a sequence of symbols, using one of the production rules. It is a named reference to another rule in the grammar, like variables in the programming languages. Nonterminals is something that allows to compose the grammar. 
