@@ -27,3 +27,15 @@ A => b
 with A as a single nonterminal symbol, and b as a string of terminals and/or nonterminals b  can be empty. A formal grammar is "context free" if its production rules can be applied regardless of the context of a nonterminal. No matter which symbols surround it, the single nonterminal on the left hand side can always be replaced by the right hand side. This is what distinguishes it from a context-sensitive grammar.
 
 A formal grammar is a powerful tool for describing and analyzing languages. It is a set of rules by which valid sentences in a language are constructed. It provides for us syntax to describe all these rules. Let's be honest these rules are pretty advanced. And, if you see this grammar the first time the big probaility it will be hard for you to understand it. However through the time, through repetitions it becomes easier. It just takes some time.
+
+It would be much easier to explain it what it is and how to use and read it if we start straight with the example. Here's a trivial example of English grammar:
+
+```
+sentence    –> <subject> <verb-phrase> <object>
+subject     –> This | Computers | I
+verb-phrase –> <adverb> <verb> | <verb>
+adverb      –> never
+verb        –> is | run | am | tell
+object      –> the <noun> | a <noun> | <noun>
+noun        –> university | world | cheese | lies
+```
