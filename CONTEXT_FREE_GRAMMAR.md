@@ -13,3 +13,5 @@ We know that the multiplication is evaluated before the addition or substraction
 So it intuitively seems like a workable representation of our code is a tree that matches the grammatical structure — the operator nesting — of the language.
 
 So, indeed the most appropriate representation of the code for the interpreter to run is the tree.
+
+To understand how to split something on structuring blocks, pieces, we should know the laws or the rules of how these pieces are connected with each other. This is the something, that is described by grammar. Knowing these rules, we can split the source string on the pieces and combine them in the shape of a tree to make it readable (interpreatable) for interpreters.
