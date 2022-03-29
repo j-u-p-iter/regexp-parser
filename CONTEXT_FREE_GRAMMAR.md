@@ -39,3 +39,6 @@ verb        –> is | run | am | tell
 object      –> the <noun> | a <noun> | <noun>
 noun        –> university | world | cheese | lies
 ```
+This is an example of the formal context-free grammar for the English grammar. Of course it's not the full grammar of the English, but only very tiny piece. This grammar consists of multiple rows. These rows are called production rules or just productions. They called like that because they produce the strings in the grammar.
+
+So, using these production rules we can generate the result strings, that satisfy the English language grammar. These result strings are called deriviations. They called like that cause they are derived from the rules of the grammar.
