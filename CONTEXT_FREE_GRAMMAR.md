@@ -42,3 +42,24 @@ noun        –> university | world | cheese | lies
 This is an example of the formal context-free grammar for the English grammar. Of course it's not the full grammar of the English, but only very tiny piece. This grammar consists of multiple rows. These rows are called production rules or just productions. They called like that because they produce the strings in the grammar.
 
 So, using these production rules we can generate the result strings, that satisfy the English language grammar. These result strings are called deriviations. They called like that cause they are derived from the rules of the grammar.
+
+As an example the next deriviations can be produced from the above rules:
+
+```
+This is a university.
+Computers run the world.
+I am the cheese.
+I never tell lies.
+```
+
+Here is a leftmost derivation of the first sentence using these productions. It's called `leftmost`, cause we derive starting from the left side of the production rule.
+```
+sentence –> <subject> <verb-phrase> <object>
+         –> This <verb-phrase> <object>
+         –> This <verb> <object>
+         –> This is <object>
+         –> This is a <noun>
+         –> This is a university
+```
+
+In addition to several reasonable sentences, we can also derive nonsense like "Computers run cheese" and "This am a lies". These sentences don't make semantic sense, but they are syntactically correct because they are of the sequence of subject, verb-phrase, and object. Formal grammars are a tool for syntax, not semantics. We worry about semantics at a later point in the compiling process. In the syntax analysis phase, we verify structure, not meaning.
