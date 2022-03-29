@@ -85,3 +85,21 @@ The nonterminal X is declared equivalent to the concatenation of the symbols Y1Y
 `Derivation`
 
 A sequence of applications of the rules of a grammar that produces a finished string of terminals. A leftmost derivation is where we always substitute for the leftmost nonterminal as we apply the rules (we can similarly define a rightmost derivation). A derivation is also called a parse.
+
+`Start symbol`
+
+A grammar has a single nonterminal (the start symbol) from which all sentences derive: 
+
+```
+S –> X1X2X3...Xn
+```
+
+All sentences are derived from S by successive replacement using the productions of the grammar.
+
+`null symbol ε (epsilon)`
+
+It is sometimes useful to specify that a symbol can be replaced by nothing at all. To indicate this, we use the null symbol ε, e.g., A –> B | ε.
+
+`BNF`
+
+A way of specifying programming languages using formal grammars and production rules with a particular form of notation (Backus-Naur form).
