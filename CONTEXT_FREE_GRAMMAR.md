@@ -102,4 +102,6 @@ It is sometimes useful to specify that a symbol can be replaced by nothing at al
 
 `BNF`
 
-A way of specifying programming languages using formal grammars and production rules with a particular form of notation (Backus-Naur form).
+A way of specifying programming languages using formal grammars and production rules with a particular form of notation (Backus-Naur form). 
+
+It was the first notation, that was used to specify programming languages (ALGOL 58 in particular). This notation has some pros and cons. Through the time this notation is modified by many people, who try to create more appropriation, flexible notation for them. So, nearly everyone uses some flavor of BNF, tweaked to their own tastes.
