@@ -68,16 +68,20 @@ Vocabulary
 
 Before we can proceed we should review some important definitions:
 
-Grammar - a set of rules by which valid sentences in a language are constructed. 
+`Grammar` - a set of rules by which valid sentences in a language are constructed. 
 
-Nonterminal - a grammar symbol that can be replaced/expanded to a sequence of symbols, using one of the production rules. It is a named reference to another rule in the grammar, like variables in the programming languages. Nonterminals is something that allows to compose the grammar. 
+`Nonterminal` - a grammar symbol that can be replaced/expanded to a sequence of symbols, using one of the production rules. It is a named reference to another rule in the grammar, like variables in the programming languages. Nonterminals is something that allows to compose the grammar. 
 
 An actual word in a language; these are the symbols in a grammar that cannot be replaced by anything else. "terminal" is supposed to conjure up the idea that it is a dead-end—no further expansion is possible.
 
-Production - a grammar rule that describes how to replace/exchange symbols. The general form of a production for a nonterminal is:
+`Production` - a grammar rule that describes how to replace/exchange symbols. The general form of a production for a nonterminal is:
 
 ```
 X –>Y1Y2Y3...Yn
 ```
 
 The nonterminal X is declared equivalent to the concatenation of the symbols Y1Y2Y3...Yn. The production means that anywhere where we encounter X, we may replace it by the string Y1Y2Y3...Yn. Eventually we will have a string containing nothing that can be expanded further, i.e., it will consist of only terminals. Such a string is called a sentence. In the context of programming languages, a sentence is a syntactically correct and complete program.
+
+`Derivation`
+
+A sequence of applications of the rules of a grammar that produces a finished string of terminals. A leftmost derivation is where we always substitute for the leftmost nonterminal as we apply the rules (we can similarly define a rightmost derivation). A derivation is also called a parse.
