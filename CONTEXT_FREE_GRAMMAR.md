@@ -72,7 +72,7 @@ Before we can proceed we should review some important definitions:
 
 `Nonterminal` - a grammar symbol that can be replaced/expanded to a sequence of symbols, using one of the production rules. It is a named reference to another rule in the grammar, like variables in the programming languages. Nonterminals is something that allows to compose the grammar. 
 
-An actual word in a language; these are the symbols in a grammar that cannot be replaced by anything else. "terminal" is supposed to conjure up the idea that it is a dead-end—no further expansion is possible.
+`Terminal` - an actual word in a language; these are the symbols in a grammar that cannot be replaced by anything else. "terminal" is supposed to conjure up the idea that it is a dead-end—no further expansion is possible.
 
 `Production` - a grammar rule that describes how to replace/exchange symbols. The general form of a production for a nonterminal is:
 
