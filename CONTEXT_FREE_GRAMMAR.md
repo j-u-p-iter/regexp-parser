@@ -317,12 +317,13 @@ The set maybe empty, finite or infinite.
 ```
 L1(Σ) = { aabc, bbc, cb, ac, ... }
 ```
-The language L1 for the alphabet Σ is called infinite, cause it consists of all possible combinations of a, b, c symbols of any lengths.
+The language L1 for the alphabet Σ is called infinite, cause it consists of all possible combinations of a, b, c symbols of any lengths. This language don't have any restrictions in terms of lenght of the strings and the order of characters.
 
-On the other hand the language L2(Σ) is finite, cause the maximum lenght of each string of this language maximum consists of 3 characters.
+On the other hand the language L2(Σ) is finite, cause the maximum lenght of each string of this language maximum consists of 3 characters. So, applying restriction on the language (length of any string is 3 characters maximum), we can make finite language.
 
 ```
-L2(Σ) = {abc, aac, bbc, acc, ...}
+L2(Σ) = { abc, aac, bbc, acc, ... }
 ```
 
+The main takeaway here - once we start applying restrictins to the language - we form the grammar of the language. So, the grammar is a set of restrictions on the top of the alphabet for the specific language.
 
