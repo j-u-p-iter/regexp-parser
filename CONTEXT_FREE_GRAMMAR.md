@@ -286,17 +286,13 @@ The deriviated "sentence" on this step will look like:
 
 Let's talk about some new definitions important for further deep dive into the topic.
 
-We'll be using the next example of a grammar to provide the definitions:
+### Symbol
 
-```
-s => <a><b>
-a => <a>x | y
-b => z
-```
+A character, glyph, mark. An abstract entity that has no meaning by itself, often called uninterpreted. Letters from various alphabets, digits and special characters are the most commonly used symbols.
 
 ### Alphabet
 
-Alphabet is denoted by greek letter Σ
+Alphabet is usually denoted by greek letter Σ
 
 The alphabet for the provided above grammar is:
 
