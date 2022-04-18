@@ -1,3 +1,5 @@
+## We need a way to get the tree structure of the string
+
 The end goal of each interpreter is to interpret the code. For that interpreter should be able to understand the code. In this case the string representation of the raw source code is not an appropriate form of representation to make it easy for the interpreter to understand and run the code. It means that before interpreting the code we need to modify it from raw string representation to much more appropriate. And, this is where the tokinizers and parsers come. They help us to transform uninterpretable structure to something that can be run and interpreted.
 
 But what structure can be the most appropriate for intepretation?
@@ -13,6 +15,8 @@ We know that the multiplication is evaluated before the addition or substraction
 So it intuitively seems like a workable representation of our code is a tree that matches the grammatical structure — the operator nesting — of the language.
 
 So, indeed the most appropriate representation of the code for the interpreter to run is the tree.
+
+## Everything starts from the Formal Grammar
 
 To understand how to split something on structuring blocks, pieces, we should know the laws or the rules of how these pieces are connected with each other. This is the something, that is described by grammar. Knowing these rules, we can split the source string on the pieces and combine them in the shape of a tree to make it readable (interpreatable) for interpreters.
 
@@ -116,3 +120,20 @@ It is sometimes useful to specify that a symbol can be replaced by nothing at al
 A way of specifying programming languages using formal grammars and production rules with a particular form of notation (Backus-Naur form). 
 
 It was the first notation, that was used to specify programming languages (ALGOL 58 in particular). This notation has some pros and cons. Through the time this notation is modified by many people, who try to create more appropriation, flexible notation for them. So, nearly everyone uses some flavor of BNF, tweaked to their own tastes.
+
+## Formal Grammar is the schema/plan of the future program
+
+If you know the grammar you can turn it into the programm.
+
+Grammar consists of non-terminals and terminals.
+non-terminals are variables in the grammar. To read the grammar (deriviate it) you should substitute one non-terminal (variable) with another.
+terminals are simple plain values, literals, like strings, numbers, booleans.
+
+To build the parser for the language you should convert the grammar of the language to it's programm analogue (programming implementation).
+
+If the non-terminal depends on some other non-terminals - it means, that in the programm we'll have a function that will depend on other function 
+calls. For non-terminals we create the appropriate methods.
+
+If you get a string and a parser, based on grammar and run parser on the string (parse the string) you'll get answers on two questions:
+- does this string belongs to the language, described by grammar;
+- what is the structure of the string with regard to the grammar.
