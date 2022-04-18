@@ -143,3 +143,15 @@ appropriate method for the third production rule and etc - deriviation (parsing)
 If you get a string and a parser, based on grammar and run parser on the string (parse the string) you'll get answers on two questions:
 - does this string belongs to the language, described by grammar;
 - what is the structure of the string with regard to the grammar.
+
+## Different types of grammar
+
+To build the grammar there're a lot of different notations (languages to describe the grammar): BNF, EBNF and etc.
+
+There're different types of grammar (category of grammar). Each type(category) has it's own capabilities.
+
+Regular grammar can describe only simple strings, set of strings. This is the same, that RegExp can do. By the way we can say, that RegExp is 
+one of the possible notations of the grammar for the set of strings.
+
+Context-free grammar is more advanced grammar. This is the grammar, that we use to describe the programming languages. To describe the RegExp language
+we also use the context-free grammar.
