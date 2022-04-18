@@ -293,3 +293,10 @@ s => <a><b>
 a => <a>x | y
 b => z
 ```
+
+### Alphabet
+
+Alphabet is denoted by greek letter Σ
+
+The alphabet for the provided above grammar is:
+Σ = { S, A, B, x, y, z }
