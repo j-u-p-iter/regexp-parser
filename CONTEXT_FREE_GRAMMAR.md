@@ -297,5 +297,7 @@ Alphabet is usually denoted by greek letter Σ
 The alphabet for the provided above grammar is:
 
 ```
-Σ = { <s>, <a>, <b>, x, y, z }
+Σ = { a, b, c }
 ```
+
+In our case an alphabet Σ consists of three symbols - a, b and c. 
