@@ -301,3 +301,28 @@ The alphabet for the provided above grammar is:
 ```
 
 In our case an alphabet Σ consists of three symbols - a, b and c. 
+
+### String
+
+A finite sequence of symbols from an alphabet is called string.
+
+Example of the string for the alphabet provided above is "aabbccbbaa".
+
+### Language
+
+Language is a set of strings from an alphabet.
+
+The set maybe empty, finite or infinite.
+
+```
+L1(Σ) = { aabc, bbc, cb, ac, ... }
+```
+The language L1 for the alphabet Σ is called infinite, cause it consists of all possible combinations of a, b, c symbols of any lengths.
+
+On the other hand the language L2(Σ) is finite, cause the maximum lenght of each string of this language maximum consists of 3 characters.
+
+```
+L2(Σ) = {abc, aac, bbc, acc, ...}
+```
+
+
