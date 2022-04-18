@@ -163,7 +163,7 @@ we also use the context-free grammar.
 ## One more big example of production rules deriviation
 
 ```
-sentense => sentense and sentense 
+sentense => <sentense> and <sentense> 
 | <subject> <verb-phrase> <adjective> <object> 
 | <subject> <verb-phrase> <object>;
 
@@ -282,3 +282,14 @@ The deriviated "sentence" on this step will look like:
 
 `sentense => I quickly finish delicious breakfast and I love the world`
 
+## Symbols, alphabets and languages
+
+Let's talk about some new definitions important for further deep dive into the topic.
+
+We'll be using the next example of a grammar to provide the definitions:
+
+```
+s => <a><b>
+a => <a>x | y
+b => z
+```
