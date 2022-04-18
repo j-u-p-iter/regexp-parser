@@ -129,10 +129,16 @@ Grammar consists of non-terminals and terminals.
 non-terminals are variables in the grammar. To read the grammar (deriviate it) you should substitute one non-terminal (variable) with another.
 terminals are simple plain values, literals, like strings, numbers, booleans.
 
+So, for each non-terminal there's an appropriate variable or the method in the parsing programm (or just parser).
+
 To build the parser for the language you should convert the grammar of the language to it's programm analogue (programming implementation).
 
 If the non-terminal depends on some other non-terminals - it means, that in the programm we'll have a function that will depend on other function 
 calls. For non-terminals we create the appropriate methods.
+
+When we execute the parser non-terminal methods call each other. The method, related to the first production rule, calls
+an appropriate method, related to the second production rule, the method, related to the second production rule, calls an 
+appropriate method for the third production rule and etc - deriviation (parsing) in an action. The later the method is called the earlier it returns. So, the non-terminals from the grammar are expanded starting from the bottom - the last formal grammar rule.
 
 If you get a string and a parser, based on grammar and run parser on the string (parse the string) you'll get answers on two questions:
 - does this string belongs to the language, described by grammar;
