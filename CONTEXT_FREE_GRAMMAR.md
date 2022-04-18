@@ -301,5 +301,5 @@ Alphabet is denoted by greek letter Σ
 The alphabet for the provided above grammar is:
 
 ```
-Σ = { S, A, B, x, y, z }
+Σ = { <s>, <a>, <b>, x, y, z }
 ```
