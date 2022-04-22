@@ -30,7 +30,7 @@ In formal language theory, a context-free grammar (CFG) is a formal grammar whos
 A => b
 ```
 
-with A as a single nonterminal symbol, and b as a string of terminals and/or nonterminals b  can be empty. A formal grammar is "context free" if its production rules can be applied regardless of the context of a nonterminal. No matter which symbols surround it, the single nonterminal on the left hand side can always be replaced by the right hand side. This is what distinguishes it from a context-sensitive grammar.
+with A as a single nonterminal symbol, and b as a string of terminals and/or nonterminals b  can be empty. A formal grammar is "context free" if its production rules can be applied regardless of the context of a nonterminal. No matter which symbols surround it, the single nonterminal on the left hand side can always be replaced by the right hand side. In context-free grammars, all production rules must have only one (non-terminal) symbol on the left-hand side. It essentially means that regardless in which context the non-terminal symbol appears, it should be also interpreted the same way. This is what distinguishes it from a context-sensitive grammar, where it's possible to have several non-terminals on the left-hand side. In this case the substitution is only possible, when production rule has the same "sequence" of the non-terminals on the right-hand side.
    
 In computing, we use formal languages - programming languages, query languages, markup languages, protocols, config formats, etc. 
 Using them, we define what we want the computer to do.
