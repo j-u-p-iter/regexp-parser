@@ -40,6 +40,8 @@ So, one more time, the precedense of the steps that should be implemented is:
 
 ## Writing the grammar.
 
-We'll start with the very light version of the grammar.
-
-
+We'll be writing grammar in parallel with the parser. It's the most convenient way to do it. So, this is what we do:
+- start with the lighest version of the grammar;
+- detect what tokens are declared in the grammar and write tokenizer to extract these tokens;
+- detect what nodes of the AST tree should be implemented by the parser and write parser part for these nodes;
+- advance the grammar and repeat the process.
