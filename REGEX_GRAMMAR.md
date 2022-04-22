@@ -38,4 +38,8 @@ So, one more time, the precedense of the steps that should be implemented is:
 - extract simple production rule into new non-terminal and place it below the starting symbol declaration;
 - add for the starting symbol new declaration, using the non-terminal, introduced on the previous step.
 
-## Writing the grammar. Initial iteration.
+## Writing the grammar.
+
+We'll start with the very light version of the grammar.
+
+
