@@ -22,3 +22,18 @@ So, my favorite is the bottom-up approach. This is the approach we'll be using w
 It will be very hard to write the whole grammar of the RegExp before starting implementing the parser. In this case it will take a lot of time till we even start writing parser. And I'm pretty sure sticking to this approach we'll find a lot of mistakes in the grammar declaration and will have to rewrite the grammar writing the parser itself. So, in many ways and according to many reasons this is very confusing and hard way of doing things.
 
 Instead we need to start with something simple. We need to declare an initial state of our grammar, write parser for that and after that add gradually new elements of the grammar, make it more complex and advance.
+
+## Everything starts with the starting symbol.
+
+Every grammar should contain:
+- starting symbol;
+- production rule;
+- terminal;
+- non-terminal.
+
+Despite the fact that starting symbol sits on the very top of the grammr and we'll be using the bottom-up approach, we always will be using the starting symbol. Starting symbol is here everywhere. No starting symbol - no grammar. At first starting symbol we'll contain the most simple rule. On the next step the starting symbol we'll be shifted one step up and the declaration of the starting symbol we'll be extracted into new non-terminal under the starting symbol declaration and the starting symbol will contain new, more complex production rule.
+
+So, one more time, the precedense of the steps that should be implemented is:
+- add starting symbol with the simple production rule;
+- extract simple production rule into new non-terminal and place it below the starting symbol declaration;
+- add for the starting symbol new declaration, using the non-terminal, introduced on the previous step.
