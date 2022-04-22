@@ -20,7 +20,9 @@ So, indeed the most appropriate representation of the code for the interpreter t
 
 To understand how to split something on structuring blocks, pieces, we should know the laws or the rules of how these pieces are connected with each other. This is the something, that is described by grammar. Knowing these rules, we can split the source string on the pieces and combine them in the shape of a tree to make it readable (interpreatable) for interpreters.
 
-To formulate these rules we need to have some syntax for them. The source code of a program can be represented with an infinite amount of expressions. According to this we need some tool that will allow us to describe potentially infinite amount of valid strings. In other words we need the way to describe potentially infinite amount of strings, using finite amount of these strings. It sounds like we need some recursion. Or we need the tool, that allows to describe infinite amount of expressions, using recursion. We can do it, using Context-Free Grammar.
+When you learn a new programming language you typically go through a guide written in a natural language like English. This is a great way to learn language but it's not the optimal to describe it.
+
+To formulate these rules we need to have some syntax for them. The syntaxes of most programming languages in use today are defined through formal grammars. The source code of a program can be represented with an infinite amount of expressions. According to this we need some tool that will allow us to describe potentially infinite amount of valid strings. In other words we need the way to describe potentially infinite amount of strings, using finite amount of these strings. It sounds like we need some recursion. Or we need the tool, that allows to describe infinite amount of expressions, using recursion. We can do it, using Context-Free Grammar.
 
 In formal language theory, a context-free grammar (CFG) is a formal grammar whose production rules are of the form
 
