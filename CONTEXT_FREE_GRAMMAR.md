@@ -127,6 +127,16 @@ A way of specifying programming languages using formal grammars and production r
 
 It was the first notation, that was used to specify programming languages (ALGOL 58 in particular). This notation has some pros and cons. Through the time this notation is modified by many people, who try to create more appropriation, flexible notation for them. So, nearly everyone uses some flavor of BNF, tweaked to their own tastes.
 
+There are several different styles of notations for context-free grammars. One of the most widely used is Extended Backus-Naur form (EBNF). It is a combination of standard Backus-Naur Form with an addition of the constructs often found in regular expressions like quantifiers, and some other extensions.
+
+Unfortunately, there is no single EBNF standard. There is a ISO/IEC 14977 standard which defines EBNF, but some people don’t recommend using it. Ultimately, it’s up to which tools are available on your platform/language and which notation they support. I’m going to stick with a W3C notation because it is supported by the tool which I’m going to use to generate railroad diagrams.
+
+## History of Backus-Naur Form
+
+In the middle 1950s, computer scientists began to design high–level programming languages and build their compilers. The first two major successes were FORTRAN (FORmula TRANslator), developed by the IBM corporation in the United States, and ALGOL (ALGOrithmic Language), sponsored by a consortium of North American and European countries. John Backus led the effort to develop FORTRAN. He then became a member of the ALGOL design committee, where he studied the problem of describing the syntax of these programming languages simply and precisely.
+
+Backus invented a notation (based on the work of logician Emil Post) that was simple, precise, and powerful enough to describe the syntax of any programming language. Using this notation, a programmer or compiler can determine whether a program is syntactically correct: whether it adheres to the grammar and punctuation rules of the programming language. Peter Naur, as editor of the ALGOL report, popularized this notation by using it to describe the complete syntax of ALGOL. In their honor, this notation is called Backus–Naur Form (BNF).
+
 ## Formal Grammar is the schema/plan of the future program
 
 If you know the grammar you can turn it into the programm.
