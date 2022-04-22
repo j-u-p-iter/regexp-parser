@@ -20,4 +20,48 @@ All lexemes of this/that language can be described by regular expressions. It me
 
 Syntatic grammar is another beast. It regulates how tokens (lexemes) or simply words get grouped into sentenses.
 
-So, as we can see the difference between lexical and syntatic grammar is the level of granularity of building blocks (characters vs words) and result structure (lexemes vs sentenses). The rules how to build and respectively validate and parse lexemes are described by lexical grammar. The rules how to build and respectively parse and validate sentenses are described by syntatic grammar 
+So, as we can see the difference between lexical and syntatic grammar is the level of granularity of building blocks (characters vs words) and result structure (lexemes vs sentenses). The rules how to build and respectively validate and parse lexemes are described by lexical grammar. The rules how to build and respectively parse and validate sentenses are described by syntatic grammar.
+
+If you have ever studied a foreign language, you know that grammar consists of rules that describe the language. For example, English grammar contains rules like this:
+
+```
+Adjective can modify nouns. An adjective can be put before the noun.
+```
+
+A formal linguist or a computer scientist would describe this rule using a formal, generative grammar:
+
+```
+ModifiedNoun ::= Adjective Noun | Adjective ", " ModifiedNoun
+Adjective ::= "fast" | "blue"
+Noun ::= "car" | "sky"
+```
+
+So, the formal grammar is the scientific approach to formulate syntatic grammar.
+
+But what does it mean for grammar to be generative? You can think of a generative grammar as a recipe for constructing sentences in the language. Let’s see an example. You start with ModifiedNoun – it’s the first symbol on the list. Then you begin substituting:
+
+```
+ModifiedNoun // Start
+Adjective Noun // Select the first alternative
+fast Noun // Substitute Adjective
+fast car // Substitute Noun
+```
+
+That was easy. What happens if you substitute another noun?
+
+```
+fast sky
+```
+
+Hmm, this doesn’t make any sense! But this is fine. A grammar does not describe the meaning of the strings or what can be done with them in whatever context—only their form.
+
+The first option of `ModifiedNoun` was simple, but the other one is defined using `ModifiedNoun` itself! This is a recursive symbol. Namely, it is right-recursive because a non-terminal symbol ModifiedNoun appears on the right side.
+
+```
+ModifiedNoun // Start
+Adjective, ModifiedNoun // Select the second alternative
+fast, ModifiedNoun // Substitute Adjective
+fast, Adjective Noun // Select the first alternative
+fast, blue Noun // Substitute Adjective
+fast, blue car // Substitute Noun
+```
