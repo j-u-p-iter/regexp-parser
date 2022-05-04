@@ -1,7 +1,8 @@
 1. Our programming language consists of only numbers:
 
 ```
-Program => NumericLiteral;
+Program        => NumericLiteral;
+NumericLiteral => NUMBER;
 ```
 
 In this case the Parser class will have two methods:
@@ -14,6 +15,8 @@ In this case the Parser class will have two methods:
 
 ```
 Program => NumericLiteral | StringLiteral;
+NumericLiteral => NUMBER;
+StringLiteral => STRING;
 ```
 
 The Parser class will get new method:
@@ -26,6 +29,8 @@ The Program method itself will return either StringLiteral or NumericLiteral, de
 ```
 Program => Literal;
 Literal => NumericLiteral | StringLiteral;
+NumericLiteral => NUMBER;
+StringLiteral => STRING;
 ```
 
 Here we introduce new method Literal for the Parser and extract all logic for the literals from the Program method to the Literal method. Program itself will call Literal method and return the result of this call.
