@@ -35,7 +35,7 @@ StringLiteral  => STRING;
 
 Here we introduce new method Literal for the Parser and extract all logic for the literals from the Program method to the Literal method. Program itself will call Literal method and return the result of this call.
 
-4. Every program consists of different statements. Examples of the statements:
+4. Each literal is the part of something bigger. Literals are structuring blocks of the expressions, for example. Program can contain different expressions. Examples of the expressions:
 
 ```
 1 + 2 = 3;
@@ -43,12 +43,39 @@ Here we introduce new method Literal for the Parser and extract all logic for th
 "a" + "b" = "ab";
 ```
 
-Actually each programm is the set of statements. In the simplest case it can be one statement.
+So, the next non-terminal we introduce is the Expression.
+
+```
+Program        => Expression;
+Expression     => Literal;
+Literal        => NumericLiteral | StringLiteral;
+NumericLiteral => NUMBER;
+StringLiteral  => STRING;
+```
+
+In the simplest form the Expression is just a Literal, which will be changed in the future.
+
+5. Actually each programm is the set of statements. In the simplest case it can be one statement.
 
 So, the next non-terminal we introduce is the Statement.
 
 ```
 Program        => Statement;
+Statement      => Literal;
+Literal        => NumericLiteral | StringLiteral;
+NumericLiteral => NUMBER;
+StringLiteral  => STRING;
+```
+
+Here we introduce new method for the Parser which called Statement.
+
+6. However the program is usually more than one statement. In most cases the amount of statements is more than one. So, regular program consists of statements or statements list. Actually in the simplest form each programm is the list of different statements.
+
+Let's introduce new non-terminal, which is called StatementsList:
+
+```
+Program        => StatementsList;
+StatementsList => Statement | StatementsList Statement;
 Statement      => Literal;
 Literal        => NumericLiteral | StringLiteral;
 NumericLiteral => NUMBER;
