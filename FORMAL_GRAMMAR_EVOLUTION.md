@@ -55,19 +55,31 @@ StringLiteral  => STRING;
 
 In the simplest form the Expression is just a Literal, which will be changed in the future.
 
-5. Actually each programm is the set of statements. In the simplest case it can be one statement.
+Here we introduce new method for the Parser which is called Expression.
 
-So, the next non-terminal we introduce is the Statement.
+
+5. Actually each programm is the set of statements. In the simplest case it can be one statement. And there're different types of possible statements. One of the possible types is the expression statement.
+
+Expression statements can be described by the next production:
 
 ```
-Program        => Statement;
-Statement      => Literal;
-Literal        => NumericLiteral | StringLiteral;
-NumericLiteral => NUMBER;
-StringLiteral  => STRING;
+ExpressionStatement => Expression <;>;
 ```
 
-Here we introduce new method for the Parser which called Statement.
+So, as we can see here the expression statement consists of the expression itself and semicolumn.
+
+So, the next non-terminal we introduce is the ExpressionStatement.
+
+```
+Program             => ExpressionStatement;
+ExpressionStatement => Expression <;>;
+Expression          => Literal;
+Literal             => NumericLiteral | StringLiteral;
+NumericLiteral      => NUMBER;
+StringLiteral       => STRING;
+```
+
+Here we introduce new method for the Parser which is called ExpressionStatement.
 
 6. However the program is usually more than one statement. In most cases the amount of statements is more than one. So, regular program consists of statements or statements list. Actually in the simplest form each programm is the list of different statements.
 
