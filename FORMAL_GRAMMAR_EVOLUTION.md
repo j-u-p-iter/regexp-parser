@@ -34,3 +34,23 @@ StringLiteral  => STRING;
 ```
 
 Here we introduce new method Literal for the Parser and extract all logic for the literals from the Program method to the Literal method. Program itself will call Literal method and return the result of this call.
+
+4. Every program consists of different statements. Examples of the statements:
+
+```
+1 + 2 = 3;
+
+"a" + "b" = "ab";
+```
+
+Actually each programm is the set of statements. In the simplest case it can be one statement.
+
+So, the next non-terminal we introduce is the Statement.
+
+```
+Program        => Statement;
+Statement      => Literal;
+Literal        => NumericLiteral | StringLiteral;
+NumericLiteral => NUMBER;
+StringLiteral  => STRING;
+```
