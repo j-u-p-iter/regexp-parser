@@ -61,8 +61,7 @@ At the same time a statement may have internal components (e.g., expressions). I
 
 The ExpressionStatement here has the "expression" property, which contains the Literal node.
 
-Based on this structure and definitions we'll create our own structure on the next step.
-
+We won't reinvent the wheel and will create the similar structure.
 
 4. Each literal is the part of something bigger. Literals are structuring blocks of the expression statements, for example. Program can contain different expression statements. Examples of the expression statements:
 
@@ -76,32 +75,25 @@ Based on this structure and definitions we'll create our own structure on the ne
 "a" + "b" = "ab";
 ```
 
-In our program we declare the Expression Statement as an Expression followed by ";":
+As we can see the expression statement in the simplest case is represented by the primitive value:
 
 ```
-ExpressionStatement => Expression ";";
+ExpressionStatement => Literal ";";
 ```
 
-Expression at the same time in the simplest form is represented by the primitive value:
+The simplest form of ExpressionStatement is the Literal followed by semicolon.
 
-```
-Expression => Literal;
-```
-
-The simplest form of Expression is the Literal.
-
-So, the next two non-terminals will be the Expression and ExpressionStatement.
+So, the next non-terminal will be the ExpressionStatement.
 
 ```
 Program             => ExpressionStatement;
-ExpressionStatement => Expression ";";
-Expression          => Literal;
+ExpressionStatement => Literal ";";
 Literal             => NumericLiteral | StringLiteral;
 NumericLiteral      => NUMBER;
 StringLiteral       => STRING;
 ```
 
-Here we introduce two new methods for the Parser which are called Expression and ExpressionStatement.
+Here we introduce new, ExpressionStatement, method.
 
 5. Right now our parser can parse only one literal - numeric or string - and present it as an ExpressionStatement in the AST. However the program is usually more than one statement. In most cases the amount of statements is more than one. So, regular program consists of statements or statements list. Actually in the simplest form each programm is the list of different statements. If we try to parse multiple Literal values parser will stop on the first one. To make it possible to parse all statements (which is a sequence or an array) in the program we need to introduce a loop and to go through all the statements in this loop and to deriviate each statement into appropriate node. So, the body of our result program will be presented at the end by an array of nodes. Each of these nodes represent one specific statement.
 
@@ -116,8 +108,7 @@ As result we come to the next grammar:
 Program        => StatementsList;
 StatementsList => Statement | StatementsList Statement;
 Statement      => ExpressionStatement;
-ExpressionStatement => Expression ";";
-Expression          => Literal;
+ExpressionStatement => Literal ";";
 Literal             => NumericLiteral | StringLiteral;
 NumericLiteral      => NUMBER;
 StringLiteral       => STRING;
