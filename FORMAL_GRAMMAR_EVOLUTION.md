@@ -35,27 +35,61 @@ StringLiteral  => STRING;
 
 Here we introduce new method Literal for the Parser and extract all logic for the literals from the Program method to the Literal method. Program itself will call Literal method and return the result of this call.
 
-4. Each literal is the part of something bigger. Literals are structuring blocks of the expressions, for example. Program can contain different expressions. Examples of the expressions:
+If with the NumericLiterals and StringLiterals everything was very easy and we could easily find an appropriate definition for the AST node type, no things become more complicated. It's because it's hard to find:
+- on what structuring blocks we should split the program;
+- how to name these blocks.
+
+For the inspiration I recommend to use the `https://astexplorer.net/` project. Here you can choose language and parser and to see the structure of the AST every parser introduces. It really helps to find appropriate names for the AST nodes for the parser you're creating.
+
+For example, let's choose the JavaScript language and the @typescript-eslint/parser.
+
+For the 42 number it gives the next structure (I'll provide here the light form of the structure we to concentrate on really important things):
 
 ```
+{
+  type: 'ExpressionStatement',
+  expression: {
+    type: 'Literal',
+    value: 42,
+  }
+} 
+```
+
+So, here we can see that the 42 value is determined as an ExpressionStatement here. In computer programming, a statement is a syntactic unit of an imperative programming language that expresses some action to be carried out. A program written in such a language is formed by a sequence of one or more statements. A statement may have internal components (e.g., expressions). So, actually each program is the sequence (an array) of statements that go one after another. Executing each statement of the program we execute the program as a whole thing.
+
+The ExpressionStatement here has the "expression" property, which contains the Literal node.
+
+Based on this structure we'll create our own structure on the next step.
+
+
+4. Each literal is the part of something bigger. Literals are structuring blocks of the expression statements, for example. Program can contain different expression statements. Examples of the expression statements:
+
+```
+42;
+
+"hello";
+
 1 + 2 = 3;
 
 "a" + "b" = "ab";
 ```
 
-So, the next non-terminal we introduce is the Expression.
+In our program we declare the Expression Statement as an Expression followed by ";".
+
+The simplest form of Expression is the Literal.
+
+So, the next two non-terminals will be the Expression and ExpressionStatement.
 
 ```
-Program        => Expression;
-Expression     => Literal;
-Literal        => NumericLiteral | StringLiteral;
-NumericLiteral => NUMBER;
-StringLiteral  => STRING;
+Program             => ExpressionStatement;
+ExpressionStatement => Expression ";";
+Expression          => Literal;
+Literal             => NumericLiteral | StringLiteral;
+NumericLiteral      => NUMBER;
+StringLiteral       => STRING;
 ```
 
-In the simplest form the Expression is just a Literal, which will be changed in the future.
-
-Here we introduce new method for the Parser which is called Expression.
+Here we introduce two new methods for the Parser which are called Expression and ExpressionStatement.
 
 
 5. Actually each programm is the set of statements. In the simplest case it can be one statement. And there're different types of possible statements. One of the possible types is the expression statement.
