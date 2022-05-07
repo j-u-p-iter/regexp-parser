@@ -57,9 +57,11 @@ For the 42 number it gives the next structure (I'll provide here the light form 
 
 So, here we can see that the 42 value is determined as an ExpressionStatement here. In computer programming, a statement is a syntactic unit of an imperative programming language that expresses some action to be carried out. A program written in such a language is formed by a sequence of one or more statements. A statement may have internal components (e.g., expressions). So, actually each program is the sequence (an array) of statements that go one after another. Executing each statement of the program we execute the program as a whole thing.
 
+At the same time a statement may have internal components (e.g., expressions). In computer science, an expression is a syntactic entity in a programming language that may be evaluated to determine its value. It is a combination of one or more constants, variables, functions, and operators that the programming language interprets (according to its particular rules of precedence and of association) and computes to produce ("to return", in a stateful environment) another value. This process, for mathematical expressions, is called evaluation.
+
 The ExpressionStatement here has the "expression" property, which contains the Literal node.
 
-Based on this structure we'll create our own structure on the next step.
+Based on this structure and definitions we'll create our own structure on the next step.
 
 
 4. Each literal is the part of something bigger. Literals are structuring blocks of the expression statements, for example. Program can contain different expression statements. Examples of the expression statements:
@@ -74,7 +76,17 @@ Based on this structure we'll create our own structure on the next step.
 "a" + "b" = "ab";
 ```
 
-In our program we declare the Expression Statement as an Expression followed by ";".
+In our program we declare the Expression Statement as an Expression followed by ";":
+
+```
+ExpressionStatement => Expression ";";
+```
+
+Expression at the same time in the simplest form is represented by the primitive value:
+
+```
+Expression => Literal;
+```
 
 The simplest form of Expression is the Literal.
 
