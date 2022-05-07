@@ -103,39 +103,44 @@ StringLiteral       => STRING;
 
 Here we introduce two new methods for the Parser which are called Expression and ExpressionStatement.
 
+5. Right now our parser can parse only one literal - numeric or string - and present it as an ExpressionStatement in the AST. However the program is usually more than one statement. In most cases the amount of statements is more than one. So, regular program consists of statements or statements list. Actually in the simplest form each programm is the list of different statements. If we try to parse multiple Literal values parser will stop on the first one. To make it possible to parse all statements (which is a sequence or an array) in the program we need to introduce a loop and to go through all the statements in this loop and to deriviate each statement into appropriate node. So, the body of our result program will be presented at the end by an array of nodes. Each of these nodes represent one specific statement.
 
-5. Actually each programm is the set of statements. In the simplest case it can be one statement. And there're different types of possible statements. One of the possible types is the expression statement.
+So, one more time:
 
-Expression statements can be described by the next production:
+- the program consists of one or more statements and can be defined as the list of statements;
+- there are different type of statements. On the previous step we took a look at the ExpressionStatement as on one of the examples of such type of statements.
 
-```
-ExpressionStatement => Expression <;>;
-```
-
-So, as we can see here the expression statement consists of the expression itself and semicolumn.
-
-So, the next non-terminal we introduce is the ExpressionStatement.
+As result we come to the next grammar:
 
 ```
-Program             => ExpressionStatement;
-ExpressionStatement => Expression <;>;
+Program        => StatementsList;
+StatementsList => Statement | StatementsList Statement;
+Statement      => ExpressionStatement;
+ExpressionStatement => Expression ";";
 Expression          => Literal;
 Literal             => NumericLiteral | StringLiteral;
 NumericLiteral      => NUMBER;
 StringLiteral       => STRING;
 ```
 
-Here we introduce new method for the Parser which is called ExpressionStatement.
-
-6. Right now our parser can parse only one literal - numeric or string - and present it as an ExpressionStatement in the AST. However the program is usually more than one statement. In most cases the amount of statements is more than one. So, regular program consists of statements or statements list. Actually in the simplest form each programm is the list of different statements. If we try to parse multiple Literal values parser will stop on the first one. To make it possible to parse all statements (which is a sequence or an array) in the program we need to introduce a loop and to go through all the statements in this loop and to deriviate each statement into appropriate node. So, the body of our result program will be presented at the end by an array of nodes. Each of these nodes represent one specific statement.
-
-Let's introduce new non-terminal, which is called StatementsList:
+Here we added two additional types of nodes: Statement and StatementList.
 
 ```
-Program        => StatementsList;
 StatementsList => Statement | StatementsList Statement;
-Statement      => Literal;
-Literal        => NumericLiteral | StringLiteral;
-NumericLiteral => NUMBER;
-StringLiteral  => STRING;
+```
+
+This statement means that the statements list consists of one or more statements. In the program it will be presented by the loop.
+
+The loop will look like that:
+
+```
+StatementList() {
+  let statementsList = [this.Statement()];
+
+  while (this._lookahead !== null) {
+    statementsList.push(this.Statement())
+  }
+ 
+  return statementsList;
+}
 ```
