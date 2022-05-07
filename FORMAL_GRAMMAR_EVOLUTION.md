@@ -135,12 +135,26 @@ The loop will look like that:
 
 ```
 StatementList() {
-  let statementsList = [this.Statement()];
+  let statementList = [this.Statement()];
 
   while (this._lookahead !== null) {
-    statementsList.push(this.Statement())
+    statementList.push(this.Statement())
   }
  
-  return statementsList;
+  return statementList;
 }
 ```
+
+How does it work?
+
+If we enter the StatementList node we expect to have here at least one node. We don't need loop for that, so we declare the initial list like that:
+
+```
+let statementList = [this.Statement()];
+```
+
+As soon as the Statement node is created and all internal callbacks are executed we look at the next token, thanks to the lookahead. If the lookahead is not null, it means, that there's at least one more statement, cause the previous one finished it's execution and returned result node. So, the new node, if there's a node, belongs to the next statement. After the second statement is created and returned we again look at the lookahead checking the presense of new node. Again, if there's node, than it belongs to one more new statement, cause the previous one was already executed and returned.
+
+And such loop repeats until all nodes for all statements are deriviated.
+
+As soon as all statements are deriviated, it means that we reached the end of the program, we return the statementList, which will be the body of our program.
