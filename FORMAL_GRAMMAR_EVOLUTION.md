@@ -127,7 +127,7 @@ StringLiteral       => STRING;
 
 Here we introduce new method for the Parser which is called ExpressionStatement.
 
-6. However the program is usually more than one statement. In most cases the amount of statements is more than one. So, regular program consists of statements or statements list. Actually in the simplest form each programm is the list of different statements.
+6. Right now our parser can parse only one literal - numeric or string - and present it as an ExpressionStatement in the AST. However the program is usually more than one statement. In most cases the amount of statements is more than one. So, regular program consists of statements or statements list. Actually in the simplest form each programm is the list of different statements. If we try to parse multiple Literal values parser will stop on the first one. To make it possible to parse all statements (which is a sequence or an array) in the program we need to introduce a loop and to go through all the statements in this loop and to deriviate each statement into appropriate node. So, the body of our result program will be presented at the end by an array of nodes. Each of these nodes represent one specific statement.
 
 Let's introduce new non-terminal, which is called StatementsList:
 
