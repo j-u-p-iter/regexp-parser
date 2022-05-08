@@ -1,3 +1,9 @@
+Breif explanation of how the parser works.
+
+Parser is implemented as a Parser class. It takes some string as an input string. This input string is the program we need to parse. Parse uses Tokenizer under the hood. Tokenizer helps the Parser to split program on different tokens. Tokenizer knows about all possible nodes the program can have. Each time the Parser asks to return the next token (according to the current position of the cursor) the Tokenizer loops through the specification (list of nodes) and checks if there's a specification for the token the Parser tries to parse. If there's such a specification, it returns it to the Parser and Parser includes this node into the result AST and after that continue parsing the program. If it's the end of the input string, the parser stops it's execution returning the result AST tree, if it's not the end of the input string, the parser continues it's execution, asking Tokenizer to return the next token.
+If Tokenizer for some reason can't find an appropriate token for the next input string, it throws an error and as result Parser stops it's execution, throwing an error.
+
+
 1. Our programming language consists of only numbers:
 
 ```
