@@ -8,7 +8,7 @@ NumericLiteral => NUMBER;
 In this case the Parser class will have two methods:
 
 - Program, that returns the root node of the result parser tree;
-- NumericLiteral, that returns the node for the Number token.
+- NumericLiteral, that returns the node for the Number token. It will be a leaf node, which means it will be the last node in the branch, cause NumericLiteral deriviates to terminal.
 
 
 2. We add to the programming language string literal.
