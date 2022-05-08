@@ -151,3 +151,5 @@ As soon as the Statement node is created and all internal callbacks (for the non
 And such loop repeats until all nodes for all statements are deriviated.
 
 As soon as all statements are deriviated, it means that we reached the end of the program, we return the statementList, which will be the body of our program.
+
+It's important to notice on this step, that not all non-terminals have appropriate AST nodes. Some of them are just helpers. StatementList, for example, doesn't deriviate new node. It's just a helper, that returns list of Statement. Statement is also not a separate node, but just one more helper, the same as Literal, which makes decision which Statement to return and return it.
