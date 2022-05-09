@@ -122,7 +122,7 @@ NumericLiteral      => NUMBER;
 StringLiteral       => STRING;
 ```
 
-Here we added two additional types of nodes: Statement and StatementList.
+Here we added two additional non-terminals: Statement and StatementList.
 
 ```
 StatementsList => Statement | StatementsList Statement;
@@ -159,3 +159,20 @@ And such loop repeats until all nodes for all statements are deriviated.
 As soon as all statements are deriviated, it means that we reached the end of the program, we return the statementList, which will be the body of our program.
 
 It's important to notice on this step, that not all non-terminals have appropriate AST nodes. Some of them are just helpers. StatementList, for example, doesn't deriviate new node. It's just a helper, that returns list of Statement. Statement is also not a separate node, but just one more helper, the same as Literal, which makes decision which Statement to return and return it.
+
+6. By this moment we declared one type of statements, which is called `ExpressionStatement`:
+
+```
+Statement => ExpressionStatement;
+```
+
+There're a lot of different types of statements. Here we'll introduce new such type, which is called `BlockStatement`. Block statements starts with the "{" and ends with the "}". This statement does nothing else than declaring new scope for the program. We can even say that it declares new mini-program or sub-program. It means, that block statement can contain any statement the main program can contain.
+
+So, the grammar for the BlockStatement looks like that:
+
+```
+Statement      => ExpressionStatement | BlockStatement;
+BlockStatement => "{" StatementList | ɛ "}";
+```
+
+Here we use an epsilon symbol, which deriviates to null. It allows us to make non-terminals (in this case StatementList non-terminal) optional. It actually says, taht BlockStatement can be empty or it can contain any amount of statements.
