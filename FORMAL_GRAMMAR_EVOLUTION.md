@@ -351,11 +351,14 @@ Program             => StatementsList;
 StatementsList      => Statement | StatementsList Statement;
 Statement           => ExpressionStatement | BlockStatement | EmptyStatement;
 BlockStatement      => "{" StatementList | ɛ "}";
-ExpressionStatement => Literal ";";
+ExpressionStatement => (Literal | BinaryExpression) ";";
+BinaryExpression => Literal | BinaryExpression ADDITIVE_OPERATOR Literal
 Literal             => NumericLiteral | StringLiteral;
 NumericLiteral      => NUMBER;
 StringLiteral       => STRING
 ```
+
+I use brackets for the ExpressionStatement to show, that at first the part in the brackets should deriviate and only after that we should add ";" to the result of the deriviation to finish the whole expression deriviation.
 
 If we use multiplication operator or round brackets we have a deal with the precedence of the operations. The AST tree should be able to represent this precedence order. And it does it by the level of tree nesting.
 
