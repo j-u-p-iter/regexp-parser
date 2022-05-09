@@ -224,4 +224,4 @@ For the JavaScript language and @typescript-eslint/parser it will look like that
 }
 ```
 
-So, in our parser we'll introduce new BlockStatement Method, that will return new "BlockStatement" node, which looks like the mini version of the root "Program" node.
+So, in our parser we'll introduce new BlockStatement Method, that will return new "BlockStatement" node, which looks like the mini version of the root "Program" node. We'll also modify the Statement method, cause we introduced new type of statement and we need to have the condition to detect what type of the statements we have deal with at every moment of time.
