@@ -180,9 +180,9 @@ Here we use an epsilon symbol, which deriviates to null. It allows us to make no
 The grammar on this step will look like that:
 
 ```
-Program        => StatementsList;
-StatementsList => Statement | StatementsList Statement;
-Statement      => ExpressionStatement;
+Program             => StatementsList;
+StatementsList      => Statement | StatementsList Statement;
+Statement           => ExpressionStatement;
 ExpressionStatement => Literal ";";
 Literal             => NumericLiteral | StringLiteral;
 NumericLiteral      => NUMBER;
