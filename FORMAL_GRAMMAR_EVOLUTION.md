@@ -298,7 +298,7 @@ It gave me the next AST:
         value: 2,
       },
       right: {
-        type: "Right",
+        type: "Literal",
         value: 3,
       }
     }
@@ -360,6 +360,41 @@ StringLiteral       => STRING
 
 I use brackets for the ExpressionStatement to show, that at first the part in the brackets should deriviate and only after that we should add ";" to the result of the deriviation to finish the whole expression deriviation.
 
-If we use multiplication operator or round brackets we have a deal with the precedence of the operations. The AST tree should be able to represent this precedence order. And it does it by the level of tree nesting.
+Let's use the astexplorer again and see what we have for the expression `2 + 3 - 2`:
+
+```
+{
+  type: "Program",
+  body: [{
+    type: "ExpressionStatement",
+    expression: {
+      type: "BinaryExpression",
+      operator: "-",
+      left: {
+        type: "BinaryExpression",
+        operator: "+",
+        left: {
+          type: "Literal",
+          value: 2,
+        },
+        right: {
+          type: "Literal",
+          value: 3,
+        }
+      },
+      right: {
+        type: "Literal",
+        value: 2,
+      }
+    }
+  }]
+}
+```
+
+When we evaluate such type of expressions usually we go from the left to right, evaluating every operator one by one. It means that we start from the "plus" operator, evaluate result of the first BinaryExpression, after that go to the "-" operator and evaluate next BinaryExpression. Actually the precedence order doesn't make any sense in this case, but still it's included in the AST. The precedence of the "+" operator is higher than the precedence of the "-" operator. We can see it by the level of nesting of the BinaryExpression(s). The deeper the BinaryExpression the higher precedence and vice versa. It's like that, cause to evaluate the parent operation we need at first to evaluate child operation at first, which is obvious.
+
+So, here we create the BinaryExpression method, which will return the BinaryExpression node.
+
+9. If we use multiplication operator or round brackets we have a deal with the precedence of the operations. The AST tree should be able to represent this precedence order. And it does it by the level of tree nesting.
 
 There's a rule: the closer operator is located to the starting symbol (the lower nesting level) the lower precedence of the operation. And vise versa - the deeper the BinaryExpression operator the higher precedence of this operator.
