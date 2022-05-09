@@ -182,7 +182,8 @@ The grammar on this step will look like that:
 ```
 Program             => StatementsList;
 StatementsList      => Statement | StatementsList Statement;
-Statement           => ExpressionStatement;
+Statement           => ExpressionStatement | BlockStatement;
+BlockStatement      => "{" StatementList | ɛ "}";
 ExpressionStatement => Literal ";";
 Literal             => NumericLiteral | StringLiteral;
 NumericLiteral      => NUMBER;
