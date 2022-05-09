@@ -89,7 +89,7 @@ As we can see the expression statement in the simplest case is represented by th
 ExpressionStatement => Literal ";";
 ```
 
-The simplest form of ExpressionStatement is the Literal followed by semicolon.
+The simplest form of ExpressionStatement is the Literal followed by semicolon. In our program the semicolon as a delimeter is a mandatory symbol. The delimeter won't be presented in the AST itself. The parser won't return node for the delimeter but instead will just skip it.
 
 So, the next non-terminal will be the ExpressionStatement.
 
@@ -225,3 +225,26 @@ For the JavaScript language and @typescript-eslint/parser it will look like that
 ```
 
 So, in our parser we'll introduce new BlockStatement Method, that will return new "BlockStatement" node, which looks like the mini version of the root "Program" node. We'll also modify the Statement method, cause we introduced new type of statement and we need to have the condition to detect what type of the statements we have deal with at every moment of time.
+
+7. The next statement we'll introduce is called EmptyStatement.
+
+Standalone ";" symbol is valid as a separate statement for many programming languages, including the one we are building. So, let's include it into the result grammar:
+
+```
+Program             => StatementsList;
+StatementsList      => Statement | StatementsList Statement;
+Statement           => ExpressionStatement | BlockStatement | EmptyStatement;
+BlockStatement      => "{" StatementList | ɛ "}";
+ExpressionStatement => Literal ";";
+Literal             => NumericLiteral | StringLiteral;
+NumericLiteral      => NUMBER;
+StringLiteral       => STRING;
+```
+
+In the Parser it will be presented in form of the new EmptyStatement method, that will return the node:
+
+```
+{
+  type: "EmptyStatement",
+}
+```
