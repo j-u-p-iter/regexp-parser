@@ -189,3 +189,35 @@ Literal             => NumericLiteral | StringLiteral;
 NumericLiteral      => NUMBER;
 StringLiteral       => STRING;
 ```
+
+The next step is to determine, how to show the block statements in the AST. Let's open the astexplorer and generate AST for the next program:
+
+```
+{
+  42;
+  
+  "hello";  
+}
+```
+
+For the JavaScript language and @typescript-eslint/parser it will look like that:
+
+{
+  type: "Program",
+  body: [{
+    type: "BlockStatement",
+    body: [{
+      type: "ExpressionStatement",
+      expression: {
+        type: "Literal",
+        value: 42
+      }
+    }, {
+      type: "ExpressionStatement",
+      expression: {
+        value: "Literal",
+        value: "hello",
+      }
+    }]
+  }]
+}
