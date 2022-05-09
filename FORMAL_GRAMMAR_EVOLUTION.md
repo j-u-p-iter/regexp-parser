@@ -223,3 +223,5 @@ For the JavaScript language and @typescript-eslint/parser it will look like that
   }]
 }
 ```
+
+So, in our parser we'll introduce new BlockStatement Method, that will return new "BlockStatement" node, which looks like the mini version of the root "Program" node.
