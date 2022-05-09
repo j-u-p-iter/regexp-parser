@@ -202,6 +202,7 @@ The next step is to determine, how to show the block statements in the AST. Let'
 
 For the JavaScript language and @typescript-eslint/parser it will look like that:
 
+```
 {
   type: "Program",
   body: [{
@@ -221,3 +222,4 @@ For the JavaScript language and @typescript-eslint/parser it will look like that
     }]
   }]
 }
+```
