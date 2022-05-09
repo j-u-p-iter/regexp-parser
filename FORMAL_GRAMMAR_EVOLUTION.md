@@ -1,7 +1,9 @@
-Breif explanation of how the parser works.
+## Breif explanation of how the parser works.
 
 Parser is implemented as a Parser class. It takes some string as an input string. This input string is the program we need to parse. Parse uses Tokenizer under the hood. Tokenizer helps the Parser to split program on different tokens. Tokenizer knows about all possible nodes the program can have. Each time the Parser asks to return the next token (according to the current position of the cursor) the Tokenizer loops through the specification (list of nodes) and checks if there's a specification for the token the Parser tries to parse. If there's such a specification, it returns it to the Parser and Parser includes this node into the result AST and after that continue parsing the program. If it's the end of the input string, the parser stops it's execution returning the result AST tree, if it's not the end of the input string, the parser continues it's execution, asking Tokenizer to return the next token.
 If Tokenizer for some reason can't find an appropriate token for the next input string, it throws an error and as result Parser stops it's execution, throwing an error.
+
+## Another way to explan parser work.
 
 
 1. Our programming language consists of only numbers:
@@ -248,3 +250,90 @@ In the Parser it will be presented in form of the new EmptyStatement method, tha
   type: "EmptyStatement",
 }
 ```
+
+8. Let's comeback to the expressions now. Just to recall a little bit, expressions are the building blocks of the statements. It's something we can evaluate and get some returned value back.
+
+There're different kind of expressions. The easiest expression is just Literal value.
+
+```
+42;
+```
+
+You can ask how is this an expression? Actually absence of the arithmetic operator doesn't mean, that it's not an expression.
+
+When we have an expression like that:
+
+```
+2 + 3;
+```
+
+we say, that it consists of two parts - left and right and that it evaluates to 5. The expression 42 consists of only one part and as result evaluates to itself - to 42.
+
+So, one more time, the Literals are simplest versions of expressions:
+
+```
+ExpressionStatement => Literal";";
+```
+
+The next expression we'll take a look is the "BinaryExpression":
+
+Actually I didn't take this name from nowhere I just used astexplorer and choose JavaScript language and @typescript-eslint/parser for the expression:
+
+```
+2 + 3
+```
+
+It gave me the next AST:
+
+```
+{
+  type: "Program",
+  body: [{
+    type: "ExpressionStatement",
+    expression: {
+      type: "BinaryExpression",
+      operator: "+",
+      left: {
+        type: "Literal",
+        value: 2,
+      },
+      right: {
+        type: "Right",
+        value: 3,
+      }
+    }
+  }]
+}
+```
+
+The grammar for the BinaryExpression `2 + 3` will look like:
+
+```
+BinaryExpression => Literal "+" Literal;
+```
+
+You can tell me, that expressions may be much more complex, than this one. And I agree. For example,
+
+```
+2 + 3 - 2
+```
+
+is also a valid expression and is also called Binary (you can check it in the astexplorer).
+
+The thing is this more complex BinaryExpression contains two parts:
+
+```
+2 + 3
+```
+
+which is BinaryExpression by itself and
+
+```
+- 2
+```
+
+which is the operator and the second part of the BinaryExpression.
+
+If we use multiplication operator or round brackets we have a deal with the precedence of the operations. The AST tree should be able to represent this precedence order. And it does it by the level of nesting.
+
+There's a rule: the closer operator is located to the starting symbol (the lower nesting level) the lower precedence of the operation. And vise versa - the deeper the BinaryExpression operator the higher precedence of this operator.
