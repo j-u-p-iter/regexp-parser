@@ -344,6 +344,19 @@ ADDITIVE_OPERATOR here is the terminal to denote "+" or "-" operators.
 
 Here again we have recursion which will be presented by the loop in the code.
 
+The grammar for the moment looks like this:
+
+```
+Program             => StatementsList;
+StatementsList      => Statement | StatementsList Statement;
+Statement           => ExpressionStatement | BlockStatement | EmptyStatement;
+BlockStatement      => "{" StatementList | ɛ "}";
+ExpressionStatement => Literal ";";
+Literal             => NumericLiteral | StringLiteral;
+NumericLiteral      => NUMBER;
+StringLiteral       => STRING
+```
+
 If we use multiplication operator or round brackets we have a deal with the precedence of the operations. The AST tree should be able to represent this precedence order. And it does it by the level of tree nesting.
 
 There's a rule: the closer operator is located to the starting symbol (the lower nesting level) the lower precedence of the operation. And vise versa - the deeper the BinaryExpression operator the higher precedence of this operator.
