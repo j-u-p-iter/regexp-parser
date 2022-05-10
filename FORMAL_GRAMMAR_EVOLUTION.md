@@ -1,10 +1,21 @@
 ## Breif explanation of how the parser works.
 
-Parser is implemented as a Parser class. It takes some string as an input string. This input string is the program we need to parse. Parse uses Tokenizer under the hood. Tokenizer helps the Parser to split program on different tokens. Tokenizer knows about all possible nodes the program can have. Each time the Parser asks to return the next token (according to the current position of the cursor) the Tokenizer loops through the specification (list of nodes) and checks if there's a specification for the token the Parser tries to parse. If there's such a specification, it returns it to the Parser and Parser includes this node into the result AST and after that continue parsing the program. If it's the end of the input string, the parser stops it's execution returning the result AST tree, if it's not the end of the input string, the parser continues it's execution, asking Tokenizer to return the next token.
-If Tokenizer for some reason can't find an appropriate token for the next input string, it throws an error and as result Parser stops it's execution, throwing an error.
+Parser is implemented as a Parser class. It takes some string as an input string. This input string is the program we need to parse. Parse uses Tokenizer under the hood. Tokenizer helps the Parser to split program on different tokens. Tokenizer knows about all possible nodes the program can have. Parser itself doesn't know anything about the valid lexemes of the input string. Each time the Parser asks to return the next token (according to the current position of the cursor) he asks Tokenizer to do it. The Tokenizer loops through the specification (list of nodes) and checks if there's a specification for the token the Parser tries to parse. If there's such a specification, it returns it to the Parser and Parser includes this node into the result AST and after that continue parsing the program. If it's the end of the input string, the parser stops it's execution returning the result AST tree, if it's not the end of the input string, the parser continues it's execution, asking Tokenizer to return the next token.
+If Tokenizer for some reason can't find the match for the next token, it throws an error and as result Parser stops it's execution, throwing an error.
 
 ## Another way to explan parser work.
 
+```
+{
+  21 + 2 - 1
+}
+```
+
+To better understand the parsing process I suggest we to look at the principles lying under the hood of the Parser from different angel. Let's imagine, that the Parser is the manager of the company. The goal of the company is to provide for the customer the result AST tree for the provided above code snippet. Parser has an employee - Tokenizer, which has responsibility to extract from the code snippet tokens. Only Tokenizer knows about all possible lexemes the input string can contain, only Tokenizer knows how to extract these tokens from the code snippet.
+
+For example, only Tokenizer knows, that to extract numbers from the input string and create token for them we should use /^\d+/ regexp. Parser has no idea, that it's the way to get lexeme from the code. Parser expects on every step either valid token from the Tokenizer, either invalid token from the Tokenizer or the end of the tokens stream (which is null).
+
+So, let's say the client brings to the Parser the provided above code snippet and asks Parser to do the best and to provide the AST tree for this code snippet.
 
 1. Our programming language consists of only numbers:
 
