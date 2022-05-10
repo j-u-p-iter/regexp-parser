@@ -17,6 +17,10 @@ For example, only Tokenizer knows, that to extract numbers from the input string
 
 So, let's say the client brings to the Parser the provided above code snippet and asks Parser to do the best and to provide the AST tree for this code snippet.
 
+Parser gets the input string. The structure of the result AST tree depends on the stream of tokens it get's from the Tokenizer. Parser asks Tokenizer about one token at a time (the token, related to the first lexeme, Tokenizer can detect, starting from the beginning of the input string). As soon as Parser understands what token is the next one, it makes the decision how to continue building the AST tree.
+
+So, just after the Parser starts working with the input string he asks the Tokenizer to do the job and to find the first lexeme it could find in the input string, starting from the very beginning of this string. Tokenizer checks in a loop the code on presence of one of the lexemes he knows about. He uses regexps for that. Again, Tokenizer finds the first match, starting from the beginning of the input string. Tokenizer finds "{" and before sending it to the Parser, prepares such called token - object with additional information about found lexeme Parser could work with this information in a very convinient way. It would be correct to say that it's a form of report from Tokenizer employee for the Parser manager.
+
 1. Our programming language consists of only numbers:
 
 ```
