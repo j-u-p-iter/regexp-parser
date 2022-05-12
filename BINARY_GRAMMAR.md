@@ -120,7 +120,7 @@ The result tree will look like:
           },
           right: {
             type: "Literal",
-            value: 1,
+            value: 1
           }
         }
       ]
@@ -136,3 +136,5 @@ This tree is equivalent to the expression:
 ```
 
 The deeper the operator in the tree the higher the precedence of the operator and vice versa. It's because the tree is evaluated from the bottom to the top, from the leaves of the tree, to the root. It means, that at first the deepest BinaryExpression is resolved, after that the BinaryExpression the level above and etc. In other words to evaluate the parent operation we need at first to evaluate the child operation.
+
+And we slowly came to the definition of the ambiguous grammar. Ambiguos grammar is the grammar that makes it possible to deriviate more than one AST tree for the same input string.
