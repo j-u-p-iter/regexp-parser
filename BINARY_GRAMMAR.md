@@ -135,3 +135,4 @@ This tree is equivalent to the expression:
 (6 / 3) - 1
 ```
 
+The deeper the operator in the tree the higher the precedence of the operator and vice versa. It's because the tree is evaluated from the bottom to the top, from the leaves of the tree, to the root. It means, that at first the deepest BinaryExpression is resolved, after that the BinaryExpression the level above and etc.
