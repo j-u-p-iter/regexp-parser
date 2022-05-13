@@ -188,3 +188,34 @@ primary        → NUMBER | STRING | "true" | "false" | "nil"
 So, we sorted out the production rules according to the precedence. The highest precedence is at the bottom - it will form the bottom of the AST. The lowest precedence is at the top - and it will be the root of the tree.
 
 The only way how we can match tokens with the provided production rules is by matching them with the static symbols. For the `equality` non-terminal we'll match the token with the comparison operators: "!=" and "==". If there's such type of operator, than we have a deal with the equality and it means that on the left hand side from the operator we have the comparison and on the right hand side from the operator we have either comparison or at least one combination of comparison operator and comparison.
+
+The rule for the equality looks like that:
+
+```
+equality → comparison ( ( "!=" | "==" ) comparison )* ;
+```
+
+and the code for the equality looks like that:
+
+```
+private Equality() {
+  let expr = new this.Comparison();
+
+  while (match(BANG_EQUAL, EQUAL_EQUAL)) {
+    const operator = previous();
+    const right = new this.Comparison();
+    
+    expr = new this.Binary(expr, operator, right);
+  }
+
+  return expr;
+}
+```
+
+First of all - each grammar rule becomes a method inside this new Parser class, responsible for building the parser.
+
+Each method for parsing a grammar rule produces a syntax tree for that rule and returns it to the caller. When the body of the rule contains a nonterminal— a reference to another rule — we call that other rule’s method. The first call returns the root of the result AST tree, the second call returns the next level after the root, the last call returns the leafs of the AST tree. The last call returns first, because the parent call can't return until the child call returns. The root node of the tree will be returned in the very end and will be containing the whole tree with all child nodes returned before.
+
+So, let's go step by step throug this method:
+
+1. The first comparison nonterminal in the body of the production rule translates to the first call to the this.Comparison() in the method. 
