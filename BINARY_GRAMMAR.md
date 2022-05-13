@@ -218,4 +218,11 @@ Each method for parsing a grammar rule produces a syntax tree for that rule and 
 
 So, let's go step by step throug this method:
 
-1. The first comparison nonterminal in the body of the production rule translates to the first call to the this.Comparison() in the method. 
+1. The first comparison nonterminal in the body of the production rule translates to the first call to the this.Comparison in the method. So, nomatter what token after the first one, we always call this.Comparison.
+2. After we check if the token matches with the equality operators:
+
+```
+while (match(BANG_EQUAL, EQUAL_EQUAL)) { ... }
+```
+
+We do it in a loop according to this part of the grammar: `( ( "!=" | "==" ) comparison )*`. In other words we assume that after the second operand there can be the equality operator again and probably after the third one again. So, we do the check until we can't find equality operator after the last consumed operand.
