@@ -184,3 +184,7 @@ unary          → ( "!" | "-" ) unary
 primary        → NUMBER | STRING | "true" | "false" | "nil"
                | "(" expression ")" ;
 ```
+
+So, we sorted out the production rules according to the precedence. The highest precedence is at the bottom - it will form the bottom of the AST. The lowest precedence is at the top - and it will be the root of the tree.
+
+The only way how we can match tokens with the provided production rules is by matching them with the static symbols. For the `equality` non-terminal we'll match the token with the comparison operators: "!=" and "==". If there's such type of operator, than we have a deal with the equality and it means that on the left hand side from the operator we have the comparison and on the right hand side from the operator we have either comparison or at least one combination of comparison operator and comparison.
