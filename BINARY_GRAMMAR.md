@@ -138,3 +138,49 @@ The deeper the operator in the tree the higher the precedence of the operator an
 And we slowly came to the definition of the ambiguous grammar. Ambiguos grammar is the grammar that makes it possible to deriviate more than one AST tree for the same input string.
 
 Is this a problem. It's a real problem, cause we can just generate incorrect tree and evaluate incorrect result.
+
+To solve the problem with ambiguosity we need to take into an account the precedence and associativity in the grammar.
+
+`Precedence` determines which operator is evaluated first in an expression containing a mixture of different operators. Precedence rules tell us that we evaluate the / before the - in the above example. Operators with higher precedence are evaluated before operators with lower precedence.
+
+`Associativity` determines which operator is evaluated first in a series of the same operator. When an operator is left-associative (think “left-to-right”), operators on the left evaluate before those on the right. Since - is left-associative, this expression:
+
+```
+5 - 3 - 1
+```
+is equivalent to:
+```
+(5 - 3) - 1
+```
+
+Assignment, on the other hand, is right-associative. This:
+
+```
+a = b = c
+```
+is equivalent to:
+```
+a = (b = c)
+```
+
+Without well-defined precedence and associativity, an expression that uses multiple operators is ambiguous—it can be parsed into different syntax trees, which could in turn evaluate to different results.
+
+Right now, the grammar stuffs all expression types into a single expression rule. That same rule is used as the non-terminal for operands, which lets the grammar accept any kind of expression as a subexpression, regardless of whether the precedence rules allow it.
+
+So, we need to change the grammar the way it to accept different types of expressions according to the precedence of the operators it includes.
+
+We should define a separate rule for each precedance level.
+
+The result grammar will look like that:
+
+```
+expression     → equality ;
+equality       → comparison ( ( "!=" | "==" ) comparison )* ;
+comparison     → term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
+term           → factor ( ( "-" | "+" ) factor )* ;
+factor         → unary ( ( "/" | "*" ) unary )* ;
+unary          → ( "!" | "-" ) unary
+               | primary ;
+primary        → NUMBER | STRING | "true" | "false" | "nil"
+               | "(" expression ")" ;
+```
