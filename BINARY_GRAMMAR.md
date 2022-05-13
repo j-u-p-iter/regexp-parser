@@ -25,7 +25,7 @@ Let's say we need to parse the next math expression, using provided above gramma
 What parser will do is:
 
 - split the input string of the expression on multiple tokens (tokens for the numbers 6, 3 and 1 and tokens for the operators / and -).
-- create AST tree, based on the production rules of the grammar. The parser will try to match the token stream with the production rules. This way the Parser detects which production rule is responsible for which part of the expression and as result for which part of the result AST tree. If there's a situation when the same input string produces two different AST trees, then the result of the further interpretation of the tree can be incorrect.
+- create AST tree, based on the production rules of the grammar. The parser will try to match the token stream with the production rules. This way the Parser detects which production rule is responsible for which part of the expression and as result for which part of the result AST tree. If there's a situation when the same input string produces two different AST trees (in other words the same set of tokens can be deriviated by different production rules), then the result of the further interpretation of the tree can be incorrect.
 
 The problem with the above input string and the grammar is that we can generate two different trees for the same input string, using the same grammar.
 
