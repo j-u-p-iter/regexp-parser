@@ -224,3 +224,15 @@ while (match(BANG_EQUAL, EQUAL_EQUAL)) { ... }
 ```
 
 We do it in a loop according to this part of the grammar: `( ( "!=" | "==" ) comparison )*`. In other words we assume that after the second operand there can be the equality operator again and probably after the third one again. So, we do the check until we can't find equality operator after the last consumed operand.
+
+In the while loop we grab the matched operator token so we can track which kind of equality expression we have. After that we call the this.Comparison method again to parse the right hand side operand. At the end we combine the operator and its two operands into a new syntax tree node.
+
+```
+while (match(BANG_EQUAL, EQUAL_EQUAL)) {
+  const operator = previous();
+  const right = comparison();
+  expr = new Binary(expr, operator, right);
+}
+```
+
+If after the second operand there's new equality operator, the new while loop starts and we create new Binary node. It's very important to notice, that each new binary node becomes parent node for the binary node created on the previous step and etc. It means, that the first operation from the left will be presented into the first binary node and will be placed at the very bottom of the result AST tree, which means it will have the highest `associativity`, which is absolutely correct for the equality operators (the leftmost equality operator has the highest associativity, the rightmost equality operator has the lowest associativity).
