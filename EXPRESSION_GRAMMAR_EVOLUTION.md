@@ -125,3 +125,5 @@ The tree for the expression `4 + 3 * 2` looks like:
   }]
 }
 ```
+
+Here the right operand of the root binary expression contains multiplicative binary expression and the left operand contains literal value. It's like that, cause the precedence of the multiplicative operator is higher than the additive operator. The deeper nested the expression, the higher execution priority it has.
