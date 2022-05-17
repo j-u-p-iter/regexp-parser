@@ -34,4 +34,4 @@ NumericLiteral           => NUMBER;
 StringLiteral            => STRING;
 ```
 
-The multiply operator has the higher precedence than the additive operator. It means that in the grammar the production rule for the MultiplicationExpression should come before the AdditiveExpression, because the parser should be able to find the multiplication expression at first. The grammar for the MultiplicationExpression production is similar to the grammar for the AdditiveExpression. Operand and operators are different, but the structure of the grammar is the same.
+The multiply operator has the higher precedence than the additive operator. It means that in the grammar the production rule for the MultiplicativeExpression should come before the AdditiveExpression, because the parser should be able to find the multiplication expression at first. The grammar for the MultiplicativeExpression production is similar to the grammar for the AdditiveExpression. Operand and operators are different, but the structure of the grammar is the same.
