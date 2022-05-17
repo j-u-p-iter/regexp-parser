@@ -11,7 +11,7 @@ StringLiteral       => STRING;
 
 2. Let's add the `AdditiveExpression`. The parsers starts matching the tokens from the code with the grammar, moving from the top to the bottom. Literal is the
 part of the `AdditiveExpression`, so, the logical conclusion is that parser should find at first the `AdditiveExpression` and if it doesn't it find it there,
-it should try to find at least the literal.
+it should try to find at least the Literal.
 
 According to this the `AdditiveExpression` production rule should be placed above the production rule for the literal.
 
@@ -26,12 +26,12 @@ StringLiteral       => STRING;
 3. The next expression we'll add is the MultiplicativeExpression. This expression includes * | / operators despite the fact it's called "multiplication", because actually to devide by 5 is to multiply by 1/5.
 
 ```
-ExpressionStatement      => MultiplicativeExpression;
-MultiplicativeExpression => AdditiveExpression ((* | /) AdditiveExpression)*;
-AdditiveExpression       => Literal ((+ | -) Literal)*;
+ExpressionStatement      => AdditiveExpression;
+AdditiveExpression       => MultiplicativeExpression ((+ | -) MultiplicativeExpression)*;
+MultiplicativeExpression => Literal ((* | /) Literal)*;
 Literal                  => NumericLiteral | StringLiteral;
 NumericLiteral           => NUMBER;
 StringLiteral            => STRING;
 ```
 
-The multiply operator has the higher precedence than the additive operator. It means that in the grammar the production rule for the MultiplicativeExpression should come before the AdditiveExpression, because the parser should be able to find the multiplication expression at first. The grammar for the MultiplicativeExpression production is similar to the grammar for the AdditiveExpression. Operand and operators are different, but the structure of the grammar is the same.
+The multiply operator has the higher precedence than the additive operator. It means that in the grammar the production rule for the MultiplicativeExpression should come after the AdditiveExpression. Parser goes matching from the top of the Grammar tree to the bottom. The later the production rule is in the grammar the deeper it will be in the result AST tree, the earlier it will be executed. So, the rule of thumb - if you want the production is executed and evaluated earlier - the it should be located deeper in the grammar and result in the AST tree.
