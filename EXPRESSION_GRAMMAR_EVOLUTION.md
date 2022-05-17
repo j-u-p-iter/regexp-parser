@@ -22,3 +22,16 @@ Literal             => NumericLiteral | StringLiteral;
 NumericLiteral      => NUMBER;
 StringLiteral       => STRING;
 ```
+
+3. The next expression we'll add is the MultiplicationExpression. This expression includes * | / operators despite the fact it's called "multiplication", because actually to devide by 5 is to multiply by 1/5.
+
+```
+ExpressionStatement      => MultiplicationExpression;
+MultiplicationExpression => AdditiveExpression ((* | /) AdditiveExpression)*;
+AdditiveExpression       => Literal ((+ | -) Literal)*;
+Literal                  => NumericLiteral | StringLiteral;
+NumericLiteral           => NUMBER;
+StringLiteral            => STRING;
+```
+
+The multiply operator has the higher precedence than the additive operator. It means that in the grammar the production rule for the MultiplicationExpression should come before the AdditiveExpression, because the parser should be able to find the multiplication expression at first.
