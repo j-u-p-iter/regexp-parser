@@ -26,8 +26,8 @@ StringLiteral       => STRING;
 3. The next expression we'll add is the MultiplicationExpression. This expression includes * | / operators despite the fact it's called "multiplication", because actually to devide by 5 is to multiply by 1/5.
 
 ```
-ExpressionStatement      => MultiplicationExpression;
-MultiplicationExpression => AdditiveExpression ((* | /) AdditiveExpression)*;
+ExpressionStatement      => MultiplicativeExpression;
+MultiplicativeExpression => AdditiveExpression ((* | /) AdditiveExpression)*;
 AdditiveExpression       => Literal ((+ | -) Literal)*;
 Literal                  => NumericLiteral | StringLiteral;
 NumericLiteral           => NUMBER;
