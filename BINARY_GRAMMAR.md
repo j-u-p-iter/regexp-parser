@@ -239,4 +239,33 @@ If after the second operand there's new equality operator, the new while loop st
 
 It's very important to notice, that each new binary node becomes parent node for the binary node created on the previous step and etc. It means, that the first operation from the left will be presented into the first binary node and will be placed at the very bottom of the result AST tree, which means it will have the highest `associativity`, which is absolutely correct for the equality operators (the leftmost equality operator has the highest associativity, the rightmost equality operator has the lowest associativity).
 
-The second thing, that is also very important to notice is that if the parser never encounters an equality operator, then it never enters the loop. In that case, the equality() method effectively calls and returns comparison(). In that way we can say, that the equality production rule was just skipped and we go to the next production rule, which is "comparison". The same happens with any another further production rule. If there's no comparison operator, the comparison production rule will be eventually skipped and we'll switch to the next rule and etc. This is how we can easily can come to the situation, when the expression is resolved as just a number, in case there're no any operators on each step.
+The second thing, that is also very important to notice is that if the parser never encounters an equality operator, then it never enters the loop. In that case, the equality() method effectively calls and returns this.Comparison(). In that way we can say, that the equality production rule was just skipped and we go to the next production rule, which is "comparison". The same happens with any another further production rule. If there's no comparison operator, the comparison production rule will be eventually skipped and we'll switch to the next rule and etc. This is how we can easily can come to the situation, when the expression is resolved as just a number, in case there're no any operators on each step.
+
+According to the provided above grammar the next production rule (from the top) is the production rule for the ComparisonExpression:
+
+```
+comparison     → term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
+```
+
+The code for the ComparisonExpression is absolutely identical by it's form to the code for the:
+
+```
+private Comparison() {
+  let expr = new this.Term();
+
+  while (match(GREATER, GREATER_EQUAL, LESS, LESS_EQUAL)) {
+    const operator = previous();
+    const right = new this.Term();
+    
+    expr = new this.Binary(expr, operator, right);
+  }
+
+  return expr;
+}
+```
+
+The Comparison method of the Parser is related to the comparison production rule of the grammar.
+
+According to the grammar there always should be Term befor the comparison operator. This is why we call the this.Term method at first. After that the same way as previously we match the next token with one of the comparison operators. In case we find the operator we go inside the loop and track the operator and the right node and create the BinaryExpression node. This node will be the first node of the comparison production rule and is related to the leftmost comparison expression. As result this node will be located at the bottom of the result AST comparison tree, according to it's associativity. We loop through all comparison operators and create the result comparison expression.
+
+And again, if the parser never matches an comparison operator, then it never enters the loop. In that case, the this.Comarison method effectively calls and returns this.Term(). In that way we can say, that the equality production rule was just skipped and we go to the next production rule, which is "term". The same happens with any another further production rule. If there's no additive operator, the term production rule will be eventually skipped and we'll switch to the next rule and etc. This is how we can easily can come to the situation, when the expression is resolved as just a number, in case there're no any operators on each step.
