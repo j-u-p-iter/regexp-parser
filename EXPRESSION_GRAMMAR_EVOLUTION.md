@@ -95,7 +95,7 @@ StringLiteral            => STRING;
 The multiply operator has the higher precedence than the additive operator. It means that in the grammar the production rule for the MultiplicativeExpression should come after the AdditiveExpression. Parser goes matching from the top of the Grammar tree to the bottom. The later the production rule is in the grammar the deeper it will be in the result AST tree, the earlier it will be executed. So, the rule of thumb - if you want the production is executed and evaluated earlier - then it should be located deeper in the grammar and result in the AST tree.
 
 
-The tree for the expression `2 * 3 - 1` looks like:
+The tree for the expression `4 + 3 * 2` looks like:
 
 ```
 {
@@ -104,22 +104,22 @@ The tree for the expression `2 * 3 - 1` looks like:
     type: "ExpressionStatement",
     expression: {
       type: "BinaryExpression",
-      operator: "-",
+      operator: "+",
       left: {
+        type: "NumericLiteral",
+        value: 4,
+      },
+      right: {
         type: "BinaryExpression",
         operator: "*",
         left: {
           type: "NumericLiteral",
-          value: 2
+          value: 3
         },
         right: {
           type: "NumericLiteral",
-          value: 3,
+          value: 2,
         }
-      },
-      right: {
-        type: "NumericLiteral",
-        value: 1,
       }
     }
   }]
