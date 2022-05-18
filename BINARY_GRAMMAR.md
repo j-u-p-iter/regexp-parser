@@ -328,3 +328,5 @@ private Unary() {
 ```
 
 Here we can see that if we there's not an appropriate unary operator the unary deriviates eventually to the primary expression. In other words it returns the result of the this.Primary method, which we'll describe later.
+
+If there's unary operator we get the operator itself and call Unary method again, cause there can be at least one more unary operator. So, we recursively call unary until we consume all chain of the unary operators. At the end we call the this.UnaryNode method, which returns the UnaryExpression node.
