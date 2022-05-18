@@ -192,3 +192,5 @@ COMPARISON_OPERATOR      => ">" | ">=" | "<" | "<=";
 ADDITIVE_OPERATOR        => "+" | "-";
 MULTIPLICATIVE_OPERATOR  => "*" | "/";
 ```
+
+Here we can see that the UnaryExpression deriviates to either Literal, if there's not "!" or "-" operators or to itself. The construction `((! | -) UnaryExpression)*` means, that the UnaryExpression can deriviate eventually to `!!2`, `!-1`, `--!2` and etc., which is also unusual looking but still valid unary expression.
