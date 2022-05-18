@@ -166,3 +166,29 @@ COMPARISON_OPERATOR      => ">" | ">=" | "<" | "<=";
 ADDITIVE_OPERATOR        => "+" | "-";
 MULTIPLICATIVE_OPERATOR  => "*" | "/";
 ```
+
+6. Here we'll introduce one more kind of expression (alongside the binary expression) which is called the unary expression. Examples of unary expressions are:
+
+```
+-1; 
+
+!2;
+```
+
+The precedence of the unary expression is higher than the precedence of any binary expression and lower than the precedence of the Primary expression (which is literal and will be shown later). As result the grammar for the result tree will look like:
+
+```
+ExpressionStatement      => EqualityExpression;
+EqualityExpression.      => ComparisonExpression (EQUALITY_OPERATOR ComparisonExpression)*;
+ComparisonExpression     => AdditiveExpression (COMPARISON_OPERATOR AdditiveExpression)*;
+AdditiveExpression       => MultiplicativeExpression (ADDITIVE_OPERATOR MultiplicativeExpression)*;
+MultiplicativeExpression => Literal (MULTIPLICATIVE_OPERATOR Literal)*;
+UnaryExpression          => Literal | ((! | -) UnaryExpression)*;
+Literal                  => NumericLiteral | StringLiteral;
+NumericLiteral           => NUMBER;
+StringLiteral            => STRING;
+
+COMPARISON_OPERATOR      => ">" | ">=" | "<" | "<=";
+ADDITIVE_OPERATOR        => "+" | "-";
+MULTIPLICATIVE_OPERATOR  => "*" | "/";
+```
