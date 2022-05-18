@@ -326,3 +326,5 @@ private Unary() {
   return this.Primary();
 }
 ```
+
+Here we can see that if we there's not an appropriate unary operator the unary deriviates eventually to the primary expression. In other words it returns the result of the this.Primary method, which we'll describe later.
