@@ -309,3 +309,20 @@ private Factor() {
 ```
 
 That's all of the binary operators, parsed with the correct precedence and associativity.
+
+The next by precedence according to the grammar is the unary production for the Unary expression.
+
+The code for the unary production looks like:
+
+```
+private Unary() {
+  if (match(BANG, MINUS)) {
+    const operator = previous();
+    const right = this.Unary();
+    
+    return new this.UnaryNode(operator, right);
+  }
+
+  return this.Primary();
+}
+```
