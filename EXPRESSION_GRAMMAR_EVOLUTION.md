@@ -128,13 +128,33 @@ The tree for the expression `4 + 3 * 2` looks like:
 
 Here the right operand of the root binary expression contains multiplicative binary expression and the left operand contains literal value. It's like that, cause the precedence of the multiplicative operator is higher than the additive operator. The deeper nested the expression, the higher execution priority it has.
 
-4. The next binary expression we'll introduce is the ComparisonExpression. This is the type of the expression that connects operands with one of the operans: ">" | ">=" | "<" | "<=". 
+4. The next binary expression we'll introduce is the ComparisonExpression. This is the type of the expression that connects operands with one of the operators: ">" | ">=" | "<" | "<=". 
 The precedence of such type of operators is lower than the precedence of additive operators. It means, that in the AST tree such type of BinaryExpression nodes should appear above the additive BinaryExpression(s).
 
 According to this the formal grammar should look this way:
 
 ```
 ExpressionStatement      => ComparisonExpression;
+ComparisonExpression     => AdditiveExpression (COMPARISON_OPERATOR AdditiveExpression)*;
+AdditiveExpression       => MultiplicativeExpression (ADDITIVE_OPERATOR MultiplicativeExpression)*;
+MultiplicativeExpression => Literal (MULTIPLICATIVE_OPERATOR Literal)*;
+Literal                  => NumericLiteral | StringLiteral;
+NumericLiteral           => NUMBER;
+StringLiteral            => STRING;
+
+COMPARISON_OPERATOR      => ">" | ">=" | "<" | "<=";
+ADDITIVE_OPERATOR        => "+" | "-";
+MULTIPLICATIVE_OPERATOR  => "*" | "/";
+```
+
+5. The next and the final binary expression we'll introduce is such called EqualityExpression. This is the type of the expression that connects operands with one of the operators: "!=" or "==".
+The precedence of such type of operators is lower than the precedence of the comparison operators. It means, that in the AST tree such type of BinaryExpression nodes should appear above the comarison BinaryExpression(s).
+
+According to this the result formal grammar should look like this:
+
+```
+ExpressionStatement      => EqualityExpression;
+EqualityExpression.      => ComparisonExpression (EQUALITY_OPERATOR ComparisonExpression)*;
 ComparisonExpression     => AdditiveExpression (COMPARISON_OPERATOR AdditiveExpression)*;
 AdditiveExpression       => MultiplicativeExpression (ADDITIVE_OPERATOR MultiplicativeExpression)*;
 MultiplicativeExpression => Literal (MULTIPLICATIVE_OPERATOR Literal)*;
