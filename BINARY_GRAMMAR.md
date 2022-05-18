@@ -295,13 +295,13 @@ Again, everything is identical to the previous two methods. The only two differe
 And for the highest by precedence binary expression the code looks like this:
 
 ```
-private Expr factor() {
-  Expr expr = unary();
+private Factor() {
+  let expr = this.Unary();
 
   while (match(SLASH, STAR)) {
-    Token operator = previous();
-    Expr right = unary();
-    expr = new Expr.Binary(expr, operator, right);
+    const operator = previous();
+    const right = this.Unary();
+    expr = new Binary(expr, operator, right);
   }
 
   return expr;
