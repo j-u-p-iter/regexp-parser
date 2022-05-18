@@ -247,7 +247,7 @@ According to the provided above grammar the next production rule (from the top) 
 comparison     → term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
 ```
 
-The code for the ComparisonExpression is absolutely identical by it's form to the code for the:
+The code for the ComparisonExpression is absolutely identical by it's form to the code for the EqualityExpression:
 
 ```
 private Comparison() {
@@ -266,6 +266,44 @@ private Comparison() {
 
 The Comparison method of the Parser is related to the comparison production rule of the grammar.
 
-According to the grammar there always should be Term befor the comparison operator. This is why we call the this.Term method at first. After that the same way as previously we match the next token with one of the comparison operators. In case we find the operator we go inside the loop and track the operator and the right node and create the BinaryExpression node. This node will be the first node of the comparison production rule and is related to the leftmost comparison expression. As result this node will be located at the bottom of the result AST comparison tree, according to it's associativity. We loop through all comparison operators and create the result comparison expression.
+According to the grammar there always should be the Term befor the comparison operator. This is why we call the `this.Term` method at first. After that the same way as previously we match the next token with one of the comparison operators. In case we find the operator we go inside the loop and track the operator and the right node and create the BinaryExpression node. This node will be the first node of the comparison production rule and is related to the leftmost comparison expression. As result this node will be located at the bottom of the result AST comparison tree, according to it's associativity. We loop through all comparison operators and create the result comparison expression tree.
 
 And again, if the parser never matches an comparison operator, then it never enters the loop. In that case, the this.Comarison method effectively calls and returns this.Term(). In that way we can say, that the equality production rule was just skipped and we go to the next production rule, which is "term". The same happens with any another further production rule. If there's no additive operator, the term production rule will be eventually skipped and we'll switch to the next rule and etc. This is how we can easily can come to the situation, when the expression is resolved as just a number, in case there're no any operators on each step.
+
+The remaining two binary operator rules (ADDITIVE AND MULTIPLICATIVE operators) follow the same pattern.
+ 
+In the order of the precedence the first operation is the addition and substraction. This operation has lower precedence so it goes above the multiplication and devision in the AST tree.
+ 
+```
+private Term() {
+  let expr = this.Factor();
+
+  while (match(MINUS, PLUS)) {
+    const operator = previous();
+    right = this.Factor();
+    expr = new this.Binary(expr, operator, right);
+  }
+
+  return expr;
+}
+```
+
+Again, everything is identical to the previous two methods. The only two differences are:
+- the operators we match trying to enter the loop;
+- the functions we call for the operands.
+
+And for the highest by precedence binary expression the code looks like this:
+
+```
+private Expr factor() {
+  Expr expr = unary();
+
+  while (match(SLASH, STAR)) {
+    Token operator = previous();
+    Expr right = unary();
+    expr = new Expr.Binary(expr, operator, right);
+  }
+
+  return expr;
+}
+```
