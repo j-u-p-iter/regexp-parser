@@ -307,3 +307,5 @@ private Factor() {
   return expr;
 }
 ```
+
+That's all of the binary operators, parsed with the correct precedence and associativity.
