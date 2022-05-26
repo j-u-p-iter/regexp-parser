@@ -78,3 +78,23 @@ i + 1;
 ```
 
 are syntactically valid statements--they consist of an expression followed by a semicolon--but in each case, they compute a value without doing anything with it, so the computed value is discarded, and the statement is useless. But if the "degenerate" statements in this paragraph don't make much sense to you, don't worry; it's because they, frankly, don't make much sense.
+
+The only kind of a Statement we're looking at for now is the ExpressionStatement. It's an Expression followed by semicolomn:
+
+```
+ExpressionStatement = Expression ";";
+```
+
+And the code for the ExpressionStatement looks like:
+
+```
+ExpressionStatement() {
+  const expression = thie.Expression();
+  this._eat(";");
+  
+  return {
+    type: "ExpressionStatement",
+    expression,
+  };
+}
+```
