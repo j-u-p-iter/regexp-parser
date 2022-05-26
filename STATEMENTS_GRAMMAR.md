@@ -6,7 +6,7 @@ All that's said above can be expressed in the next grammar:
 
 ```
 Program        => StatementsList EOF;
-StatementsList => Statement | StatementsList Statement; 
+StatementsList => Statement | ɛ | StatementsList Statement; 
 ```
 
 This is equivalent to the next code:
