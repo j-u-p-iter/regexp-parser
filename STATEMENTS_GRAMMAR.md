@@ -20,7 +20,7 @@ isAtEnd() {
 }
 
 StatementsList() {
-  const statementsList = [this.Statement()];
+  const statementsList = [];
   
   while(!isAtEnd()) {
     statementsList.push(this.Statement());
@@ -31,7 +31,7 @@ StatementsList() {
 ```
 
 
-Initially the `statementsList` variable contains one Statement, cause according to the grammar the StatementsList is presented by at least one Statement till the end of the file (EOF) is reached.
+Initially the `statementsList` variable contains no statements, cause according to the grammar the StatementsList can be empty (ɛ).
 
 After we are checking the presence of other Statement(s). And, if there is no the end of the file, it means, that there is another statement. This way we're looping through all the statements till the end of the file.
 
