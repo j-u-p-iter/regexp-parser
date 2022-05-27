@@ -111,3 +111,7 @@ BlockStatment() {
   };
 }
 ```
+
+Here we just skip open and close curly braces. We don't need to preserve them in the result AST structure. And after, we return the "BlockStatement" node with the list of statements.
+
+Everything is pretty easy and trivial.
