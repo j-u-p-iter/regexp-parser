@@ -81,4 +81,4 @@ And, the AST for this program looks like this:
 }
 ```
 
-As we can see the nodes of the "Program" and "BlockStatement" types are very similar. They all have "body" property with an Array type. The body of both nodes are array of statements. This is what makes BlockStatement(s) look like Program in form of AST format.
+As we can see the nodes of the "Program" and "BlockStatement" types are very similar. They all have "body" property with an Array type. The body of both nodes are array of statements. This is what makes BlockStatement(s) look like Program in form of AST format, which is an additional proof, that "BlockStatement" is a mini-program.
