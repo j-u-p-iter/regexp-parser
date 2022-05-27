@@ -82,3 +82,32 @@ And, the AST for this program looks like this:
 ```
 
 As we can see the nodes of the "Program" and "BlockStatement" types are very similar. They all have "body" property with an Array type. The body of both nodes are array of statements. This is what makes BlockStatement(s) look like Program in form of AST format, which is an additional proof, that "BlockStatement" is a mini-program.
+
+The grammar for the BlockStatement is also similar to the grammar for the Program:
+
+```
+Program             => StatementsList EOF;
+StatementsList      => Statement | ɛ | StatementsList Statement; 
+Statement           => ExpressionStatement | BlockStatement;
+ExpressionStatement => Expression ";"
+BlockStatement      => "{" StatementsList "}"
+```
+
+Since StatementsList and as result the whole Program can be empty, the BlockStatement which depends on the StatementsList also can be empty.
+
+The piece of code for the BlockStatement looks the next way:
+
+```
+BlockStatment() {
+  this._eat("{");
+  
+  const statementsList = this.StatementsList();
+  
+  this._eat("}")
+  
+  return {
+    type: "BlockStatement",
+    body: statementsList,
+  };
+}
+```
