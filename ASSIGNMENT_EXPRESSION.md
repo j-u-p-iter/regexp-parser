@@ -32,10 +32,10 @@ The interesting thing here is that the grammar for the AssignmentExpression is r
 
 Such type of right-recursive grammars is not a problem for the descent parser implementation compared to the left-recursive grammars we've seen previously. It's not a problem, cause we always can add some condition before the AssignmentExpression call not to call AssignmentExpression infinite amount of times.
 
-Let's say we have such left-recursive grammar:
+For example, for the grammar provided above we'll have a condition before the AssignmentExpression call, that will check if the "=" operator exists. If this operator exists - we expect to have an AssignmentExpression on the right hand side from the operator. Otherwice we just scip the rucursive call of the AssignmentExpression and it will never be called again. This is how we can prevent infinite recursive call.
+
+For the left-recursive grammar, like for the provided below, it doesn't work, cause the recursive call is on the firts position and there's no way to call the P method by some condition. As result, it will result into the infinite loop.
 
 ```
-P => P "+" N;
+P => P "+" N | F;
 ```
-
-For the left-recursive grammars such trick is not possible, cause the first thing we do in the code for the parser is recursively calling the method that stands for the P nonterminal. It's not possible to call it under the condition to prevent infinite recursive calls.
