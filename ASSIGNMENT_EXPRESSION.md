@@ -35,6 +35,7 @@ According to this the grammar for the AssignmentExpression looks like this:
  *
  * AssignmentExpression => IDENTIFIER ASSIGNMENT_OPERATOR AssignmentExpression | EqualityExpression
  */
+ 
 AssignmentExpression => IDENTIFIER "=" AssignmentExpression | EqualityExpression;
 ```
 
