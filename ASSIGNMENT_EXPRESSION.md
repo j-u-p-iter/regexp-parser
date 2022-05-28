@@ -20,12 +20,22 @@ This expression consists of:
 - right side, which is represented by the ADDITIVE_EXPRESSION;
 - assignment operator "=".
 
-Assignment operation evaluates after any operation on the right hand side of the assignment operator. It means that the precedence of the AssignmentExpression is even lower than the precedence of the ComparisonExpression. So, the assignment expression is the lowest by precendence among of all expressions.
+Assignment operation evaluates after any operation on the right hand side of the assignment operator. It means that the precedence of the AssignmentExpression is even lower than the precedence of the EqualityExpression. So, the assignment expression is the lowest by precendence among of all expressions.
 
 According to this the grammar for the AssignmentExpression looks like this:
 
 ```
-AssignmentExpression => IDENTIFIER "=" AssignmentExpression | ComparisonExpression;
+/** 
+ * If we have ASSIGNMENT_OPERATOR:
+ * - we expect the IDENTIFIER (variable) in front of the ASSIGNMENT_OPERATOR
+ * - the expression after the ASSIGNMENT_OPERATOR 
+ *
+ * If there is not ASSIGNMENT_OPERATOR we expect to have one of the further 
+ *   expressions, starting from the EqualityExpression
+ *
+ * AssignmentExpression => IDENTIFIER ASSIGNMENT_OPERATOR AssignmentExpression | EqualityExpression
+ */
+AssignmentExpression => IDENTIFIER "=" AssignmentExpression | EqualityExpression;
 ```
 
 The interesting thing here is that the grammar for the AssignmentExpression is right-recursive, cause the recursive refference to AssignmentExpression nonterminal is located at the right hand side of the production rule.
