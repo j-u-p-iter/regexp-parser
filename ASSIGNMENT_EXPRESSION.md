@@ -45,6 +45,12 @@ Such type of right-recursive grammars is not a problem for the descent parser im
 
 For example, for the grammar provided above we'll have a condition before the AssignmentExpression call, that will check if the "=" operator exists. If this operator exists - we expect to have an AssignmentExpression on the right hand side from the operator. Otherwice we just scip the rucursive call of the AssignmentExpression and it will never be called again. This is how we can prevent infinite recursive call.
 
+We need to make recursive call, cause the assignment operations can be chained like:
+
+```
+x = y = 42;
+```
+
 For the left-recursive grammar, like for the provided below, it doesn't work, cause the recursive call is on the firts position and there's no way to call the P method by some condition. As result, it will result into the infinite loop.
 
 ```
