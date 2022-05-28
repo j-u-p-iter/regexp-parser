@@ -56,3 +56,5 @@ For the left-recursive grammar, like for the provided below, it doesn't work, ca
 ```
 P => P "+" N | F;
 ```
+
+This is why in the code for the left-recursive grammar we use while loop to iterate through all operators instead of recursive calls.
