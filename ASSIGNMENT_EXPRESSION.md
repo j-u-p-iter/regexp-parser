@@ -86,3 +86,11 @@ AssignmentExpression() {
 According to the grammar the first thing we need to do here is to call EqualityExpression method, which will generate the AST branch. After that, we try to find the assignmentOperator. If there's an assignment operator, it means we have a deal with the AssignmentExpression. But we are not ready to return the AssignmentExpression node yet. At first we need to be sure, that in case we have an assignment operator after the left operand (result of the EqualityExpression call), the left operand is identifier. If the left operand is really identifier, we return and AssignmentExpression node with left and right properties. The right property can also contain the AssignmentExpression, like in an expression `x = y = 5;`. This is why we call the AssignmentExpression recursively. If the left operand on the left hand side is not an identifier, like in case `5 = 5`, we throw an appropriate error.
 
 If there's no an assignment operator, it means there's no AssignmentExpression and we return the EqualityExpression call result.
+
+To be able to parse the identifiers, we update the grammar for the PrimaryExpression:
+
+```
+PrimaryExpression => "(" Expression ")" | IDENTIFIER | Literal;
+```
+
+The evolution of the identifiers has the same precedence as the evolution of the literals or any another standalone values.
