@@ -35,7 +35,8 @@ According to this the grammar for the AssignmentExpression looks like this:
  *
  */
  
-AssignmentExpression => IDENTIFIER ASSIGNMENT_OPERATOR AssignmentExpression | EqualityExpression;
+AssignmentExpression => IDENTIFIER AssignmentOperator AssignmentExpression | EqualityExpression;
+AssignmentOperator.  => SIMPLE_ASSIGNMENT_OPERATOR | COMPLEX_ASSIGNMENT_OPERATOR;
 ```
 
 The interesting thing here is that the grammar for the AssignmentExpression is right-recursive, cause the recursive refference to AssignmentExpression nonterminal is located at the right hand side of the production rule.
