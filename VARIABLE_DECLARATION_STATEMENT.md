@@ -13,3 +13,12 @@ There are different possible types of notations for the variable declaration sta
 - With initializer: `let x = 5`;
 - With list of declarations instead of one declaration: `let x, y = 5`;
 - With the initializer in form of an assignment: `let x = y = 5`.
+
+
+```
+Statement                    => EmptyStatement | BlockStatement | ExpressionStatement | VariableDeclarationStatement;
+VariableDeclarationStatement => "let" VariableDeclarationsList ";";
+VariableDeclarationsList     => VariableDeclaration | VariableDeclarationList "," VariableDeclaration;
+VariableDeclaration          => IDENTIFIER "=" Expression;
+Expression                   => AssignmentExpression;
+```
