@@ -87,11 +87,12 @@ According to the grammar the first thing we need to do here is to call EqualityE
 
 If there's no an assignment operator, it means there's no AssignmentExpression and we return the EqualityExpression call result.
 
-To be able to parse the identifiers, we update the grammar for the PrimaryExpression:
+To access a variable, we define a new kind of primary expression. To be able to parse the identifiers, we update the grammar for the PrimaryExpression:
 
 ```
 PrimaryExpression => "(" Expression ")" | IDENTIFIER | Literal;
 ```
+That IDENTIFIER clause matches a single identifier token, which is understood to be the name of the variable being accessed.
 
 The evolution of the identifiers has the same precedence as the evolution of the literals or any another standalone values.
 
