@@ -125,3 +125,5 @@ The AST for the assignment expression `x = y = 5` will look like:
   }]  
 }
 ```
+
+We can see that the associativity of the assignment operator is increasing from right to left compared to the associativity of appropriate operators of the additive or multiplicative expressions, for example.
