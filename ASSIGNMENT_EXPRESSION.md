@@ -33,10 +33,9 @@ According to this the grammar for the AssignmentExpression looks like this:
  * If there is not ASSIGNMENT_OPERATOR we expect to have one of the further 
  *   expressions, starting from the EqualityExpression
  *
- * AssignmentExpression => IDENTIFIER ASSIGNMENT_OPERATOR AssignmentExpression | EqualityExpression
  */
  
-AssignmentExpression => IDENTIFIER "=" AssignmentExpression | EqualityExpression;
+AssignmentExpression => IDENTIFIER ASSIGNMENT_OPERATOR AssignmentExpression | EqualityExpression;
 ```
 
 The interesting thing here is that the grammar for the AssignmentExpression is right-recursive, cause the recursive refference to AssignmentExpression nonterminal is located at the right hand side of the production rule.
