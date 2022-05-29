@@ -98,3 +98,8 @@ ExpressionStatement() {
   };
 }
 ```
+
+Nothing special here. We just:
+- parset an expression;
+- eat (skip) the semicolumn followed by the expression. As result, it won't be presented in the result AST tree.
+- return ExpressionStatement node with the parsed expression, that has been gotten on the above step.
