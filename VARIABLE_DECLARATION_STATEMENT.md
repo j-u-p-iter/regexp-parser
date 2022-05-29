@@ -19,6 +19,7 @@ There are different possible types of notations for the variable declaration sta
 Statement                    => EmptyStatement | BlockStatement | ExpressionStatement | VariableDeclarationStatement;
 VariableDeclarationStatement => "let" VariableDeclarationsList ";";
 VariableDeclarationsList     => VariableDeclaration | VariableDeclarationList "," VariableDeclaration;
-VariableDeclaration          => IDENTIFIER "=" Expression;
+VariableDeclaration          => IDENTIFIER VariableInitializer;
+VariableInitializer.         => SIMPLE_ASSIGNMENT_OPERATOR Expression;
 Expression                   => AssignmentExpression;
 ```
