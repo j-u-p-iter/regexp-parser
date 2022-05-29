@@ -57,3 +57,28 @@ P => P "+" N | F;
 ```
 
 This is why in the code for the left-recursive grammar we use while loop to iterate through all operators instead of recursive calls.
+
+```
+AssignmentExpression() {
+  const expression = this.EqualityExpression();
+
+  const assignmentOperator = this._match('ASSIGNMENT_OPERATOR');
+
+  if (assignmentOperator) {
+    const assignmentOperatorValue = assignmentOperator.value;
+
+    if (this._isIdentifier(expression)) {
+      return {
+        type: "AssignmentExpression",
+        operator: assignmentOperatorValue,
+        left: expression,
+        right: this.AssignmentExpression(),
+      };
+    }
+
+    throw new SyntaxError('Invalid left-hand side in the assignment expression. The identifier is expected.');
+  }
+
+  return expression;
+}
+```
