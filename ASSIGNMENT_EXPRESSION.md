@@ -94,3 +94,34 @@ PrimaryExpression => "(" Expression ")" | IDENTIFIER | Literal;
 ```
 
 The evolution of the identifiers has the same precedence as the evolution of the literals or any another standalone values.
+
+The AST for the assignment expression `x = y = 5` will look like:
+
+```
+{
+  type: "Program",
+  body: [{
+    type: "ExpressionStatement",
+    expression: {
+      type: "AssignmentExpression",
+      operator: "=",
+      left: {
+        type: "Identifier",
+        name: "x",
+      },  
+      right: {
+        type: "AssignmentExpression",
+        operator: "=",
+        left: {
+          type: "Identifier",
+          name: "y",
+        },
+        right: {
+          type: "NumericLiteral",
+          value: 5,
+        }
+      },  
+    },  
+  }]  
+}
+```
