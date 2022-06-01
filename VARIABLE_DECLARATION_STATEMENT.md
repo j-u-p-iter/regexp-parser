@@ -20,6 +20,7 @@ Statement                    => EmptyStatement | BlockStatement | ExpressionStat
 VariableDeclarationStatement => "let" VariableDeclarationsList ";";
 VariableDeclarationsList     => VariableDeclaration | VariableDeclarationList "," VariableDeclaration;
 VariableDeclaration          => IDENTIFIER VariableInitializer;
-VariableInitializer.         => SIMPLE_ASSIGNMENT_OPERATOR Expression;
+VariableInitializer          => SIMPLE_ASSIGNMENT_OPERATOR Expression;
+ExpressionStatement          => Expression;
 Expression                   => AssignmentExpression;
 ```
