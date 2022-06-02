@@ -6,7 +6,7 @@ let a = 2 + 3;
 a = 2 + 3;
 ```
 
-The first line is the variable declaration statement we'll take a look at it further. The second line represents the assignment expression. Despite the fact, that these notations look very similar, they are actually represented as absolutely different AST node in the result tree. The first line is the VariableDeclarationStatement node (we'll talk about it later) and the second like is the AssignmentExpression.
+The first line is the variable declaration statement. We'll take a look at it further. The second line represents the assignment expression. Despite the fact, that these notations look very similar, they are actually represented as absolutely different AST nodes in the result tree. The first line is the VariableDeclarationStatement node (we'll talk about it later) and the second line is the AssignmentExpression.
 
 The topic of this documentation is to look at the assignment expression:
 
@@ -26,11 +26,11 @@ According to this the grammar for the AssignmentExpression looks like this:
 
 ```
 /** 
- * If we have ASSIGNMENT_OPERATOR:
+ * If we have an ASSIGNMENT_OPERATOR:
  * - we expect the IDENTIFIER (variable) in front of the ASSIGNMENT_OPERATOR
  * - the expression after the ASSIGNMENT_OPERATOR 
  *
- * If there is not ASSIGNMENT_OPERATOR we expect to have one of the further 
+ * If there is no ASSIGNMENT_OPERATOR we expect to have one of the further 
  *   expressions, starting from the EqualityExpression
  *
  */
@@ -57,7 +57,7 @@ For the left-recursive grammar, like for the provided below, it doesn't work, ca
 P => P "+" N | F;
 ```
 
-This is why in the code for the left-recursive grammar we use while loop to iterate through all operators instead of recursive calls.
+This is why in the code for the left-recursive grammar we use the while loop to iterate through all operators instead of recursive calls.
 
 ```
 AssignmentExpression() {
@@ -84,7 +84,7 @@ AssignmentExpression() {
 }
 ```
 
-According to the grammar the first thing we need to do here is to call EqualityExpression method, which will generate the AST branch. After that, we try to find the assignmentOperator. If there's an assignment operator, it means we have a deal with the AssignmentExpression. But we are not ready to return the AssignmentExpression node yet. At first we need to be sure, that in case we have an assignment operator after the left operand (result of the EqualityExpression call), the left operand is an identifier. If the left operand is really identifier, we return and AssignmentExpression node with left and right properties. The right property can also contain the AssignmentExpression, like in an expression `x = y = 5;`. This is why we call the AssignmentExpression recursively. If the left operand on the left hand side is not an identifier, like in case `5 = 5`, we throw an appropriate error.
+According to the grammar the first thing we need to do here is to call EqualityExpression method, which will generate the AST branch. After that, we try to find the assignmentOperator. If there's an assignment operator, it means we have a deal with the AssignmentExpression. But we are not ready to return the AssignmentExpression node yet. At first we need to be sure, that in case we have an assignment operator after the left operand (result of the EqualityExpression call), the left operand is an identifier. If the left operand is really an identifier, we return and AssignmentExpression node with left and right properties. The right property can also contain the AssignmentExpression, like in an expression `x = y = 5;`. This is why we call the AssignmentExpression recursively. If the left operand on the left hand side is not an identifier, like in case `5 = 5`, we throw an appropriate error.
 
 If there's no an assignment operator, it means there's no AssignmentExpression and we return the EqualityExpression call result.
 
@@ -128,4 +128,4 @@ The AST for the assignment expression `x = y = 5` will look like:
 }
 ```
 
-We can see that the associativity of the assignment operator is increasing from right to left compared to the associativity of appropriate operators of the additive or multiplicative expressions, for example, which have left associativity.
+We can see that the associativity of the assignment operator is increasing from right to left compared to the associativity of appropriate operators of the additive or multiplicative expressions, for example, which is left.
