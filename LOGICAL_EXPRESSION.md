@@ -22,3 +22,5 @@ LogicalORExpression => LogicalAndExpression (LOGICAL_OR_OPERATOR LogicalAndExpre
 
 LogicalAndExpression => EqualityExpression (LOGICAL_AND_OPERATOR EqualityExpression)*;
 ```
+
+The code to parse Logical Expressions is identical to the code to parse Binary Expressions:
