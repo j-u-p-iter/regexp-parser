@@ -9,3 +9,13 @@ There are two types of Logical Expressions:
 In logical OR expressions the two operands are connected by the || operator. In logical AND expressions the two operands are connected by the && operator.
 
 The precedence of the AND operator is higher than the precedence of the OR operator. It means that in the Grammar the Logical OR Expressions are located above the Logical AND Expressions.
+
+The precedence of the Logical Expressions are higher than the precednce of the Assignment Expressions. And at the same time it's lower than the precedence of the Equality Expressions. So, in Grammar the Logical Expressions are located after the Assignment Expressions and above the Equality Expressions:
+
+
+```
+AssignmentExpression => IDENTIFIER AssignmentOperator AssignmentExpression | LogicalORExpression;
+AssignmentOperator   => SIMPLE_ASSIGNMENT_OPERATOR | COMPLEX_ASSIGNMENT_OPERATOR;
+LogicalORExpression => LogicalAndExpression (LOGICAL_OR_OPERATOR LogicalAndExpression)*
+LogicalAndExpression => EqualityExpression (LOGICAL_AND_OPERATOR EqualityExpression)*
+```
