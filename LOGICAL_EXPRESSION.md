@@ -64,3 +64,48 @@ LogicalAndExpression() {
   return leftOperand;
 }
 ```
+
+The code is 100% familiar to us, cause it's identical to the code we've already seen for the BinaryExpression code.
+
+The AST subtree for the `x && y || x && z` looks like that:
+
+```
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "LogicalExpression",
+        "operator": "||",
+        "left": {
+          "type": "LogicalExpression",
+          "operator": "&&",
+          "left": {
+            "type": "Identifier",
+            "name": "x"
+          },
+          "right": {
+            "type": "Identifier",
+            "name": "y"
+          }
+        },
+        "right": {
+          "type": "LogicalExpression",
+          "operator": "&&",
+          "left": {
+            "type": "Identifier",
+            "name": "x"
+          },
+          "right": {
+            "type": "Identifier",
+            "name": "z"
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+Here we can see again, that the precedence of the `&&` operator is higher than the precedence of the `||` operator. This is why LogicalExpression with the `&&` operator is nested deeper into the tree.
