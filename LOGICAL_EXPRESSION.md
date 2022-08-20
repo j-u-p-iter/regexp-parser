@@ -15,7 +15,10 @@ The precedence of the Logical Expressions are higher than the precednce of the A
 
 ```
 AssignmentExpression => IDENTIFIER AssignmentOperator AssignmentExpression | LogicalORExpression;
+
 AssignmentOperator   => SIMPLE_ASSIGNMENT_OPERATOR | COMPLEX_ASSIGNMENT_OPERATOR;
-LogicalORExpression => LogicalAndExpression (LOGICAL_OR_OPERATOR LogicalAndExpression)*
-LogicalAndExpression => EqualityExpression (LOGICAL_AND_OPERATOR EqualityExpression)*
+
+LogicalORExpression => LogicalAndExpression (LOGICAL_OR_OPERATOR LogicalAndExpression)*;
+
+LogicalAndExpression => EqualityExpression (LOGICAL_AND_OPERATOR EqualityExpression)*;
 ```
