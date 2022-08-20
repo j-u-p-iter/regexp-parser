@@ -24,3 +24,43 @@ LogicalAndExpression => EqualityExpression (LOGICAL_AND_OPERATOR EqualityExpress
 ```
 
 The code to parse Logical Expressions is identical to the code to parse Binary Expressions:
+
+```
+LogicalOrExpression() {
+  let leftOperand = this.LogicalAndExpression();
+
+  while(this._check('LOGICAL_OR')) {
+    const operator = this._eat('LOGICAL_OR');
+
+    const rightOperand = this.LogicalAndExpression();
+
+    leftOperand = this.LogicalNode(
+      leftOperand, 
+      operator.value, 
+      rightOperand
+    );  
+  }   
+
+  return leftOperand;
+}
+```
+
+```
+LogicalAndExpression() {
+  let leftOperand = this.EqualityExpression();
+
+  while(this._check('LOGICAL_AND')) {
+    const operator = this._eat('LOGICAL_AND');
+
+    const rightOperand = this.EqualityExpression();
+
+    leftOperand = this.LogicalNode(
+      leftOperand, 
+      operator.value, 
+      rightOperand
+    );  
+  }   
+
+  return leftOperand;
+}
+```
