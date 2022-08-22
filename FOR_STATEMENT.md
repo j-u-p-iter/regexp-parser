@@ -25,5 +25,6 @@ IterationStatement => WhileStatement | DoWhileStatement | ForStatement;
 The production rule for the ForStatement looks this way:
 
 ```
-ForStatement => "for" "(" (VariableDeclarationStatement | ExpressionStatement | ";") Expression? ";" Expression? ")" Statement;
+ForStatement => 
+  "for" "(" (VariableDeclarationStatement | ExpressionStatement | ";") Expression? ";" Expression? ")" Statement;
 ```
