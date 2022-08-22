@@ -40,7 +40,7 @@ Here we skip the "WHILE" token, since it won't be added to result AST tree. The 
 
 Like other statements, the parser recognizes a while statement by the leading "while" keyword. When it finds one, it calls this new method to parse the rest.
 
-The AST for the WhileStatement `while (x > 10) { x-=1; }` will look like this:
+The AST for the WhileStatement `while (x > 10) { x -= 1; }` will look like this:
 
 ```
 {
