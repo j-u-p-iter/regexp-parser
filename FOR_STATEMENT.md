@@ -28,3 +28,20 @@ The production rule for the ForStatement looks this way:
 ForStatement => 
   "for" "(" (VariableDeclarationStatement | ExpressionStatement | ";") Expression? ";" Expression? ")" Statement;
 ```
+
+Let's extract separate parts into their own pruductions:
+
+```
+ForStatementInitPart => (VariableDeclarationStatement | ExpressionStatement | ";");
+ForStatementTestPart => Expression? ";";
+ForStatementUpdatePart => Expression? ";";
+ForStatement => 
+  "for" "(" ForStatementInitPart ForStatementTestPart ForStatementUpdatePart ")" Statement;
+```
+
+Take into account that `init`, `test` and `update` parts are optional. It means that such type of for statement would be absolutely valid:
+
+```
+for (; ;) {
+};
+```
