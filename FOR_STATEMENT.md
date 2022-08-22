@@ -45,3 +45,8 @@ Take into account that `init`, `test` and `update` parts are optional. It means 
 for (; ;) {
 };
 ```
+
+The code for the `ForStatement` rule looks like:
+
+```
+```
