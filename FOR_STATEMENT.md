@@ -81,5 +81,8 @@ ForStatement() {
 ```
 
 Here we skip the FOR token, since we don't need it into the result AST Tree. The same way we skip the LEFT_PAREN token. 
-Further we check that the next token is the "let" keyword. If there's a "let" keyword, it means the "init" part is not empty but will be presented by VariableDeclarationInit block. Next we check that the next token is not equal to ";". If it's not then the "init" part will be presented by the Expression node, otherwise it will be equal to null since the "init" part is empty - there's no VariableDeclaration or Expression before the ";" token.
+Further we check that the next token is the "let" keyword. If there's a "let" keyword, it means the "init" part is not empty but will be presented by "VariableDeclaration" node. Next we check that the next token is not equal to ";". If it's not then the "init" part will be presented by the "Expression" node, otherwise it will be equal to null since the "init" part is empty - there's no VariableDeclaration or Expression before the ";" token.
 
+Next we move to the "test" part and again check the presence of the ";" token. If there is no such a token, it means that the "test" part is not empty but instead is presented by the "Expression" node. Otherwise it will be equal "null" since there's no Expression before the ";" token.
+
+Next we move to the "update" part. Here we check the presence of the "RIGHT_PAREN" token. If there is such a token, it means the "update" part is empty since there's no Expression node before the "RIGHT_PAREN" token. And in this case the "update" part equals to null. Otherwise in case the "update" part contains Expression before the ";" token the "update" part will contain Expression node. 
