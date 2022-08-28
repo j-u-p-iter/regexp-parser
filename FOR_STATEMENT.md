@@ -92,3 +92,74 @@ Again, we skip here ";" token.
 Next we move to the "update" part. Here we check the presence of the "RIGHT_PAREN" token. If there is such a token, it means the "update" part is empty since there's no Expression node before the "RIGHT_PAREN" token. And in this case the "update" part equals to null. Otherwise in case the "update" part contains Expression before the ";" token the "update" part will contain Expression node. 
 
 And again, we skip here ";" token.
+
+Like other statements, the parser recognizes a while statement by the leading "for" keyword. When it finds one, it calls this new method to parse the rest.
+
+The AST for the for statement "for(let i = 0; i < 10; i += 1) { x = 10; }" will look like this:
+
+```
+{
+  type: "Program",
+  body: [
+    {   
+      type: "ForStatement",
+      init: {
+        type: "VariableDeclaration",
+        declarations: [{
+          type: "VariableDeclarator",
+          id: {
+            type: "Identifier",
+            name: "i",
+          },  
+          init: {
+            type: "NumericLiteral",
+            value: 0,
+          }   
+        }]  
+      },  
+      test: {
+        type: "BinaryExpression",
+        operator: "<",
+        left: {
+          type: "Identifier",
+          name: "i",
+        },  
+        right: {
+          type: "NumericLiteral",
+          value: 10, 
+        }   
+      },  
+      update: {
+        type: "AssignmentExpression",
+        operator: "+=",
+        left: {
+          type: "Identifier",
+          name: "i",
+        },
+        right: {
+          type: "NumericLiteral",
+          value: 1,
+        }
+      },
+      body: {
+        type: "BlockStatement",
+        body: [{
+          type: "ExpressionStatement",
+          expression: {
+            type: "AssignmentExpression",
+            operator: "=",
+            left: {
+              type: "Identifier",
+              name: "x",
+            },
+            right: {
+              type: "NumericLiteral",
+              value: 10,
+            }
+          }
+        }]
+      }
+    }
+  ]
+}
+```
