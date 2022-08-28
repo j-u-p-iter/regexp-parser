@@ -26,13 +26,13 @@ The production rule for the ForStatement looks this way:
 
 ```
 ForStatement => 
-  "for" "(" (VariableDeclarationStatement | ExpressionStatement | ";") Expression? ";" Expression? ")" Statement;
+  "for" "(" (VariableDeclaration | Expression) ";" Expression? ";" Expression? ")" Statement;
 ```
 
 Let's extract separate parts into their own pruductions:
 
 ```
-ForStatementInitPart => (VariableDeclarationStatement | ExpressionStatement | ";");
+ForStatementInitPart => (VariableDeclarationStatement | ExpressionStatement) ";";
 ForStatementTestPart => Expression? ";";
 ForStatementUpdatePart => Expression? ";";
 ForStatement => 
@@ -49,4 +49,37 @@ for (; ;) {
 The code for the `ForStatement` rule looks like:
 
 ```
+ForStatement() {
+  this._eat('FOR');
+
+  this._eat('LEFT_PAREN');
+
+  const init = this._check('let') 
+    ? this.VariableDeclarationInit() 
+    : !this._check(';') ? this.Expression() : null; 
+
+  this._eat(';');
+
+  const test = !this._check(';') ? this.Expression() : null;
+
+  this._eat(';')
+
+  const update = !this._check('RIGHT_PAREN') ? this.Expression() : null;
+
+  this._eat('RIGHT_PAREN');
+
+  const body = this.Statement();
+        
+  return {
+    type: "ForStatement",
+    init,
+    test,
+    update,
+    body,
+  };  
+}
 ```
+
+Here we skip the FOR token, since we don't need it into the result AST Tree. The same way we skip the LEFT_PAREN token. 
+Further we check that the next token is the "let" keyword. If there's a "let" keyword, it means the "init" part is not empty but will be presented by VariableDeclarationInit block. Next we check that the next token is not equal to ";". If it's not then the "init" part will be presented by the Expression node, otherwise it will be equal to null since the "init" part is empty - there's no VariableDeclaration or Expression before the ";" token.
+
