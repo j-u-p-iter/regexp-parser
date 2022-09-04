@@ -20,4 +20,4 @@ Declaration => VariableDeclaration | FunctionDeclaration
 IterationStatement => WhileStatement | DoWhileStatement | ForStatement;
 ```
 
-Here we've not only introduced new production, which is the `FunctionDeclaration` but extracted from the Statement rule the `Declaration` production with two production rules: `VariableDeclaration` and `FunctionDeclaration`.
+Here we've not only introduced new production, which is the `FunctionDeclaration` but extracted from the Statement rule the `Declaration` production with two production rules: `VariableDeclaration` and `FunctionDeclaration`. From here we can see that Declaration, despite the fact it doesn't have `Statement` suffix, still considered as a `Declaration`.
