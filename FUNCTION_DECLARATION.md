@@ -21,3 +21,11 @@ IterationStatement => WhileStatement | DoWhileStatement | ForStatement;
 ```
 
 Here we've not only introduced new production, which is the `FunctionDeclaration` but extracted from the Statement rule the `Declaration` production with two production rules: `VariableDeclaration` and `FunctionDeclaration`. From here we can see that Declaration, despite the fact it doesn't have `Statement` suffix, still considered as a `Declaration`.
+
+The grammar for the `FunctionDeclaration` production rule looks like this:
+
+```
+FunctionDeclaration => "function" Function;
+
+Function => Identifier "(" ParametersLit? ")" BlockStatement;
+```
