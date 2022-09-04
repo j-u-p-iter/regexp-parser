@@ -29,3 +29,5 @@ FunctionDeclaration => "function" Function;
 
 Function => Identifier "(" ParametersLit? ")" BlockStatement;
 ```
+
+The main `FunctionDeclaration` rule uses a separate helper rule `Function`. A `FunctionDeclaration` statement is the "function" keyword followed by the actual function-y stuff. When we get to classes, we’ll reuse that function rule for declaring methods. Those look similar to function declarations, but aren’t preceded by "function".
