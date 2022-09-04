@@ -17,7 +17,7 @@ for (let i = 0; i < 10; i += 1) {
 Let's update Statement Grammar that contains Grammar for the For Statement:
 
 ```
-Statement => EmptyStatement | BlockStatement | VariableDeclarationStatement | ExpressionStatement | IfStatement | IterationStatement;
+Statement => EmptyStatement | BlockStatement | VariableDeclaration | ExpressionStatement | IfStatement | IterationStatement;
 
 IterationStatement => WhileStatement | DoWhileStatement | ForStatement;
 ```
