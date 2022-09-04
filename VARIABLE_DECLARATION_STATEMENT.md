@@ -18,9 +18,9 @@ There are different possible types of notations for the variable declaration sta
 
 ```
 Statement                    => EmptyStatement | BlockStatement | ExpressionStatement | VariableDeclarationStatement;
-VariableDeclarationStatement => "let" VariableDeclarationsList ";";
-VariableDeclarationsList     => VariableDeclaration | VariableDeclarationList "," VariableDeclaration;
-VariableDeclaration          => IDENTIFIER SIMPLE_ASSIGNMENT_OPERATOR VariableInitializer | IDENTIFIER;
+VariableDeclaration          => "let" VariableDeclarationsList ";";
+VariableDeclarationsList     => VariableDeclarator | VariableDeclarationList "," VariableDeclarator;
+VariableDeclarator           => IDENTIFIER SIMPLE_ASSIGNMENT_OPERATOR VariableInitializer | IDENTIFIER;
 VariableInitializer          => Expression;
 Expression                   => AssignmentExpression;
 ```
@@ -74,7 +74,7 @@ Potentially there's more than just one `VariableDeclaration`. This is why create
 And at least we come to the `VariableDeclaration` non-terminal.
 
 ```
-VariableDeclaration() {
+VariableDeclarator() {
   const identifier = this.Identifier();
 
   let initializer = null;
