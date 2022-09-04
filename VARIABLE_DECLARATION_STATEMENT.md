@@ -1,3 +1,5 @@
+# VARIABLE DECLARATION
+
 While the `x = 1` is an assignment expression, the `let x = 1` is a variable declation statement. The AST for these two types of notation is absolutely different.
 
 Declaration differs from an assignment only by one keyword `let`.
