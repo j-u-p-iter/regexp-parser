@@ -7,13 +7,13 @@ So, it's one more statement we should update our Grammar with.
 Currently our Grammar for the statement looks like:
 
 ```
-Statement => EmptyStatement | BlockStatement | VariableDeclarationStatement | ExpressionStatement;
+Statement => EmptyStatement | BlockStatement | VariableDeclaration | ExpressionStatement;
 ```
 
 With the new IfStatement nonterminal it turns into:
 
 ```
-Statement => EmptyStatement | BlockStatement | VariableDeclarationStatement | ExpressionStatement | IfStatement;
+Statement => EmptyStatement | BlockStatement | VariableDeclaration | ExpressionStatement | IfStatement;
 ```
 
 Production rule for the IfStatement looks like:
