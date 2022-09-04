@@ -5,7 +5,7 @@ Do While Statements are used to repeat some block of code until this while test 
 It's one more statement. With this statement our Grammar becomes look like:
 
 ```
-Statement => EmptyStatement | BlockStatement | VariableDeclarationStatement | ExpressionStatement | IfStatement | WhileStatement | DoWhileStatement;
+Statement => EmptyStatement | BlockStatement | VariableDeclaration | ExpressionStatement | IfStatement | WhileStatement | DoWhileStatement;
 ```
 
 The production rule for the DoWhileStatement looks this way:
