@@ -5,7 +5,7 @@ While Statements are used to repeat some block of code until this while test con
 It's one more statement. With this statement our Grammar becomes look like:
 
 ```
-Statement => EmptyStatement | BlockStatement | VariableDeclarationStatement | ExpressionStatement | IfStatement | WhileStatement;
+Statement => EmptyStatement | BlockStatement | VariableDeclaration | ExpressionStatement | IfStatement | WhileStatement;
 ```
 
 The production rule for the WhileStatement looks very similar to the IfStatement but even simpler:
