@@ -82,3 +82,5 @@ FunctionParamsList() {
   return paramsList;                                                         
 } 
 ```
+
+In the `FunctionDeclaration` method we skip the `function` keyword since we don't need it into the result AST tree and return the `Function` helper, which corresponds to the `Function` production rule.
