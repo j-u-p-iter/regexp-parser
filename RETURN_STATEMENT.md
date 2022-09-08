@@ -27,3 +27,27 @@ ReturnStatement() {
 }
 ```
 
+In the very we skip the `RETURN` node since it's not needed to have it in the result AST. After we parse an `Expression` but only if the `RETURN` word is not followed by the `;` token. If it is, it means there's no Expression. After we skip the `;` token and return result node.
+
+The AST for the `ReturnStatement` `return x * y;` looks this way:
+
+```
+body: {
+  type: "BlockStatement",
+  body: [{
+    type: "ReturnStatement",        
+    argument: {          
+      type: "BinaryExpression",       
+      left: {            
+        type: "Identifier",             
+        name: "x",       
+      },                 
+      operator: "*",
+      right: {
+        type: "Identifier",             
+        name: "x",
+      }
+    }
+  }]
+}
+```
