@@ -84,3 +84,6 @@ FunctionParamsList() {
 ```
 
 In the `FunctionDeclaration` method we skip the `function` keyword since we don't need it into the result AST tree and return the `Function` helper, which corresponds to the `Function` production rule.
+The function node itself consists of a name, params and body. This is why the `Function` production rule parses `Identifier` which will be serving as a name, `FunctionParamsList` which will serve as a params and the `BlockStatement` which corresponds to the function body.
+
+To parse the params the separate helper was created which is called `FunctionParamsList`. We extracted this piece of code into separate helper not to reuse it in the future, but just to make code look better and more readable. Parsing the params we first of all skip the `LEFT_PAREN` and after that check the lookahead - if the next token is `RIGHT_PAREN`. If it is it means that params of the function is an empty list. If it's not we parse one param after another using the `do {} while()` block. Next we skip the closing `RIGHT_PAREN` token and return params list.
