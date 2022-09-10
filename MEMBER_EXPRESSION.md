@@ -57,3 +57,5 @@ MemberExpression => PrimaryExpression (("." Identifier) | "[" Expression "]")*;
 ```
 
 Here we can see that the "dot" character can be followed only by Identifier and the "thing" inside of the square brackets can deriviate to any Expression (this is why this property is called computed, since it can be computed).
+
+The code for the MemberExpression production looks next way: ...
