@@ -90,3 +90,5 @@ MemberExpression() {
   return primaryExpression;
 }
 ```
+
+According the Grammar the first thing we should do is to parse the PrimaryExpresssion whatever it is. After that we check if the next token is the `dot` token. If it is than we setup computed property ad false and according to the Grammar again we parse an Identifier which is the only thing which can be followed by dot. 
