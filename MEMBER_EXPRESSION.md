@@ -90,4 +90,47 @@ MemberExpression() {
 }
 ```
 
-According the Grammar the first thing we should do is to parse the PrimaryExpresssion whatever it is. After that we check if the next token is the `dot` token. If it is than we setup computed property ad false and according to the Grammar again we parse an Identifier which is the only thing which can be followed by dot. 
+According the Grammar the first thing we should do is to parse the PrimaryExpresssion whatever it is. And again, according to the Grammar this is the simplest form of memberExpression.
+
+According to the grammar we can have any amount of `"." Identifider` OR `"[" Expression "]"` combinations further. It means that we need to initiate a while loop here. While the next token is "dot" or "opening square bracket" we continue parsing the `MemberExpression` according to the Grammar. It's necessary to point out here that the precedence of the "dot" or "brackets" properties is left-to-right. And it means, that each current member expression will be nested inside the newly parsed memberExpression object. The deeper the object nested the higher the precedance of this object, the earlier it was executed.
+
+And at the end, we return the result `MemberExpression`.
+
+The AST for the `MemberExpression` `a.b.c['d']` will look like this:
+
+```
+{
+  type: "Program",
+  body: [{
+    type: "ExpressionStatement",
+    expression: {
+      type: "MemberExpression",
+      object: {
+        type: "MemberExpression",
+        object: {
+          type: 'MemberExpression',
+          object: {
+            type: "Identifier",
+            name: 'a',
+          },  
+          computed: false,
+          property: {
+            type: "Identifier",
+            name: 'b' 
+          },  
+        },  
+        computed: false,
+        property: {
+          type: "Identifier",
+          name: 'c',
+        },
+      },
+      computed: true,
+      property: {
+        type: "StringLiteral",
+        value: "d",
+      }
+    }
+  }],
+}
+```
