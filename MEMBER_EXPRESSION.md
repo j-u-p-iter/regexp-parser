@@ -58,4 +58,35 @@ MemberExpression => PrimaryExpression (("." Identifier) | "[" Expression "]")*;
 
 Here we can see that the "dot" character can be followed only by Identifier and the "thing" inside of the square brackets can deriviate to any Expression (this is why this property is called computed, since it can be computed).
 
-The code for the MemberExpression production looks next way: ...
+The code for the MemberExpression production looks next way:
+
+```
+MemberExpression() {
+  const primaryExpression = this.PrimaryExpression(); 
+
+  let computed = null;
+  let property = null;
+
+  if (this._match('.')) {
+    computed = false;
+    property = this.Identifier();
+  }   
+
+  if (this._match('[')) {
+    computed = true;
+    property = this.Expression();
+    this._eat(']');
+  }   
+
+  if (property) {
+    return {
+      type: "MemberExpression",
+      object: primaryExpression,
+      computed,
+      property,
+    };  
+  }   
+
+  return primaryExpression;
+}
+```
