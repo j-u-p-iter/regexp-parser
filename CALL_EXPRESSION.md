@@ -43,3 +43,45 @@ This rule matches a primary expression followed by zero or more function calls. 
 This rule for `ArgumentList` requires at least one Expression, followed by zero or more other Expression(s), each preceded by a comma. To handle zero-argument calls, the call rule itself considers the entire `ArgumentList` production to be optional.
 
 I admit, this seems more grammatically awkward than you’d expect for the incredibly common “zero or more comma-separated things” pattern. There are some sophisticated metasyntaxes that handle this better, but in our BNF and in many language specs I’ve seen, it is this cumbersome.
+
+The code for the CallExpression looks like this one:
+
+```
+CallExpression() {
+  let callExpression = this.MemberExpression();
+
+  if (!this._check('LEFT_PAREN')) { 
+    return callExpression;
+  }   
+
+  while (this._match('LEFT_PAREN')) {
+    const argumentList = this._check('RIGHT_PAREN') 
+      ? []  
+      : this.ArgumentList();
+
+    callExpression = { 
+      type: "CallExpression",
+      callee: callExpression,
+      arguments: argumentList,
+    }   
+
+    this._eat('RIGHT_PAREN');
+  }   
+
+  return callExpression;
+}
+```
+
+At the same time the code for the `ArgumentList` looks this way:
+
+```
+ArgumentList() {
+  let argumentList = []; 
+
+  do {
+    argumentList.push(this.Expression()) 
+  } while(this._match('COMMA'));
+
+  return argumentList;
+}
+```
