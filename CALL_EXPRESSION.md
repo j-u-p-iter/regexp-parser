@@ -85,3 +85,5 @@ ArgumentList() {
   return argumentList;
 }
 ```
+
+First, we parse a `MemberExpression`, the “left operand” to the call. According to the Grammar the CallExpressions bubbles up to the MemberExpression if there're no parentheses after the MemberExpression. So, we check the presence of the "LEFT_PAREN" token. If there's no such a token CallExpression => MemberExpression, if there's such a token we check the presence of the ArgumentList to parse. We do it by checking the presence of the "RIGHT_PAREN" token. If it followed by the "LEFT_PAREN" token, it means there is no ArgumentList for the CallExpression and vice-versa. Each `CallExpression` can be a Callee according to the grammar. The precedence of the `()` operator is left-to-rigth. It means that the leftmost callee should be executed at the very beginning, the rightmost callee should be executed at the very end. This is why in the `while loop` the `CallExpression` parsed on the previous step is nested into the newly parsed `CallExpression`. During the interpretation phase the deepest `CallExpression` will be called at first. The most top `CallExpression` will be called as the last one.
