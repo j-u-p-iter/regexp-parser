@@ -15,7 +15,7 @@ Allways start with simple and don't add a lot of details at the same time during
 
 You should have:
 
-1. 1 book to read - NodeJS Advanced Patterns Third edition.
+1. 1 book to read - NodeJS Advanced Patterns Third edition. (https://learning.oreilly.com/library/view/node-js-design-patterns/9781839214110/Text/Chapter_1.xhtml#_idParaDest-29)
 2. 1 Project to work on - Parser.
 3. 1 new topic to study - Algorithms (Udemy). For each topic create small NextJS project to formulate the main rules.
 4. 1 Course to watch - Parser (Udemy).
