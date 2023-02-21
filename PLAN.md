@@ -23,3 +23,10 @@ You should have:
 
 These are the things you should be working on constantly. Don't add additional complexity in terms of new topics until you finish with the current ones.
 Create todo list all projects you want to implement in the future, but don't start them until you completely finish with the current ones.
+
+Todo List:
+
+- testing framework;
+- builder;
+- CLI parser
+- 
