@@ -28,5 +28,5 @@ Todo List:
 
 - testing framework;
 - builder;
-- CLI parser
-- 
+- CLI parser;
+- look at Vercel projects and try to simulate them.
