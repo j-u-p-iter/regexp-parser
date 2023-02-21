@@ -9,3 +9,17 @@
 1. Frontend Masters courses.
 2. Build bundler from scratch.
 3. Build parser from scratch.
+
+
+Allways start with simple and don't add a lot of details at the same time during development and studying.
+
+You should have:
+
+1. 1 book to read - NodeJS Advanced Patterns Third edition.
+2. 1 Project to work on - Parser.
+3. 1 new topic to study - Algorithms (Udemy). For each topic create small NextJS project to formulate the main rules.
+4. 1 Course to watch - Parser (Udemy).
+
+
+These are the things you should be working on constantly. Don't add additional complexity in terms of new topics until you finish with the current ones.
+Create todo list all projects you want to implement in the future, but don't start them until you completely finish with the current ones.
