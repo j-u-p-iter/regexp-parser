@@ -29,4 +29,5 @@ Todo List:
 - testing framework;
 - builder;
 - CLI parser;
-- look at Vercel projects and try to simulate them.
+- look at Vercel projects and try to simulate them;
+- look at AdonisJS Framework projects and try to reimplement them.
