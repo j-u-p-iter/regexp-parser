@@ -31,3 +31,4 @@ Todo List:
 - CLI parser;
 - look at Vercel projects and try to simulate them;
 - look at AdonisJS Framework projects and try to reimplement them.
+- try to reimplement this super thing: https://github.com/sindresorhus/execa#readme
