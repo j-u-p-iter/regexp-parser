@@ -9,6 +9,7 @@
 1. Frontend Masters courses.
 2. Build bundler from scratch.
 3. Build parser from scratch.
+4. Learn linux. This is the basis of everything else.
 
 
 Allways start with simple and don't add a lot of details at the same time during development and studying.
