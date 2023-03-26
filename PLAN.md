@@ -10,6 +10,7 @@
 2. Build bundler from scratch.
 3. Build parser from scratch.
 4. Learn linux. This is the basis of everything else.
+5. Stick to this plan: https://github.com/j-u-p-iter/coding-interview-university
 
 
 Allways start with simple and don't add a lot of details at the same time during development and studying.
