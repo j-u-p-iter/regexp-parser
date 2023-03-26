@@ -34,3 +34,6 @@ Todo List:
 - look at AdonisJS Framework projects and try to reimplement them.
 - try to reimplement this super thing: https://github.com/sindresorhus/execa#readme
 - great amount of tools to investigate and reimplement: https://github.com/sindresorhus/awesome-nodejs
+
+
+The very, very important note: I'm learning not to be the best of the best. This is not possible. I'm learning cause I feel it's mine. Cause I literally like it. And it makes me better first and foremost like a person. There are a lot of people concentrating on coding like a mantra. I have a lot of interests in my life: Fitness, Coding, Public speaking, Learning Foreing Language, Meeting new people (intentionally) and I want to practise in all these areas. Of course it's much easier to concentrate only on one areat and master it. But it's not my way. I believe the way I'm doint it is very proffitable for my personality. So, taking these all into account - don't punish yourself that you don't know something, or you are not good enought. This is not rational way to do things. Create plan, stick to this plan and continue moving forward. The goal is not to become the best. The goal is to improve daily. Only doing this you'll be in 1% of the best. But again, this is not a goal. The goal is to move forward and enjoy the process. Only doing this you'll be very valuable.
