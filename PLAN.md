@@ -12,6 +12,7 @@
 4. Learn linux. This is the basis of everything else.
 5. Stick to this plan: https://github.com/j-u-p-iter/coding-interview-university.
 6. Build Flash Cards application for both - desktop and mobile devices.
+7. https://github.com/DmitrySoshnikov/javascript-algorithms
 
 
 Allways start with simple and don't add a lot of details at the same time during development and studying.
