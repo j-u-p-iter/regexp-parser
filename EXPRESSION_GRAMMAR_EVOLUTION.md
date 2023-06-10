@@ -7,6 +7,8 @@ ExpressionStatement => Literal;
 Literal             => NumericLiteral | StringLiteral;
 NumericLiteral      => NUMBER;
 StringLiteral       => STRING;
+BooleanLiteral      => TRUE | FALSE;
+NullLiteral         => NULL;
 ```
 
 2. Let's add the `AdditiveExpression`. The parsers starts matching the tokens from the code with the grammar, moving from the top to the bottom. Literal is the
@@ -21,6 +23,8 @@ AdditiveExpression  => Literal ((+ | -) Literal)*;
 Literal             => NumericLiteral | StringLiteral;
 NumericLiteral      => NUMBER;
 StringLiteral       => STRING;
+BooleanLiteral      => TRUE | FALSE;
+NullLiteral         => NULL;
 ```
 
 If we parse simple mathematical expression like `2 + 2` we'll get the next AST tree:
