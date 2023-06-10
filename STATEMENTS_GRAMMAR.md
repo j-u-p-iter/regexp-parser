@@ -43,6 +43,8 @@ Statements by definition don't evaluate to a value (expressions do but not state
 - producing user-visible output;
 - modifying some state (value of the variable). It makes them a great fit for defining variables or the named entities.
 
+Where an expression’s main job is to produce a value, a statement’s job is to produce an effect. Since, by definition, statements don’t evaluate to a value, to be useful they have to otherwise change the world in some way—usually modifying some state, reading input, or producing output.
+
 Most of the statements in a program are expression statements. An expression statement is simply an expression followed by a semicolon. The lines
 
 ```
